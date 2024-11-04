@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!--
+  1 dấu chấm: đi ngang cấp
+  2 dầu châm: đi ra ngoài
+  -->
+
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- internal css -->
+  <style>
+    span {
+      background-color: aqua;
+      color: burlywood;
+    }
+
+    /* class => dấu chấm (.) */
+    /* id => dầu (#) */
+  </style>
+</head>
+
+<body>
+  <!-- p: paragraph -->
+  <!-- tag -->
+  <!-- inline css -->
+  <p style="color: red; background-color: yellow;">ABCABC</p>
+  <span>ABCABC</span>
+
+  <span>
+    <span class="first-class">ABCABC12345</span>
+    <!-- <span style="background-color: red;" class="first-class">ABCABC12345</span> -->
+    <span>ABCABC 1</span>
+  </span>
+
+  <!-- h: heading -->
+  <h1 id="first-id" class="first-class" style="background-color: aqua;">Heading 1</h1>
+  <h2>Heading 2</h2>
+  <h3 class="first-class first-class-2">Heading 3</h3>
+  <h4 class="first-class">Heading 4</h4>
+  <h5>Heading 5</h5>
+  <h6 class="first-class">Heading 6</h6>
+
+  <!-- hình ảnh -->
+  <!-- source:  -->
+  <img
+    src="https://cdnphoto.dantri.com.vn/L5SSf3VQWVUzgsQaJvPKfdAByCM=/zoom/270_180/2024/10/28/skysports-david-coote-var-monito-crop-1730096019406.jpeg"
+    alt="day-la-anh-bong-da">
+
+  <!-- button -->
+  <button>Click me!</button>
+
+  <!-- a: link -->
+  <a href="https://oxidized-trite-wolfberry.glitch.me/">Link</a>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Stt</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Dang Tien Hung</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ul>
+    <li>Dang</li>
+    <li>Tien</li>
+  </ul>
+
+  <ol>
+    <li>Dang</li>
+    <li>Tien</li>
+  </ol>
+
+  <!-- sematic -->
+  <header>abcabc</header>
+  <aside>
+    <p>abc</p>
+    <p>ahihi</p>
+  </aside>
+  <section>
+    <p>abc</p>
+    <p>ahihi</p>
+  </section>
+
+  <p>Lorem ipsum dolor <br /> sit amet consectetur adipisicing elit. Perspiciatis, sequi.</p>
+
+  <form>
+    <input type="text">
+    <input type="checkbox">
+    <input type="radio">
+    <input type="password">
+  </form>
+</body>
+
+</html>

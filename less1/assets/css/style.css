@@ -1,0 +1,25 @@
+/* external css */
+.first-class-2 {
+  background-color: chocolate;
+}
+
+.first-class {
+  background-color: red;
+  color: #fff;
+}
+
+#first-id {
+  height: 100px;
+  background: #000;
+  color: #fff;
+}
+
+
+/* thứ tự ưu tiên trong css */
+/*
+inline css: 1000
+internal css: 100
+external css: 10
+#id: 5
+.class: 1
+*/
