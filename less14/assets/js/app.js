@@ -205,4 +205,12 @@ function sortString() {
 // sortString();
 // tìm cho sản phẩm có giá trị gần nhất với một giá trị mục tiêu(targe)
 // target 450 => sản phẩm { id: 4, name: 'Pants', category: 'Clothing', price: 400 }
-function findProductWithPriceTarge(targe) {}
+function findProductWithPriceTarge(target) {
+	const closestProduct = products.reduce((closest, current) => {
+		return Math.abs(current.price - target) < Math.abs(closest.price - target)
+			? current
+			: closest;
+	});
+
+	console.log(closestProduct);
+}

@@ -1,0 +1,18 @@
+.red {
+  background-color: #f00;
+  color: #fff;
+}
+
+
+.black {
+  background-color: #000;
+  color: #fff;
+}
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
