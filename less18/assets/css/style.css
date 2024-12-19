@@ -1,0 +1,139 @@
+/* reset css */
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.container {
+	padding: 40px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.container .heading {
+	text-align: center;
+	margin-bottom: 16px;
+}
+
+.container .product-list {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 24px;
+}
+
+.container .product-list .product {
+	width: 100%;
+	background: #ccc;
+	border-radius: 12px;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	-ms-border-radius: 12px;
+	-o-border-radius: 12px;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.product-list .product .product-content {
+	padding: 6px 16px 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+  flex: 1 1 0%;
+}
+
+.product-list .product h2 {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.product-list .product p {
+  margin-top: auto;
+	font-size: 14px;
+}
+
+.product-list .product img {
+	width: 100%;
+	height: 200px;
+	flex-shrink: 0;
+}
+
+.product .product-buy-now {
+	padding: 8px 12px;
+	width: 100%;
+	border: none;
+	border-radius: 4px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+/* style input search */
+.container .input-search {
+	width: 100%;
+	max-width: 500px;
+	display: block;
+	padding: 12px 12px;
+
+	outline: none;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	font-size: 14px;
+}
+
+.container .input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  justify-content: space-between;
+}
+
+.container .input-range {
+  width: 30%;
+}
+
+/* fixed btn cart */
+.cart-fixed {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  height: 100px;
+  width: 100px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100rem;
+}
+
+.cart-fixed .cart {
+  height: 100%;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cart-fixed .cart .count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  padding: 5px;
+  border-radius: 100rem;
+  background-color: #1a46e2;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-fixed .cart svg {
+  height: 30px !important;
+  width: 30px !important;
+}
