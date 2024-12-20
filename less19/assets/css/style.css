@@ -1,0 +1,102 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.container {
+  position: relative;
+}
+
+.slider-container {
+  position: relative;
+  height: 354px;
+  overflow: hidden;
+  width: 536px;
+}
+
+.slider-container .slider {
+  display: flex;
+  transition: transform 0.8s ease-in-out;
+  -webkit-transition: transform 0.8s ease-in-out;
+  -moz-transition: transform 0.8s ease-in-out;
+  -ms-transition: transform 0.8s ease-in-out;
+  -o-transition: transform 0.8s ease-in-out;
+}
+
+.slider-container .slider .slide {
+  height: 354px;
+  min-width: 100%;
+}
+
+.slider .slide img {
+  border-radius: 8px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.container .pre,
+.container .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  height: 30px;
+  width: 30px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100rem;
+  box-shadow: 0 2px 4px #ccc;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.container .pre {
+  left: -40px;
+}
+
+.container .next {
+  right: -40px;
+}
+
+.container .pre svg,
+.container .next svg {
+  height: 16px;
+  width: 16px;
+}
+
+.container .slider-nav {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: .75rem;
+}
+
+.container .slider-nav button {
+  height: 12px;
+  width: 12px;
+  border-radius: 100rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background-color: #ccc;
+  box-shadow: 0 2px 4px #ccc;
+}
+
+.slider-nav button.active {
+  background-color: #fff;
+  border: 1px solid #fff;
+}
