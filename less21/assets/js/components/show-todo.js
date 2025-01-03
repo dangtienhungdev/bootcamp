@@ -1,66 +1,12 @@
-/*
-DOM: querySelector, classList.toggle, classList.remove, classList.add
-Event: click,
-Local: localStorage
-*/
-/*
-crud
-1. c - create
-2. r - read
-3. u - update
-4. d - delete
-*/
+export const showTodo = (todoList, taskBox, filterStatus) => {
+	const result =
+		filterStatus === 'all'
+			? todoList
+			: todoList.filter((todoItem) => todoItem.status === filterStatus);
 
-import { showTodo } from './components/show-todo.js';
-import { uuid } from './uuid.js';
-
-/*
-localStorege
-- get: lấy dữ liệu
-- set: thêm dữ liệu vào
-*/
-
-// create
-const taskBox = document.querySelector('.task-box');
-const taskInput = document.querySelector('.task-input input');
-const filters = document.querySelectorAll('.filters button');
-const todos = JSON.parse(localStorage.getItem('todo-list')) ?? [];
-const clearAll = document.querySelector('.clear-btn');
-
-filters.forEach((btn) => {
-	btn.addEventListener('click', () => {
-		// handle ui/ux -> done
-		const buttonActive = document.querySelector('.filters button.active');
-		buttonActive.classList.remove('active');
-		btn.classList.add('active');
-		showTodo(todos, taskBox, btn.id);
-	});
-});
-
-// remove clear all
-clearAll.addEventListener('click', () => {
-	todos.splice(0, todos.length);
-	localStorage.setItem('todo-list', JSON.stringify(todos));
-	showTodo(todos, taskBox, 'all');
-});
-
-// create
-taskInput.addEventListener('keyup', (event) => {
-	const task = taskInput.value;
-
-	if (event.key === 'Enter') {
-		const newTask = {
-			id: uuid(),
-			name: task,
-			status: 'pending',
-		};
-		todos.push(newTask);
-		taskInput.value = '';
-		localStorage.setItem('todo-list', JSON.stringify(todos));
-
-		// get
-		const htmls = todos.map((todo, index) => {
-			return /* html */ `
+	// get
+	const htmls = result.map((todo, index) => {
+		return /* html */ `
       <li class="task">
         <label for="checked">
           <input type="checkbox" id="checked">
@@ -96,17 +42,30 @@ taskInput.addEventListener('keyup', (event) => {
           </ul>
         </div>
       </li>
-  `;
-		});
+    `;
+	});
 
-		taskBox.innerHTML =
-			htmls.length > 0
-				? htmls.join(' ')
-				: `<p class="no-data">You don't have any task here</p>`;
-		taskBox.offsetHeight >= 300
-			? taskBox.classList.add('overflow')
-			: taskBox.classList.remove('overflow');
-	}
-});
+	taskBox.innerHTML =
+		htmls.length > 0
+			? htmls.join(' ')
+			: `<p class="no-data">You don't have any task here</p>`;
+	taskBox.offsetHeight >= 300
+		? taskBox.classList.add('overflow')
+		: taskBox.classList.remove('overflow');
 
-showTodo(todos, taskBox, 'all');
+	const btns = document.querySelectorAll('.settings button');
+	const taskMenus = document.querySelectorAll('.settings .task-menu');
+	btns.forEach((btn, index) => {
+		btn.onclick = () => {
+			if (taskMenus && taskMenus.length > 0) {
+				taskMenus[index].classList.add('show');
+
+				document.addEventListener('click', (event) => {
+					if (event.target.parentElement != btn) {
+						taskMenus[index].classList.remove('show');
+					}
+				});
+			}
+		};
+	});
+};
