@@ -1,4 +1,4 @@
-export const showTodo = (todoList, taskBox, filterStatus) => {
+export const showTodo = (todoList, taskBox, filterStatus, isEditTask) => {
 	const result =
 		filterStatus === 'all'
 			? todoList
@@ -8,9 +8,15 @@ export const showTodo = (todoList, taskBox, filterStatus) => {
 	const htmls = result.map((todo, index) => {
 		return /* html */ `
       <li class="task">
-        <label for="checked">
-          <input type="checkbox" id="checked">
-          <p class="">${todo.name}</p>
+        <label for="checked-${todo.id}">
+          <input type="checkbox" id="checked-${
+						todo.id
+					}" class="input-checked" data-id="${todo.id}" ${
+			todo.status === 'completed' ? 'checked' : ''
+		}>
+          <p class="desc ${
+						todo.status === 'completed' ? 'line-through' : ''
+					}">${todo.name}</p>
         </label>
 
         <div class="settings">
@@ -23,7 +29,7 @@ export const showTodo = (todoList, taskBox, filterStatus) => {
           </button>
 
           <ul class="task-menu">
-            <li>
+            <li class="btn-edit" data-id="${todo.id}" data-name="${todo.name}">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -31,7 +37,7 @@ export const showTodo = (todoList, taskBox, filterStatus) => {
               </svg>
               <span>Edit</span>
             </li>
-            <li>
+            <li class="btn-delete" data-id="${todo.id}">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -53,6 +59,7 @@ export const showTodo = (todoList, taskBox, filterStatus) => {
 		? taskBox.classList.add('overflow')
 		: taskBox.classList.remove('overflow');
 
+	// handle logic show setting popup
 	const btns = document.querySelectorAll('.settings button');
 	const taskMenus = document.querySelectorAll('.settings .task-menu');
 	btns.forEach((btn, index) => {
@@ -67,5 +74,64 @@ export const showTodo = (todoList, taskBox, filterStatus) => {
 				});
 			}
 		};
+	});
+
+	// handle logic delete
+	const btnDeletes = document.querySelectorAll('.task-menu .btn-delete');
+	btnDeletes.forEach((btnDelete) => {
+		btnDelete.addEventListener('click', () => {
+			const id = btnDelete.dataset.id;
+			const newTodoList = todoList.filter((todo) => todo.id !== id);
+			localStorage.setItem('todo-list', JSON.stringify(newTodoList));
+			showTodo(newTodoList, taskBox, filterStatus);
+		});
+	});
+
+	// handle logic checked input
+	const checkboxs = document.querySelectorAll('.input-checked');
+	const descs = document.querySelectorAll('.desc');
+	checkboxs.forEach((checkboxItem, index) => {
+		checkboxItem.addEventListener('click', () => {
+			const lastChild = checkboxItem.parentElement.lastElementChild;
+
+			const checked = checkboxItem.checked;
+			const id = checkboxItem.dataset.id;
+			const todoItem = todoList.find((todo) => todo.id === id);
+
+			if (todoItem) {
+				if (checked) {
+					todoItem.status = 'completed';
+					// descs[index].classList.add('line-through');
+					lastChild.classList.add('line-through');
+				} else {
+					// descs[index].classList.remove('line-through');
+					lastChild.classList.remove('line-through');
+					todoItem.status = 'pending';
+				}
+			}
+
+			const result = todoList.map((todo) => {
+				if (todo.id === id) {
+					return todoItem;
+				}
+				return todo;
+			});
+
+			localStorage.setItem('todo-list', JSON.stringify(result));
+		});
+	});
+
+	// btn edit
+	const btnEdits = document.querySelectorAll('.task-menu .btn-edit');
+	btnEdits.forEach((btnEdit) => {
+		btnEdit.addEventListener('click', () => {
+			const { id, name } = btnEdit.dataset;
+
+			// gán lại giá trị vào input
+			const taskInput = document.querySelector('.task-input input');
+			taskInput.value = name;
+			taskInput.focus();
+			isEditTask = true;
+		});
 	});
 };

@@ -157,6 +157,10 @@ body {
 	position: relative;
 }
 
+.line-through {
+  text-decoration: line-through;
+}
+
 .task .settings button {
 	width: 24px;
 	height: 24px;
