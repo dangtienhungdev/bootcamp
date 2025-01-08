@@ -1,4 +1,16 @@
-export const showTodo = (todoList, taskBox, filterStatus, isEditTask) => {
+export const showTodo = (
+	todoList,
+	taskBox,
+	filterStatus,
+	isEditTask,
+	editId,
+	callback
+) => {
+	let _isEditTask = isEditTask;
+	console.log('🚀 ~ _isEditTask:', _isEditTask);
+	let _editId = editId;
+	console.log('🚀 ~ _editId:', _editId);
+
 	const result =
 		filterStatus === 'all'
 			? todoList
@@ -29,7 +41,9 @@ export const showTodo = (todoList, taskBox, filterStatus, isEditTask) => {
           </button>
 
           <ul class="task-menu">
-            <li class="btn-edit" data-id="${todo.id}" data-name="${todo.name}">
+            <li class="btn-edit" onclick='abc("${todo.id}")' data-id="${
+			todo.id
+		}" data-name="${todo.name}">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="size-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -83,14 +97,23 @@ export const showTodo = (todoList, taskBox, filterStatus, isEditTask) => {
 			const id = btnDelete.dataset.id;
 			const newTodoList = todoList.filter((todo) => todo.id !== id);
 			localStorage.setItem('todo-list', JSON.stringify(newTodoList));
-			showTodo(newTodoList, taskBox, filterStatus);
+			showTodo(
+				newTodoList,
+				taskBox,
+				filterStatus,
+				isEditTask,
+				editId,
+				(newIsEditTask, newEditId) => {
+					_isEditTask = newIsEditTask || isEditTask;
+					_editId = newEditId || editId;
+				}
+			);
 		});
 	});
 
 	// handle logic checked input
 	const checkboxs = document.querySelectorAll('.input-checked');
-	const descs = document.querySelectorAll('.desc');
-	checkboxs.forEach((checkboxItem, index) => {
+	checkboxs.forEach((checkboxItem) => {
 		checkboxItem.addEventListener('click', () => {
 			const lastChild = checkboxItem.parentElement.lastElementChild;
 
@@ -131,7 +154,8 @@ export const showTodo = (todoList, taskBox, filterStatus, isEditTask) => {
 			const taskInput = document.querySelector('.task-input input');
 			taskInput.value = name;
 			taskInput.focus();
-			isEditTask = true;
+
+			callback(true, id);
 		});
 	});
 };

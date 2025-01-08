@@ -29,7 +29,7 @@ const clearAll = document.querySelector('.clear-btn');
 let todos = JSON.parse(localStorage.getItem('todo-list')) ?? [];
 let tabActive = 'all';
 let isEditTask = false;
-console.log('🚀 ~ isEditTask:', isEditTask);
+let editId = null;
 
 filters.forEach((btn) => {
 	btn.addEventListener('click', () => {
@@ -39,7 +39,17 @@ filters.forEach((btn) => {
 		buttonActive.classList.remove('active');
 		btn.classList.add('active');
 		tabActive = btn.id;
-		showTodo(todos, taskBox, btn.id);
+		showTodo(
+			todos,
+			taskBox,
+			btn.id,
+			isEditTask,
+			editId,
+			(newIsEditTask, newEditId) => {
+				isEditTask = newIsEditTask;
+				editId = newEditId;
+			}
+		);
 	});
 });
 
@@ -48,7 +58,17 @@ clearAll.addEventListener('click', () => {
 	todos = JSON.parse(localStorage.getItem('todo-list')) ?? [];
 	todos.splice(0, todos.length);
 	localStorage.setItem('todo-list', JSON.stringify(todos));
-	showTodo(todos, taskBox, 'all');
+	showTodo(
+		todos,
+		taskBox,
+		'all',
+		isEditTask,
+		editId,
+		(newIsEditTask, newEditId) => {
+			isEditTask = newIsEditTask;
+			editId = newEditId;
+		}
+	);
 });
 
 // create
@@ -58,6 +78,16 @@ taskInput.addEventListener('keyup', (event) => {
 	if (event.key === 'Enter') {
 		if (isEditTask) {
 			// handle logic edit
+			console.log(isEditTask);
+			todos = JSON.parse(localStorage.getItem('todo-list')) ?? [];
+			const newTodo = todos.map((todo) => {
+				return todo.id === editId ? { ...todo, name: task } : todo;
+			});
+			localStorage.setItem('todo-list', JSON.stringify(newTodo));
+			taskInput.value = '';
+			isEditTask = null;
+			editId = null;
+			todos = JSON.parse(localStorage.getItem('todo-list')) ?? [];
 		} else {
 			const newTask = {
 				id: uuid(),
@@ -70,8 +100,28 @@ taskInput.addEventListener('keyup', (event) => {
 			todos = JSON.parse(localStorage.getItem('todo-list')) ?? [];
 		}
 
-		showTodo(todos, taskBox, tabActive, isEditTask);
+		showTodo(
+			todos,
+			taskBox,
+			tabActive,
+			isEditTask,
+			editId,
+			(newIsEditTask, newEditId) => {
+				isEditTask = newIsEditTask;
+				editId = newEditId;
+			}
+		);
 	}
 });
 
-showTodo(todos, taskBox, tabActive, isEditTask);
+showTodo(
+	todos,
+	taskBox,
+	tabActive,
+	isEditTask,
+	editId,
+	(newIsEditTask, newEditId) => {
+		isEditTask = newIsEditTask;
+		editId = newEditId;
+	}
+);
