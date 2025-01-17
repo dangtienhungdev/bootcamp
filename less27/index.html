@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="container mx-auto py-10 space-y-10">
+    <form class="search-box flex justify-center gap-4">
+      <input type="text"
+        class="rounded-md w-[500px] focus-visible:outline-none focus:border-blue-400 border h-10 px-4 text-sm placeholder:italic placeholder:text-slate-400"
+        placeholder="Search users">
+
+      <button class="border rounded-md text-sm px-4 bg-blue-500 text-white">Add user</button>
+    </form>
+
+    <div class="w-full grid grid-cols-3 gap-6 user-list">
+      <!-- render data -->
+      <img src="https://picsum.photos/536/354" alt="" class="rounded-2xl">
+
+      <div>
+        <p class="font-semibold text-base">Lindsay Walton</p>
+        <p class="text-xs text-slate-400">Front-end Developer</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+<script type="module" src="./assets/js/app.js"></script>
+
+</html>
