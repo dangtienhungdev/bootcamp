@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "fullname": "Nguyen Van A",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/033/662/051/small/cartoon-lofi-young-manga-style-girl-while-listening-to-music-in-the-rain-ai-generative-photo.jpg",
+      "phone": "0123456789",
+      "email": "nguyenvana@gmail.com",
+      "address": {
+        "city": "Ha Noi",
+        "country": "Viet Nam"
+      },
+      "role": "customer",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "fullname": "Admin",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/033/662/051/small/cartoon-lofi-young-manga-style-girl-while-listening-to-music-in-the-rain-ai-generative-photo.jpg",
+      "phone": "0123456789",
+      "email": "admin@gmail.com",
+      "address": {
+        "city": "Ha Noi",
+        "country": "Viet Nam"
+      },
+      "role": "admin",
+      "isActive": true
+    },
+    {
+      "id": "d4c5",
+      "fullname": "đặng hưng",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/033/662/051/small/cartoon-lofi-young-manga-style-girl-while-listening-to-music-in-the-rain-ai-generative-photo.jpg",
+      "email": "dangtienhung.dev@gmail.com",
+      "phone": "0946937769",
+      "role": "admin",
+      "isActive": false,
+      "address": {
+        "city": "Ha Noi",
+        "country": "Viet Nam"
+      }
+    },
+    {
+      "id": "e59e",
+      "fullname": "tins",
+      "email": "tin@gmail.com",
+      "phone": "0123456789",
+      "role": "admin",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/033/662/051/small/cartoon-lofi-young-manga-style-girl-while-listening-to-music-in-the-rain-ai-generative-photo.jpg",
+      "isActive": false,
+      "address": {
+        "city": "Ha Noi",
+        "country": "Viet Nam"
+      }
+    },
+    {
+      "id": "3ed5",
+      "fullname": "đạt",
+      "email": "dat@gmail.com",
+      "phone": "0`123456789",
+      "role": "customer",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/033/662/051/small/cartoon-lofi-young-manga-style-girl-while-listening-to-music-in-the-rain-ai-generative-photo.jpg",
+      "isActive": true,
+      "address": {
+        "city": "Ha Noi",
+        "country": "Viet Nam"
+      }
+    },
+    {
+      "id": "49dc",
+      "fullname": "dũng",
+      "email": "dung@gmail.com",
+      "phone": "0123456789",
+      "role": "customer",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/033/662/051/small/cartoon-lofi-young-manga-style-girl-while-listening-to-music-in-the-rain-ai-generative-photo.jpg",
+      "isActive": false,
+      "address": {
+        "city": "Ha Noi",
+        "country": "Viet Nam"
+      }
+    }
+  ]
+}
