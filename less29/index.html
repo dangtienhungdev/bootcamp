@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -51,7 +52,7 @@
   </div>
 
   <!-- Modal for adding/editing user -->
-  <div id="userModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
+  <div id="userModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
       <h3 class="text-lg font-bold mb-4">Add/Edit User</h3>
       <form id="userForm">
@@ -73,6 +74,10 @@
           <input type="text" id="phone" name="phone" required
             class="mt-1 block w-full rounded-md border-gray-300 border outline-none text-sm px-3 shadow-sm h-10"
             placeholder="Please enter your phone!">
+        </div>
+        <div class="mb-4">
+          <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+          <input type="file" id="avatar" name="avatar" required>
         </div>
         <div class="mb-4">
           <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
