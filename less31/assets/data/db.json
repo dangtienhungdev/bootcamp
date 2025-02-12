@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "fullname": "đặng hưng updated",
+      "email": "dangtienhung.dev@gmail.com",
+      "phone": "0946937769",
+      "role": "customer",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/033/662/051/small/cartoon-lofi-young-manga-style-girl-while-listening-to-music-in-the-rain-ai-generative-photo.jpg",
+      "isActive": true,
+      "address": {
+        "city": "Ha Noi",
+        "country": "Viet Nam"
+      },
+      "id": "f8fc"
+    },
+    {
+      "fullname": "bac ahihi",
+      "email": "dangtienhung.dev@gmail.com",
+      "phone": "0946937769",
+      "role": "customer",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/033/662/051/small/cartoon-lofi-young-manga-style-girl-while-listening-to-music-in-the-rain-ai-generative-photo.jpg",
+      "isActive": true,
+      "address": {
+        "city": "Ha Noi",
+        "country": "Viet Nam"
+      },
+      "id": "5483"
+    }
+  ]
+}
