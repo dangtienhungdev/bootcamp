@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- cdn font-awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- iconify -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/iconify/2.0.0/iconify.min.js"
+    integrity="sha512-lYMiwcB608+RcqJmP93CMe7b4i9G9QK1RbixsNu4PzMRJMsqr/bUrkXUuFzCNsRUo3IXNUr5hz98lINURv5CNA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- style css -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="wrapper-play">
+      <!-- header -->
+      <header class="song-header">
+        <button class="btn-head"><i class="fa-solid fa-arrow-left"></i></button>
+        <h3>Songs</h3>
+        <button class="btn-head"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M15 6H3v2h12zm0 4H3v2h12zM3 16h8v-2H3zM17 6v8.18c-.31-.11-.65-.18-1-.18a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3V8h3V6z" />
+          </svg></button>
+      </header>
+      <!-- body -->
+      <div class="player body-song">
+        <!-- image -->
+        <div class="image-area">
+          <img class="rotate"
+            src="https://papers.co/wallpaper/papers.co-bl83-art-anime-girl-white-40-wallpaper.jpg?download=true" alt="">
+        </div>
+
+        <!-- song detail -->
+        <div class="song-details">
+          <h1 class="name">Thiên lý ơi!</h1>
+          <h3 class="artists">Jack J97</h3>
+        </div>
+
+        <!-- controls -->
+        <div class="controls">
+          <button class="btn-control btn-prev">
+            <i class="fa-solid fa-backward"></i>
+          </button>
+          <button class="btn-control play-pause">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          <button class="btn-control btn-next">
+            <i class="fa-solid fa-forward"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+  integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="module" src="./assets/js/app.js"></script>
+
+</html>
