@@ -222,7 +222,7 @@ body {
 	position: absolute;
 	background-color: #e0eafc;
 	width: 100%;
-	top: 50%;
+	top: 100%;
 	left: 0;
 	box-shadow: rgb(213, 222, 239) 82px 50px 80px,
 		rgb(235, 246, 255) -10px -10px 18px;
@@ -233,6 +233,15 @@ body {
 	-ms-border-radius: 16px;
 	-o-border-radius: 16px;
 	color: var(--btn-color);
+	transition: all 0.2s ease;
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-ms-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+}
+
+.wrapper-play .music-list.show {
+	top: 50%;
 }
 
 .wrapper-play .music-list .header {
