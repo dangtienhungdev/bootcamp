@@ -41,24 +41,10 @@ const menulistBtn = wrapper.querySelector('#menu-list');
 
 let musicIndex = 0;
 
-// đăng ký 1 sợ kiện khi mà tất cả các tài nguyên được nạp vào thành công mới cho chạy code
-window.addEventListener('load', () => {
-	const currentMusic = musicAll[musicIndex];
-	musicImage.src = currentMusic.image;
-	musicName.innerText = currentMusic.name;
-	musicArtists.innerText = currentMusic.artist;
-	mAudio.src = currentMusic.link;
-});
-
-// open list menu
-menulistBtn.addEventListener('click', () => musicList.classList.add('show'));
-closeMusicBtn.addEventListener('click', () =>
-	musicList.classList.remove('show')
-);
-
+// render li
 for (let i = 0; i < musicAll.length; i++) {
 	const item = musicAll[i];
-	let litag = /* html */ `<li class="" li-index="${i}">
+	let litag = /* html */ `<li class="music-item" li-index="${i}">
        <div class="row">
          <span>${item.name}</span>
          <p class="artists">${item.artist}</p>
@@ -86,19 +72,100 @@ for (let i = 0; i < musicAll.length; i++) {
 	});
 }
 
-function clicked() {
-	console.log('abc');
+// load music
+const loadMusic = (currentMusic) => {
+	musicImage.src = currentMusic.image;
+	musicName.innerText = currentMusic.name;
+	musicArtists.innerText = currentMusic.artist;
+	mAudio.src = currentMusic.link;
+};
+
+function clicked(liIndex) {
+	musicIndex = liIndex;
+	const currentMusic = musicAll[liIndex];
+	loadMusic(currentMusic);
+	playingSong();
 }
 
 const litags = wrapper.querySelectorAll('li');
-for (let i = 0; i < litags.length; i++) {
-	const item = litags[i];
-	const audioTag = item.querySelector('.audio-duration');
+// playing music
+function playingSong() {
+	for (let i = 0; i < litags.length; i++) {
+		const item = litags[i];
 
-	if (item.getAttribute('li-index') == musicIndex) {
-		item.classList.add('playing');
-		// audioTag.innerText = /* html */ `ahihi`;
+		if (item.classList.contains('playing')) {
+			item.classList.remove('playing');
+		}
+
+		if (item.getAttribute('li-index') == musicIndex) {
+			item.classList.add('playing');
+		}
+
+		item.addEventListener('click', () =>
+			clicked(item.getAttribute('li-index'))
+		);
 	}
-
-	item.setAttribute('onclick', `clicked()`);
 }
+
+const playMusic = () => {
+	playPauseBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+	musicImage.classList.add('rotate');
+	mAudio.play();
+};
+
+// logic phát nhạc
+mAudio.onloadedmetadata = () => {
+	progressBar.max = mAudio.duration;
+	progressBar.value = mAudio.currentTime;
+
+	setInterval(() => {
+		let min = Math.floor(mAudio.duration / 60);
+		let sec = Math.floor(mAudio.duration % 60);
+		let curMin = Math.floor(mAudio.currentTime / 60);
+		let curSec = Math.floor(mAudio.currentTime % 60);
+
+		if (sec < 10) {
+			sec = '0' + sec;
+		}
+		if (curSec < 10) {
+			curSec = `0${curSec}`;
+		}
+		if (min < 10) {
+			min = '0' + min;
+		}
+		if (curMin < 10) {
+			curMin = `0${curMin}`;
+		}
+
+		const total_duration = `${min}:${sec}`;
+		if (mAudio.duration) {
+			end.innerHTML = `${total_duration}`;
+		}
+		start.innerHTML = `${curMin}:${curSec}`;
+	}, 1000);
+};
+
+mAudio.addEventListener('timeupdate', (e) => {
+	const currentTime = e.target.currentTime;
+	const duration = e.target.duration;
+
+	const progressWidth = (currentTime / duration) * 100;
+	progressBar.style.width = `${progressWidth}%`;
+});
+
+playPauseBtn.addEventListener('click', () => {
+	playMusic();
+});
+
+// đăng ký 1 sợ kiện khi mà tất cả các tài nguyên được nạp vào thành công mới cho chạy code
+window.addEventListener('load', () => {
+	const currentMusic = musicAll[musicIndex];
+	loadMusic(currentMusic);
+	playingSong();
+});
+
+// open list menu
+menulistBtn.addEventListener('click', () => musicList.classList.add('show'));
+closeMusicBtn.addEventListener('click', () =>
+	musicList.classList.remove('show')
+);
