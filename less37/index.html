@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie</title>
+  <link rel="stylesheet" href="./assets/styles/style.css">
+</head>
+
+<body class="">
+  <div class="container">
+    <!-- header -->
+    <header class="main-header">
+      <h1 class="main-header__branding">Lovely Movies</h1>
+      <div class="main-header__search">
+        <span class="loader"></span>
+        <input type="search" placeholder="Search in movies" id="main-header--search">
+      </div>
+      <!-- <h1 class="main-header__branding main-header__branding-visiable">Lovely Movies</h1> -->
+    </header>
+
+    <!-- main -->
+    <main class="content">
+      <div class="content_result">
+        <h3>Result for <span class="search-trend">"Lovely"</span> | <span>Page 1</span></h3>
+        <span class="loader"></span>
+        <div class="content_result-wrapper --visible">
+          <div class="content__result__list" id="result-wrapper">
+            <!-- content map -->
+            <div class="movie-item">
+              <figure class="movie-item__poster"
+                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
+              </figure>
+              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
+              <div class="movie-item__meta">
+                <span class="movie-item__meta__year">2024</span>
+                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
+                <span class="movie-item__meta__imdb-link">
+                  <a href="#" class="">IMDB</a>
+                </span>
+              </div>
+            </div>
+
+            <div class="movie-item">
+              <figure class="movie-item__poster"
+                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
+              </figure>
+              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
+              <div class="movie-item__meta">
+                <span class="movie-item__meta__year">2024</span>
+                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
+                <span class="movie-item__meta__imdb-link">
+                  <a href="#" class="">IMDB</a>
+                </span>
+              </div>
+            </div>
+
+            <div class="movie-item">
+              <figure class="movie-item__poster"
+                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
+              </figure>
+              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
+              <div class="movie-item__meta">
+                <span class="movie-item__meta__year">2024</span>
+                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
+                <span class="movie-item__meta__imdb-link">
+                  <a href="#" class="">IMDB</a>
+                </span>
+              </div>
+            </div>
+
+            <div class="movie-item">
+              <figure class="movie-item__poster"
+                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
+              </figure>
+              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
+              <div class="movie-item__meta">
+                <span class="movie-item__meta__year">2024</span>
+                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
+                <span class="movie-item__meta__imdb-link">
+                  <a href="#" class="">IMDB</a>
+                </span>
+              </div>
+            </div>
+
+            <div class="movie-item">
+              <figure class="movie-item__poster"
+                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
+              </figure>
+              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
+              <div class="movie-item__meta">
+                <span class="movie-item__meta__year">2024</span>
+                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
+                <span class="movie-item__meta__imdb-link">
+                  <a href="#" class="">IMDB</a>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="movie-details" id="id-details-wrapper">
+            <!-- close -->
+            <span class="movie-details__close">
+              x
+            </span>
+            <!-- image -->
+            <figure class="movie-details__poster"
+              style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
+            </figure>
+            <!-- content movie -->
+            <div class="movie-details__content">
+              <div class="movie-details__title">
+                <h2>Lorem ipsum dolor sit.</h2>
+                <span class="movie-details__rating">6.6/10</span>
+              </div>
+              <div class="movie-details__meta">
+                <span>
+                  <span class="--label">Released:</span>
+                  07 Apr 2007
+                </span>
+                &nbsp;-&nbsp;
+                <span>
+                  <span class="--label">Runtime:</span>
+                  07 Apr 2007
+                </span>
+              </div>
+              <div class="movie-details__meta">
+                <span>
+                  <span class="--label">Genre:</span>
+                  Animation, Comedy, Romance
+                </span>
+              </div>
+              <div class="movie-details__meta">
+                <span>
+                  <span class="--label">Director:</span>
+                  N/A - Writer:Aya Nakahara
+                </span>
+              </div>
+              <div class="movie-details__meta">
+                <span>
+                  <span class="--label">Country:</span>
+                  Japan
+                </span>
+                &nbsp;-&nbsp;
+                <span>
+                  <span class="--label">Language:</span>
+                  English, Japanese
+              </div>
+              <div class="movie-details__meta">
+                <span>
+                  <span class="--label">Actors:</span>
+                  Amber Lee Connors, Howard Wang, Gianni Matragrano
+                </span>
+              </div>
+              <div class="movie-details__meta">
+                <span>
+                  <span class="--label">Summary:</span>
+                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
+                    ut
+                    laoreet dolore
+                    magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+                    suscipit lobortis nisl
+                    ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
+                    esse molestie
+                    consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
+                    dignissim qui blandit
+                    praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- paginate -->
+        <button class="content__result__next-btn">Next Page</button>
+      </div>
+
+
+    </main>
+  </div>
+</body>
+
+<script type="module" src="./assets/js/app.js"></script>
+
+</html>
