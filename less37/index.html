@@ -5,6 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movie</title>
+
+  <!-- axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <link rel="stylesheet" href="./assets/styles/style.css">
 </head>
 
@@ -23,92 +27,21 @@
     <!-- main -->
     <main class="content">
       <div class="content_result">
-        <h3>Result for <span class="search-trend">"Lovely"</span> | <span>Page 1</span></h3>
+        <h3>Result for "<span class="search-trend">Lovely</span>" | <span class="page-number">Page 1</span></h3>
         <span class="loader"></span>
-        <div class="content_result-wrapper --visible">
+        <div class="content_result-wrapper">
           <div class="content__result__list" id="result-wrapper">
             <!-- content map -->
-            <div class="movie-item">
-              <figure class="movie-item__poster"
-                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
-              </figure>
-              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
-              <div class="movie-item__meta">
-                <span class="movie-item__meta__year">2024</span>
-                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
-                <span class="movie-item__meta__imdb-link">
-                  <a href="#" class="">IMDB</a>
-                </span>
-              </div>
-            </div>
-
-            <div class="movie-item">
-              <figure class="movie-item__poster"
-                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
-              </figure>
-              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
-              <div class="movie-item__meta">
-                <span class="movie-item__meta__year">2024</span>
-                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
-                <span class="movie-item__meta__imdb-link">
-                  <a href="#" class="">IMDB</a>
-                </span>
-              </div>
-            </div>
-
-            <div class="movie-item">
-              <figure class="movie-item__poster"
-                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
-              </figure>
-              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
-              <div class="movie-item__meta">
-                <span class="movie-item__meta__year">2024</span>
-                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
-                <span class="movie-item__meta__imdb-link">
-                  <a href="#" class="">IMDB</a>
-                </span>
-              </div>
-            </div>
-
-            <div class="movie-item">
-              <figure class="movie-item__poster"
-                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
-              </figure>
-              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
-              <div class="movie-item__meta">
-                <span class="movie-item__meta__year">2024</span>
-                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
-                <span class="movie-item__meta__imdb-link">
-                  <a href="#" class="">IMDB</a>
-                </span>
-              </div>
-            </div>
-
-            <div class="movie-item">
-              <figure class="movie-item__poster"
-                style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
-              </figure>
-              <h2 class="movie-item__title">Lorem ipsum dolor sit amet.</h2>
-              <div class="movie-item__meta">
-                <span class="movie-item__meta__year">2024</span>
-                <span class="movie-item__meta__divider">&nbsp;-&nbsp;</span>
-                <span class="movie-item__meta__imdb-link">
-                  <a href="#" class="">IMDB</a>
-                </span>
-              </div>
-            </div>
           </div>
 
           <div class="movie-details" id="id-details-wrapper">
-            <!-- close -->
             <span class="movie-details__close">
               x
             </span>
-            <!-- image -->
+            <!--
             <figure class="movie-details__poster"
               style="background-image: url('https://m.media-amazon.com/images/M/MV5BOGRmMjkwNTItMjQyZi00ZWU4LTgzNzItZTMwYWMwNzE4ZDI2XkEyXkFqcGc@._V1_SX300.jpg');">
             </figure>
-            <!-- content movie -->
             <div class="movie-details__content">
               <div class="movie-details__title">
                 <h2>Lorem ipsum dolor sit.</h2>
@@ -168,7 +101,7 @@
                     praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
                 </span>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
 

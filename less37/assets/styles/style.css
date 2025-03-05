@@ -135,6 +135,11 @@ border
 :hover
 */
 
+.loading .content__result__next-btn,
+.loading .content__result__list {
+	display: none;
+}
+
 .content__result__list {
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
