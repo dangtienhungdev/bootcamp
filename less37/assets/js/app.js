@@ -117,82 +117,37 @@ movieItems.forEach((movieItem) => {
 		const id = movieItem.dataset.id;
 
 		const movieDetail = await getMovieDetail(id);
-		console.log('🚀 ~ movieItem.addEventListener ~ movieDetail:', movieDetail);
 		console.log(movieDetail.Poster);
 
 		if (movieDetail) {
-			const html = /* html */ `
-      <div>
-      <span class="movie-details__close">
-        x
-      </span>
-      <figure class="movie-details__poster"
-        style="background-image: url('${movieItem.Poster}');">
-      </figure>
-      <div class="movie-details__content">
-        <div class="movie-details__title">
-          <h2>abcabc</h2>
-          <span class="movie-details__rating">6.6/10</span>
-        </div>
-        <div class="movie-details__meta">
-          <span>
-            <span class="--label">Released:</span>
-            07 Apr 2007
-          </span>
-          &nbsp;-&nbsp;
-          <span>
-            <span class="--label">Runtime:</span>
-            07 Apr 2007
-          </span>
-        </div>
-        <div class="movie-details__meta">
-          <span>
-            <span class="--label">Genre:</span>
-            Animation, Comedy, Romance
-          </span>
-        </div>
-        <div class="movie-details__meta">
-          <span>
-            <span class="--label">Director:</span>
-            N/A - Writer:Aya Nakahara
-          </span>
-        </div>
-        <div class="movie-details__meta">
-          <span>
-            <span class="--label">Country:</span>
-            Japan
-          </span>
-          &nbsp;-&nbsp;
-          <span>
-            <span class="--label">Language:</span>
-            English, Japanese
-        </div>
-        <div class="movie-details__meta">
-          <span>
-            <span class="--label">Actors:</span>
-            Amber Lee Connors, Howard Wang, Gianni Matragrano
-          </span>
-        </div>
-        <div class="movie-details__meta">
-          <span>
-            <span class="--label">Summary:</span>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
-              ut
-              laoreet dolore
-              magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
-              suscipit lobortis nisl
-              ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-              esse molestie
-              consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
-              dignissim qui blandit
-              praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-          </span>
-        </div>
-      </div>
-      </div>
-    `;
+			document.querySelector('.movie-details__title h2').innerText =
+				movieDetail.Title;
+			document.querySelector(
+				'.movie-details__rating'
+			).innerText = `${movieDetail.imdbRating}/10`;
 
-			movieDetailWrapper.innerHTML = html;
+			document.querySelector(
+				'.movie-details__poster'
+			).style.backgroundImage = `url("${movieDetail.Poster}")`;
+
+			document.querySelector('.movie-details__meta .released').innerText =
+				movieDetail.Released;
+			document.querySelector('.movie-details__meta .runtime').innerText =
+				movieDetail.Runtime;
+
+			document.querySelector('.movie-details__meta .genre').innerText =
+				movieDetail.Genre;
+			document.querySelector('.movie-details__meta .director').innerText =
+				movieDetail.Director;
+			document.querySelector('.movie-details__meta .country').innerText =
+				movieDetail.Country;
+			document.querySelector('.movie-details__meta .language').innerText =
+				movieDetail.Language;
+			document.querySelector('.movie-details__meta .actors').innerText =
+				movieDetail.Actors;
+			document.querySelector('.movie-details__meta .description').innerText =
+				movieDetail.Plot;
+
 			contentResultWrapper.classList.add('--visible');
 		}
 	});
