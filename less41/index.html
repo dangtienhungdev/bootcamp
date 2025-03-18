@@ -13,8 +13,9 @@
   <script src="https://cdn.jsdelivr.net/npm/glider-js@1.7.9/glider.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/glider-js@1.7.9/glider.min.css" rel="stylesheet">
 
-
-
+  <!-- link -->
+  <link rel="stylesheet" href="./assets/style/glider.min.css">
+  <script src="./assets/js/glider.min.js"></script>
   <link rel="stylesheet" href="./assets/style/style.css">
 </head>
 
@@ -66,12 +67,12 @@
       </div>
 
       <!-- lastest originals -->
-      <div class="content">
+      <div class="content" id="lastOriginal">
         <h3 class="content-h3">Latest Originals</h3>
 
         <div class="glider-contain">
           <div class="glider">
-            <div class="card">
+            <!-- <div class="card">
               <div class="info-card">
                 <img src="https://is5-ssl.mzstatic.com/image/thumb/_Kq-GgPdDxxqWtSZ9GbHug/1478x832.webp" alt=""
                   class="card-img">
@@ -85,7 +86,7 @@
                   </p>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <button aria-label="Previous" class="glider-prev">«</button>
@@ -96,7 +97,7 @@
       <!-- watch entire searsons -->
       <hr>
 
-      <div class="content">
+      <div class="content" id="entrSsn">
         <h3 class="content-h3">Watch entire seasons</h3>
 
         <div class="glider-contain">
@@ -234,7 +235,7 @@
       </div>
 
       <!-- ads -->
-      <div class="ads">
+      <div class="ads hide" id="advertisment">
         <div class="adv-details">
           <p class="heading">
             All Apple Originals
@@ -259,5 +260,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="module" src="./assets/js/app.js"></script>
 
 </html>
