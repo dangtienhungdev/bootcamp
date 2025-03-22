@@ -20,6 +20,21 @@
 </head>
 
 <body>
+  <div class="backdrop"></div>
+
+  <div class="modal">
+    <div class="closeBtn">
+      <button class="close-modal-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="modal-page">
+      <iframe id="modal-iframe" src="./sign-in.html" frameborder="0" width="100%" height="100%"
+        title="Sign In"></iframe>
+    </div>
+  </div>
+
   <div class="container">
     <!-- header -->
     <header>
@@ -72,21 +87,7 @@
 
         <div class="glider-contain">
           <div class="glider">
-            <!-- <div class="card">
-              <div class="info-card">
-                <img src="https://is5-ssl.mzstatic.com/image/thumb/_Kq-GgPdDxxqWtSZ9GbHug/1478x832.webp" alt=""
-                  class="card-img">
-                <div class="contentDiv">
-                  <p class="genre">Kids & family</p>
-                  <p class="title">
-                    Pretzel and the Puppies
-                  </p>
-                  <p class="description">
-                    Meet a lovable dachshund family ready to 'make their bark' on the world.
-                  </p>
-                </div>
-              </div>
-            </div> -->
+            <!-- glider -->
           </div>
 
           <button aria-label="Previous" class="glider-prev">«</button>
@@ -102,11 +103,11 @@
 
         <div class="glider-contain">
           <div class="glider">
-            <a href="/" class="innerLinks">
+            <!-- <a href="/" class="innerLinks">
               <div class="card">
                 <img src="https://is3-ssl.mzstatic.com/image/thumb/AWDRdQz0nepFpnsUNiTDuw/738x416.webp" alt="movie" />
               </div>
-            </a>
+            </a> -->
           </div>
 
           <button aria-label="Previous" class="glider-prev">«</button>
@@ -115,7 +116,7 @@
       </div>
 
       <!-- video -->
-      <div class="playback">
+      <div class="playback" id="playback">
         <video src="./assets/videos/Finch.mp4" loop autoplay muted height="100%" width="100%"></video>
         <div class="playback-content">
           <div class="playback-content_text">
@@ -131,12 +132,12 @@
             <div class="videoDiv content">
               <div class="glider-contain">
                 <div class="glider">
-                  <a href="/" class="innerLinks">
+                  <!-- <a href="/" class="innerLinks">
                     <div class="card">
                       <img src="https://is3-ssl.mzstatic.com/image/thumb/AWDRdQz0nepFpnsUNiTDuw/738x416.webp"
                         alt="movie" />
                     </div>
-                  </a>
+                  </a> -->
                 </div>
                 <button aria-label="Previous" class="glider-prev">«</button>
                 <button aria-label="Next" class="glider-next">»</button>
@@ -149,17 +150,17 @@
       <!-- comming soon -->
       <hr>
 
-      <div class="content">
+      <div class="content" id="comming-soon">
         <h3 class="content-h3">Coming Soon</h3>
         <p class="content-p">Coming Soon</p>
 
         <div class="glider-contain">
           <div class="glider">
-            <a href="/" class="innerLinks">
+            <!-- <a href="/" class="innerLinks">
               <div class="card">
                 <img src="https://is3-ssl.mzstatic.com/image/thumb/AWDRdQz0nepFpnsUNiTDuw/738x416.webp" alt="movie" />
               </div>
-            </a>
+            </a> -->
           </div>
 
           <button aria-label="Previous" class="glider-prev">«</button>
@@ -261,5 +262,6 @@
   integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="module" src="./assets/js/app.js"></script>
+<script type="module" src="./assets/js/modal.js"></script>
 
 </html>

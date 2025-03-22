@@ -25,6 +25,76 @@ a {
 	text-decoration: none;
 }
 
+/* signin */
+.logo {
+	color: #ccc;
+}
+
+.container {
+	color: #ccc;
+}
+
+#signin-container {
+	padding-top: 100px;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	align-items: center;
+}
+
+#signin-container .logo svg {
+	height: 54px;
+	width: 54px;
+}
+
+.signin-logo {
+	height: 24px;
+	width: 24px;
+}
+
+.links {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.input {
+	position: relative;
+	width: fit-content;
+}
+
+#myForm input,
+.apple-id {
+	background-color: #000;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-ms-border-radius: 6px;
+	-o-border-radius: 6px;
+	border: 2px solid #494949;
+	padding: 16px;
+	color: #fff;
+	outline: none;
+	position: relative;
+	width: 320px;
+}
+
+.signin-logo {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	right: 3%;
+	filter: invert(50%);
+	-webkit-filter: invert(50%);
+	cursor: pointer;
+}
+
+/* index */
 .container .main-nav {
 	width: 100%;
 	height: var(--header-height);
@@ -408,4 +478,56 @@ a {
 	font-size: 12px;
 	margin-top: 8px;
 	color: rgba(255, 255, 255, 0.6);
+}
+
+/* modal */
+.modal {
+	position: fixed;
+	z-index: 100;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	height: 50vh;
+	width: 50vw;
+	background-color: #333;
+	border-radius: 16px;
+	-webkit-border-radius: 16px;
+	-moz-border-radius: 16px;
+	-ms-border-radius: 16px;
+	-o-border-radius: 16px;
+	overflow: hidden;
+	display: none;
+}
+
+.backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 99;
+	display: none;
+}
+
+.closeBtn {
+	position: absolute;
+	top: 24px;
+	left: 24px;
+}
+
+.closeBtn button {
+	background: transparent;
+	border: none;
+	outline: none;
+	color: #fff;
+	font-size: 20px;
+}
+
+.modal-page {
+	height: 100%;
 }
