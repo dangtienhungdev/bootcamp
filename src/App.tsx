@@ -1,176 +1,90 @@
 // virtual DOM so với DOM
 // DOM ảo, react
+import { useEffect, useState } from 'react';
+import UserItem from './components/tutorial/user-item';
+import { Employee } from './types/user.type';
 
-import { useState } from 'react';
-
-type User = {
-	id: number;
-	email: string;
-	username: string;
-	avatar: string;
-	phone: string;
-};
-
-// omit -> loại bỏ 1 trường k dùng đến
-type UserInfo = Omit<User, 'id'>;
+/*
+{
+  "id": 1,
+  "name": "Leanne Graham",
+  "username": "Bret",
+  "email": "Sincere@april.biz",
+  "address": {
+    "street": "Kulas Light",
+    "suite": "Apt. 556",
+    "city": "Gwenborough",
+    "zipcode": "92998-3874",
+    "geo": {
+      "lat": "-37.3159",
+      "lng": "81.1496"
+    }
+  },
+  "phone": "1-770-736-8031 x56442",
+  "website": "hildegard.org",
+  "company": {
+    "name": "Romaguera-Crona",
+    "catchPhrase": "Multi-layered client-server neural-net",
+    "bs": "harness real-time e-markets"
+  }
+}
+*/
+// interface/ type
 
 const App = () => {
-	const [users, setUsers] = useState<User[]>([]);
-	const [userInfo, setUserInfo] = useState<UserInfo>({
-		username: '',
-		email: '',
-		avatar: '',
-		phone: '',
-	});
+	// useEffect: là 1 hook trong react và cho phép bạn thực hiện các tác vụ(side effects) trong các component
+	// tác vụ có thể là: fetch dữ liệu, đăng ký sự kiện, dùng để thay đổi DOM trực tiếp
 
-	const handleChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setUserInfo((prevData) => {
-			return {
-				...prevData,
-				[name]: value,
-			};
-		});
-	};
+	// cách sử dụng:
+	/*
+  useEffect(() => {
+    // code khi component được render
+  }, [dependencies])
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		const newUsers = [
-			...users,
-			{
-				...userInfo,
-				id: users.length + 1, // tạo mới id cho user
-			},
-		];
-		setUsers(newUsers);
+  - giải thích tham số của useEffect
+  + callback function (hàm gọi lại): đoạn mã muốn chạy sau khi render
+  + dependency array (mảng phụ thuộc): chứa các biến khi thay đổi sẽ kích hoạt lại useEffect.
+  nếu như không mảng useEffect thì useEffect sẽ chạy lại mỗi lần render
 
-		setUserInfo({
-			username: '',
-			email: '',
-			avatar: '',
-			phone: '',
-		});
-	};
+  */
+	const API_URL = 'https://jsonplaceholder.typicode.com/users';
+	const [count, setCount] = useState<number>(0);
+	const [users, setUsers] = useState<Employee[]>([]);
+	// never, unknow
 
-	// hàm xoá user
-	const handleDelete = (id: number) => {
-		const filteredUser = users.filter((user) => {
-			console.log(user);
-			return user.id !== id;
-		});
-		setUsers(filteredUser);
-	};
+	/* ex1: useEffect */
+	useEffect(() => {
+		fetch(API_URL)
+			.then((res) => res.json())
+			.then((data) => setUsers(data));
+	}, []);
+
+	const [timer, setTimer] = useState<number>(0);
+	const [toggle, setToggle] = useState<boolean>(false);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setTimer((prev) => prev + 1);
+		}, 1000);
+
+		return () => {
+			clearInterval(interval);
+		};
+	}, []);
 
 	return (
-		<div className="p-10 grid grid-cols-2 gap-10">
-			{/* left form */}
-			<div>
-				<h2 className="text-center text-2xl font-semibold">Form Add User</h2>
-				<form
-					autoComplete="off"
-					className="space-y-6 mt-6"
-					onSubmit={(e) => handleSubmit(e)}
-				>
-					<div className="flex flex-col gap-1">
-						<label className="text-sm" htmlFor="username">
-							Tên nhân viên
-						</label>
-						<input
-							className="border p-2 rounded-md outline-none"
-							type="text"
-							name="username"
-							id="username"
-							value={userInfo.username}
-							onChange={(e) => handleChangeUsername(e)}
-							placeholder="Tên nhân viên"
-						/>
-					</div>
+		<div className="p-10">
+			<button onClick={() => setToggle((prev) => !prev)}>count: {count}</button>
 
-					<div className="flex flex-col gap-1">
-						<label className="text-sm" htmlFor="email">
-							Email
-						</label>
-						<input
-							className="border p-2 rounded-md outline-none"
-							type="email"
-							name="email"
-							id="email"
-							value={userInfo.email}
-							onChange={(e) => handleChangeUsername(e)}
-							placeholder="Email"
-						/>
-					</div>
+			{toggle ? <p>Xin chào</p> : <p>Thời gian: {timer}</p>}
 
-					<div className="flex flex-col gap-1">
-						<label className="text-sm" htmlFor="phone">
-							Phone
-						</label>
-						<input
-							className="border p-2 rounded-md outline-none"
-							type="tel"
-							name="phone"
-							id="phone"
-							value={userInfo.phone}
-							onChange={(e) => handleChangeUsername(e)}
-							placeholder="Phone"
-						/>
-					</div>
-
-					<div className="flex flex-col gap-1">
-						<label className="text-sm" htmlFor="avatar">
-							Avatar
-						</label>
-						<input
-							className="border p-2 rounded-md outline-none"
-							type="text"
-							name="avatar"
-							id="avatar"
-							value={userInfo.avatar}
-							onChange={(e) => handleChangeUsername(e)}
-							placeholder="Link"
-						/>
-					</div>
-
-					<div className="flex items-center justify-center">
-						<button className="bg-blue-400 px-8 mx-auto py-3 text-white hover:bg-blue-500 text-center rounded-lg">
-							Thêm người dùng
-						</button>
-					</div>
-				</form>
-			</div>
-			{/* rignt list */}
-			<div>
-				<h2 className="text-center text-2xl font-semibold">Danh sách user</h2>
-
-				<div className="space-y-6 mt-6">
-					{users.length === 0 && (
-						<div className="italic text-center">Danh sách trống</div>
-					)}
-					{users &&
-						users.length > 0 &&
-						users.map((user) => (
-							<div
-								key={user.id}
-								className="flex gap-6 shadow p-4 rounded-[36px] border hover:shadow-md transition-all"
-							>
-								<img
-									src={user.avatar}
-									alt="avatar"
-									className="h-32 w-32 rounded-3xl"
-								/>
-								<div className="flex flex-col gap-2 flex-1 justify-center">
-									<p className="font-medium text-lg">{user.email}</p>
-									<p className="">{user.username}</p>
-								</div>
-								<button
-									className="text-red-400"
-									onClick={() => handleDelete(user.id)}
-								>
-									Xoá
-								</button>
-							</div>
-						))}
-				</div>
+			<div className="space-y-6 mt-6">
+				{users.length === 0 && (
+					<div className="italic text-center">Danh sách trống</div>
+				)}
+				{users &&
+					users.length > 0 &&
+					users.map((user) => <UserItem key={user.id} user={user} />)}
 			</div>
 		</div>
 	);
