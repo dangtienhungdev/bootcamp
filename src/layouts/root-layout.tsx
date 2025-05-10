@@ -12,7 +12,7 @@ const RootLayout = () => {
 				{/* header */}
 				<Header />
 
-				<main>
+				<main className="p-6">
 					<Outlet />
 				</main>
 			</div>

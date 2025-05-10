@@ -14,7 +14,7 @@ const Header = () => {
 
 			{/* notification */}
 			<button>
-				<Bell className="w-3.5 h-3.5" />
+				<Bell className="w-5 h-5" />
 			</button>
 		</header>
 	);
