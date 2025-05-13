@@ -1,13 +1,30 @@
 import { Button } from '@/components/ui/button';
+import type { Student } from '@/types/student.type';
 import { Pencil, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import StudentForm from './components/student-form';
 
 const StudentPage = () => {
-	return (
+	const [isAddingStudent, setIsAddingStudent] = useState<boolean>(true);
+	const [students, setStudents] = useState<Student[]>([]);
+
+	const onSubmit = (values: Student) => {
+		console.log('🚀 ~ onSubmit ~ values:', values);
+		setStudents((prev) => [...prev, values]);
+	};
+
+	// props, children
+	return isAddingStudent ? (
+		<StudentForm setIsAddingStudent={setIsAddingStudent} onSubmit={onSubmit} />
+	) : (
 		<div>
 			<div className="flex justify-between items-center mb-6">
 				<p className="text-2xl font-bold">Students List</p>
 
-				<Button className="uppercase bg-[#FEAF00] hover:bg-[#e09d00] cursor-pointer">
+				<Button
+					className="uppercase bg-[#FEAF00] hover:bg-[#e09d00] cursor-pointer"
+					onClick={() => setIsAddingStudent(true)}
+				>
 					Add new student
 				</Button>
 			</div>
@@ -38,9 +55,9 @@ const StudentPage = () => {
 					</thead>
 
 					<tbody>
-						{Array.from({ length: 10 }).map((_, index) => {
+						{students.map((student, index) => {
 							return (
-								<tr key={index} className="border-b hover:bg-gray-50">
+								<tr key={student.id} className="border-b hover:bg-gray-50">
 									<td className="py-3 px-4">
 										<div className="flex items-center gap-3">
 											<img
@@ -50,13 +67,13 @@ const StudentPage = () => {
 												height={50}
 												className="rounded-md"
 											/>
-											<span>Lorem, ipsum dolor.</span>
+											<span>{student.name}</span>
 										</div>
 									</td>
-									<td className="py-3 px-4">karthi@gmmail.com</td>
-									<td className="py-3 px-4">7305477760</td>
-									<td className="py-3 px-4">1234567305477760</td>
-									<td className="py-3 px-4">08-Dec, 2021</td>
+									<td className="py-3 px-4">{student.email}</td>
+									<td className="py-3 px-4">{student.phone}</td>
+									<td className="py-3 px-4">{student.errollNumber}</td>
+									<td className="py-3 px-4">{student?.dob?.getTime()}</td>
 									<td className="py-3 px-4">
 										<div className="flex items-center gap-4">
 											<button className="text-[#FEAF00] cursor-pointer">
