@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import type { Student } from '@/types/student.type';
+import { format } from 'date-fns';
 import { Pencil, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import StudentForm from './components/student-form';
@@ -7,15 +8,45 @@ import StudentForm from './components/student-form';
 const StudentPage = () => {
 	const [isAddingStudent, setIsAddingStudent] = useState<boolean>(true);
 	const [students, setStudents] = useState<Student[]>([]);
+	const [editingStudent, setEditingStudent] = useState<Student | null>(null);
 
 	const onSubmit = (values: Student) => {
-		console.log('🚀 ~ onSubmit ~ values:', values);
-		setStudents((prev) => [...prev, values]);
+		if (editingStudent) {
+			// handle update
+			const updateStudents = students.map((student) =>
+				student.id === editingStudent.id ? values : student
+			);
+			setStudents(updateStudents);
+		} else {
+			// handle add
+			setStudents((prev) => [...prev, values]);
+		}
+	};
+
+	// delete student
+	const handleDelete = (student: Student) => {
+		const deleteItem = students.filter(
+			(studentItem) => studentItem.id !== student.id
+		);
+		setStudents(deleteItem);
+	};
+
+	const handleUserInfo = (student: Student) => {
+		setEditingStudent(student);
 	};
 
 	// props, children
 	return isAddingStudent ? (
-		<StudentForm setIsAddingStudent={setIsAddingStudent} onSubmit={onSubmit} />
+		<StudentForm
+			onCancel={() => setIsAddingStudent(false)}
+			onSubmit={onSubmit}
+		/>
+	) : editingStudent ? (
+		<StudentForm
+			onCancel={() => setEditingStudent(null)}
+			onSubmit={onSubmit}
+			defaultValues={editingStudent}
+		/>
 	) : (
 		<div>
 			<div className="flex justify-between items-center mb-6">
@@ -55,7 +86,7 @@ const StudentPage = () => {
 					</thead>
 
 					<tbody>
-						{students.map((student, index) => {
+						{students.map((student) => {
 							return (
 								<tr key={student.id} className="border-b hover:bg-gray-50">
 									<td className="py-3 px-4">
@@ -73,14 +104,22 @@ const StudentPage = () => {
 									<td className="py-3 px-4">{student.email}</td>
 									<td className="py-3 px-4">{student.phone}</td>
 									<td className="py-3 px-4">{student.errollNumber}</td>
-									<td className="py-3 px-4">{student?.dob?.getTime()}</td>
+									<td className="py-3 px-4">
+										{format(student?.dob || '', 'dd/MM/yyyy')}
+									</td>
 									<td className="py-3 px-4">
 										<div className="flex items-center gap-4">
-											<button className="text-[#FEAF00] cursor-pointer">
+											<button
+												className="text-[#FEAF00] cursor-pointer"
+												onClick={() => handleUserInfo(student)}
+											>
 												<Pencil className="size-5" />
 											</button>
 
-											<button className="text-red-500 cursor-pointer">
+											<button
+												className="text-red-500 cursor-pointer"
+												onClick={() => handleDelete(student)}
+											>
 												<Trash2 className="size-5" />
 											</button>
 										</div>

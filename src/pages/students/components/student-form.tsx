@@ -3,14 +3,26 @@ import { DatePicker } from '@/components/ui/date-picker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import type { Student } from '@/types/student.type';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface StudentFormProps {
-	setIsAddingStudent: React.Dispatch<React.SetStateAction<boolean>>;
+	onCancel: () => void;
 	onSubmit: (values: Student) => void;
+	defaultValues?: Student;
 }
 
-const StudentForm = ({ setIsAddingStudent, onSubmit }: StudentFormProps) => {
+const hellworld = () => {
+	console.log('object');
+};
+
+hellworld();
+
+const StudentForm = ({
+	onCancel,
+	onSubmit,
+	defaultValues,
+}: StudentFormProps) => {
+	console.log('🚀 ~ defaultValues:', defaultValues);
 	const [name, setName] = useState<string>('');
 	const [email, setEmail] = useState<string>('');
 	const [phone, setPhone] = useState<string>('');
@@ -26,15 +38,28 @@ const StudentForm = ({ setIsAddingStudent, onSubmit }: StudentFormProps) => {
 			phone,
 			errollNumber: errollmentNumber,
 			dob: date,
-			id: Math.round(Math.random() * 100),
+			id: defaultValues ? defaultValues.id : Math.round(Math.random() * 100),
 		};
 		onSubmit(data);
-		setIsAddingStudent(false);
+		onCancel();
 	};
+
+	useEffect(() => {
+		if (defaultValues) {
+			setName(defaultValues.name);
+			setEmail(defaultValues.email);
+			setPhone(defaultValues.phone);
+			setErrollmentNumber(defaultValues.errollNumber);
+			setDate(defaultValues.dob);
+		}
+	}, [defaultValues]);
 
 	return (
 		<div className="max-w-2xl mx-auto p-6 rounded-lg shadow-sm border">
-			<h2 className="text-2xl font-bold mb-6">Add New Student</h2>
+			<h2 className="text-2xl font-bold mb-6">
+				{defaultValues ? 'Edit' : 'Add New'} Student{' '}
+				{defaultValues ? `: ${defaultValues?.name}` : ''}
+			</h2>
 
 			<form onSubmit={handleSubmit}>
 				<div className="grid grid-cols-2 gap-6">
@@ -81,11 +106,11 @@ const StudentForm = ({ setIsAddingStudent, onSubmit }: StudentFormProps) => {
 				</div>
 
 				<div className="flex justify-end gap-6 mt-6">
-					<Button variant={'outline'} onClick={() => setIsAddingStudent(false)}>
+					<Button variant={'outline'} onClick={() => onCancel()}>
 						Cancel
 					</Button>
 					<Button className="bg-[#FEAF00] hover:bg-[#FEAF00] cursor-pointer">
-						Add student
+						{defaultValues ? 'Edit student' : 'Add student'}
 					</Button>
 				</div>
 			</form>
