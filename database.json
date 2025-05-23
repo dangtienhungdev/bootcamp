@@ -1,3 +1,29 @@
 {
-  "students": []
+  "students": [
+    {
+      "name": "ab",
+      "email": "a@gmail.com",
+      "id": "9b20"
+    },
+    {
+      "name": "Nguyen updateb udpatea akjfd;lask;lfdasdfdfasasdfasdfads",
+      "email": "a.dev@gmail.com",
+      "id": "8dee"
+    },
+    {
+      "name": "Nguyen Van B",
+      "email": "b.dev@gmail.com",
+      "id": "ed60"
+    },
+    {
+      "id": "5bda",
+      "name": "Nguyen Van A updated nhes",
+      "email": "dangtienhung.dev@gmail.com"
+    },
+    {
+      "id": "01d3",
+      "name": "123",
+      "email": "123@gmail.com"
+    }
+  ]
 }

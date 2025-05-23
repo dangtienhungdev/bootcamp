@@ -11,20 +11,22 @@ import {
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChevronLeft } from 'lucide-react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { z } from 'zod';
-
-// npm i zod react-hook-form @hookform/resolvers
 
 const studentSchema = z.object({
 	name: z.string().min(2),
 	email: z.string().email({ message: 'Trường email là bắt buộc!' }),
 });
 
-const CreateStudentPage = () => {
+const StudentEditPage = () => {
+	const router = useParams();
 	const navigate = useNavigate();
+	const studentId = router.studentId;
 
+	// form
 	const form = useForm({
 		resolver: zodResolver(studentSchema),
 		defaultValues: {
@@ -37,14 +39,36 @@ const CreateStudentPage = () => {
 		register,
 		formState: { errors },
 		handleSubmit,
+		setValue,
 	} = form;
 
+	// get student info
+	useEffect(() => {
+		const fetchStudent = async () => {
+			if (studentId) {
+				try {
+					const response = await studentApi.detail(studentId);
+					if (response.statusText === 'OK') {
+						const student = response.data;
+						setValue('name', student.name);
+						setValue('email', student.email);
+					}
+				} catch (error) {
+					console.log(error);
+				}
+			}
+		};
+		fetchStudent();
+	}, [studentId]);
+
 	const onSubmit = async (values: any) => {
-		try {
-			await studentApi.create(values);
-			navigate('/students-v2');
-		} catch (error) {
-			console.log(error);
+		if (studentId) {
+			try {
+				await studentApi.update(studentId, values);
+				navigate('/students-v2');
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	};
 
@@ -97,4 +121,4 @@ const CreateStudentPage = () => {
 	);
 };
 
-export default CreateStudentPage;
+export default StudentEditPage;

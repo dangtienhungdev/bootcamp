@@ -63,14 +63,20 @@ const StudentPageV2 = () => {
 					{students.map((student) => {
 						return (
 							<tr className="border-b hover:bg-gray-50" key={student.id}>
-								<td className="py-3 px-4">{student.name}</td>
+								<td className="py-3 px-4">
+									<Link to={`/students-v2/detail/${student.id}`}>
+										{student.name}
+									</Link>
+								</td>
 								<td className="py-3 px-4">{student.email}</td>
 
 								<td className="py-3 px-4">
 									<div className="flex items-center gap-4">
-										<button className="text-[#FEAF00] cursor-pointer">
-											<Pencil className="size-5" />
-										</button>
+										<Link to={`/students-v2/edit/${student.id}`}>
+											<button className="text-[#FEAF00] cursor-pointer">
+												<Pencil className="size-5" />
+											</button>
+										</Link>
 
 										<button
 											className="text-red-500 cursor-pointer"

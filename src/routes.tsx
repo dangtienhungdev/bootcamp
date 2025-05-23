@@ -7,6 +7,8 @@ import PaymentPage from './pages/payment';
 import StudentPage from './pages/students';
 import StudentPageV2 from './pages/students-v2';
 import CreateStudentPage from './pages/students-v2/create';
+import StudentDetailPage from './pages/students-v2/detail/[studentId]';
+import StudentEditPage from './pages/students-v2/edit/[studentId]';
 
 const routes = createBrowserRouter([
 	{
@@ -34,8 +36,16 @@ const routes = createBrowserRouter([
 				element: <StudentPageV2 />,
 			},
 			{
-				path: '/students-v2/create',
+				path: urls['student-create'],
 				element: <CreateStudentPage />,
+			},
+			{
+				path: urls['student-edit'],
+				element: <StudentEditPage />,
+			},
+			{
+				path: urls['student-detail'],
+				element: <StudentDetailPage />,
 			},
 		],
 	},
