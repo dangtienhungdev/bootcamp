@@ -3,4 +3,5 @@ export const urls = {
 	course: '/course',
 	students: '/students',
 	payment: '/payments',
+	'students-v2': '/students-v2',
 };

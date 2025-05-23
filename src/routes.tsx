@@ -5,6 +5,8 @@ import CoursePage from './pages/course';
 import HomePage from './pages/home';
 import PaymentPage from './pages/payment';
 import StudentPage from './pages/students';
+import StudentPageV2 from './pages/students-v2';
+import CreateStudentPage from './pages/students-v2/create';
 
 const routes = createBrowserRouter([
 	{
@@ -26,6 +28,14 @@ const routes = createBrowserRouter([
 			{
 				path: urls.payment,
 				element: <PaymentPage />,
+			},
+			{
+				path: urls['students-v2'],
+				element: <StudentPageV2 />,
+			},
+			{
+				path: '/students-v2/create',
+				element: <CreateStudentPage />,
 			},
 		],
 	},

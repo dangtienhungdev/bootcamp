@@ -1,6 +1,12 @@
 import { urls } from '@/lib/urls';
 import { cn } from '@/lib/utils';
-import { Bookmark, CreditCard, GraduationCap, Home } from 'lucide-react';
+import {
+	Bookmark,
+	CreditCard,
+	GraduationCap,
+	Home,
+	User2Icon,
+} from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 const Sidebar = () => {
 	// useLocation
@@ -11,7 +17,13 @@ const Sidebar = () => {
 		{ id: 1, path: urls.home, icon: <Home />, title: 'Home' },
 		{ id: 2, path: urls.course, icon: <Bookmark />, title: 'Course' },
 		{ id: 3, path: urls.students, icon: <GraduationCap />, title: 'Students' },
-		{ id: 4, path: urls.payment, icon: <CreditCard />, title: 'Paymet' },
+		{ id: 4, path: urls.payment, icon: <CreditCard />, title: 'Payment' },
+		{
+			id: 5,
+			path: urls['students-v2'],
+			icon: <User2Icon />,
+			title: 'Student V2',
+		},
 	];
 
 	return (
