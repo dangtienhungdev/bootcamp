@@ -7,13 +7,22 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 
+import { Button } from '@/components/ui/button';
 import type { Category } from '@/types/category.type';
+import { PencilIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface TableCategoryProps {
 	categories: Category[];
 }
 
 export const TableCategory = ({ categories }: TableCategoryProps) => {
+	const navigate = useNavigate();
+
+	const handleEditCategory = (categoryId: string) => {
+		navigate(`/categories/edit/${categoryId}`);
+	};
+
 	return (
 		<div className="overflow-x-auto">
 			<Table>
@@ -57,6 +66,15 @@ export const TableCategory = ({ categories }: TableCategoryProps) => {
 							</TableCell>
 							<TableCell className="text-sm text-gray-600">
 								{new Date(category.updatedAt).toLocaleDateString('vi-VN')}
+							</TableCell>
+							<TableCell className="text-sm text-gray-600">
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => handleEditCategory(category.id)}
+								>
+									<PencilIcon className="w-4 h-4" />
+								</Button>
 							</TableCell>
 						</TableRow>
 					))}

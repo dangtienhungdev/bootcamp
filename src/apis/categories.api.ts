@@ -16,7 +16,7 @@ export const categoriesApi = {
 		return response.data;
 	},
 
-	getCategory: async (id: string): Promise<BaseResponse<Category>> => {
+	getCategory: async (id: string): Promise<Category> => {
 		const response = await axiosInstance.get(`/categories/${id}`);
 		return response.data;
 	},
@@ -32,7 +32,7 @@ export const categoriesApi = {
 		id: string,
 		category: Partial<Category>
 	): Promise<BaseResponse<Category>> => {
-		const response = await axiosInstance.put(`/categories/${id}`, category);
+		const response = await axiosInstance.patch(`/categories/${id}`, category);
 		return response.data;
 	},
 

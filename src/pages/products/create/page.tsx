@@ -22,7 +22,7 @@ import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { productsApi } from '@/apis/products.api';
 import { toast } from 'sonner';
-import { useCategory } from '@/hooks/categories/useCategory';
+import { useCategories } from '@/hooks/categories/useCategory';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -87,7 +87,7 @@ const CreateProductPage = () => {
 	];
 
 	// get categories
-	const { categories } = useCategory({ limit: 100 });
+	const { categories } = useCategories({ limit: 100 });
 
 	// create product muation
 	const createProductMutation = useMutation({
