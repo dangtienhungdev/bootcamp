@@ -20,6 +20,10 @@ export default function ProductsPage() {
 		page: Number(page),
 	});
 
+	const handleCreateProduct = () => {
+		navigate('/products/create');
+	};
+
 	const handleNextPage = () => {
 		navigate({
 			pathname: '/products',
@@ -77,6 +81,10 @@ export default function ProductsPage() {
 						{isFetching && (
 							<div className="text-sm text-blue-600">Đang tải...</div>
 						)}
+
+						<Button size="lg" onClick={handleCreateProduct}>
+							Thêm sản phẩm
+						</Button>
 					</div>
 				</div>
 

@@ -17,3 +17,6 @@ export const useProduct = (params?: GetProductsParams) => {
 		pagination,
 	};
 };
+
+// create product
+export const useCreateProduct = () => {};
