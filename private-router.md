@@ -1,0 +1,4 @@
+- localStorage
+- useContext
+  - props/ children
+  -> dùng để quản lý dữ liệu dưới dạng global
