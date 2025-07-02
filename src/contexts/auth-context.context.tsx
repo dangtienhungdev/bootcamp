@@ -1,11 +1,11 @@
 // useContext
 
 import type { AdminType, AuthContextType } from '@/types/auth.type';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
-import { useLogin } from '@/hooks/admins/useAuth';
 import type { LoginForm } from '@/pages/login/page';
 import { toast } from 'sonner';
+import { useLogin } from '@/hooks/admins/useAuth';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [accessToken, setAccessToken] = useState<string | null>(null);
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-	const { mutate: loginMutation, isPending } = useLogin();
+	const { mutate: loginMutation } = useLogin();
 
 	const login = (data: LoginForm) => {
 		loginMutation(data, {
@@ -36,6 +36,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			},
 		});
 	};
+
+	useEffect(() => {
+		const admin = JSON.parse(localStorage.getItem('admin') || '');
+		const accessToken = localStorage.getItem('accessToken');
+
+		if (admin && accessToken) {
+			setAdmin(admin);
+			setAccessToken(accessToken);
+			setIsAuthenticated(true);
+		} else {
+			setAdmin(null);
+			setAccessToken(null);
+			setIsAuthenticated(false);
+		}
+	}, []);
 
 	const value: AuthContextType = {
 		admin,

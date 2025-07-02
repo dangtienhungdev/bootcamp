@@ -20,3 +20,10 @@ export interface Product {
 	createdAt: string;
 	updatedAt: string;
 }
+
+export type ProductDemo = {
+	id: number;
+	name: string;
+	price: number;
+	image: string;
+};

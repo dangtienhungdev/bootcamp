@@ -1,3 +1,4 @@
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import {
 	Form,
 	FormControl,
@@ -6,16 +7,15 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/auth-context.context';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const loginSchema = z.object({
 	usernameOrEmail: z.string().min(1, 'Vui lòng nhập tên đăng nhập hoặc email'),
@@ -30,7 +30,7 @@ const LoginPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	// const { mutate: loginMutation, isPending } = useLogin();
-	const { isAuthenticated, login } = useAuth();
+	const { login } = useAuth();
 
 	const from = location.state?.from?.pathname || '/products';
 
@@ -46,7 +46,7 @@ const LoginPage = () => {
 		try {
 			setIsSubmitting(true);
 			login(data);
-			navigate('/products', { replace: true });
+			navigate('/categories', { replace: true });
 		} catch (error) {
 			// Error is handled in AuthContext
 		} finally {

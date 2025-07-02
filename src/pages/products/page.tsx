@@ -5,9 +5,9 @@ import {
 } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
+import { TableProduct } from './components/table';
 import { useAuth } from '@/contexts/auth-context.context';
 import { useProduct } from '@/hooks/products/useProduct';
-import { TableProduct } from './components/table';
 
 export default function ProductsPage() {
 	const navigate = useNavigate();
@@ -16,7 +16,6 @@ export default function ProductsPage() {
 	const limit = params.get('limit') ?? 5;
 
 	const { admin } = useAuth();
-	console.log('🚀 ~ ProductsPage ~ admin:', admin);
 
 	const { products, pagination, isLoading, isFetching, error } = useProduct({
 		limit: Number(limit),

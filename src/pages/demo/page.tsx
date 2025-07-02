@@ -1,55 +1,58 @@
-import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import { useProduct } from '@/contexts/product-context.context';
 
-export type ProductDemo = {
-	id: number;
-	name: string;
-	price: number;
-	image: string;
-};
+/*
+mục tiêu
+1. Hiểu cách dùng "useContext" để chia sẻ state giữa các component
+2. Tổ chức code theo rõ ràng
+*/
 
 const DemoPage = () => {
-	const produtList: ProductDemo[] = [
-		{
-			id: 1,
-			name: 'Product 1',
-			price: 100,
-			image: 'https://via.placeholder.com/150',
-		},
-		{
-			id: 2,
-			name: 'Product 2',
-			price: 200,
-			image: 'https://via.placeholder.com/150',
-		},
-		{
-			id: 3,
-			name: 'Product 3',
-			price: 300,
-			image: 'https://via.placeholder.com/150',
-		},
-	];
+	const navigate = useNavigate();
+	const { products, onDelete, onAdd, onEdit } = useProduct();
 
-	const [products, setproducts] = useState<ProductDemo[]>(produtList);
+	const product = {
+		name: 'Product 4',
+		price: 400,
+		image: 'https://via.placeholder.com/150',
+	};
 
-	// return <DemoDetailPage products={products} />;
-	return <Child1 products={products} />;
+	return (
+		<div className="p-10">
+			<Button className="mb-10" onClick={() => onAdd(product)}>
+				Add
+			</Button>
+
+			{products.map((product) => (
+				<div
+					key={product.id}
+					className="flex justify-between gap-2 border border-gray-300 p-4"
+				>
+					<div className="">
+						<h1 onClick={() => navigate(`/demo/detail/${product.id}`)}>
+							{product.name}
+						</h1>
+						<p>{product.price}</p>
+					</div>
+
+					<div className="flex gap-2">
+						<Button
+							onClick={() =>
+								onEdit(
+									{ ...product, name: `${product.name} update` },
+									product.id
+								)
+							}
+						>
+							Edit
+						</Button>
+						<Button onClick={() => onDelete(product.id)}>Delete</Button>
+					</div>
+				</div>
+			))}
+		</div>
+	);
 };
 
 export default DemoPage;
-
-const Child1 = ({ products }: { products: ProductDemo[] }) => {
-	return <Child2 products={products} />;
-};
-
-const Child2 = ({ products }: { products: ProductDemo[] }) => {
-	return <Child3 products={products} />;
-};
-
-const Child3 = ({ products }: { products: ProductDemo[] }) => {
-	return <Child4 products={products} />;
-};
-
-const Child4 = ({ products }: { products: ProductDemo[] }) => {
-	console.log('🚀 ~ Child4 ~ products:', products);
-	return <div>Child4</div>;
-};

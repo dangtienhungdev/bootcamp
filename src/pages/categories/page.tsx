@@ -7,12 +7,16 @@ import {
 import { Button } from '@/components/ui/button';
 import { TableCategory } from './components/table';
 import { useCategories } from '@/hooks/categories/useCategory';
+import { useProduct } from '@/contexts/product-context.context';
 
 export default function CategoriesPage() {
 	const navigate = useNavigate();
 	const [params] = useSearchParams();
 	const page = params.get('page') ?? 1;
 	const limit = params.get('limit') ?? 10;
+
+	const products = useProduct();
+	console.log('🚀 ~ CategoriesPage ~ products:', products);
 
 	const { categories, pagination, isLoading, isFetching, error } =
 		useCategories({

@@ -1,9 +1,20 @@
-import type { ProductDemo } from '../../page';
+import { useParams } from 'react-router-dom';
+import { useProduct } from '@/contexts/product-context.context';
 
-const DemoDetailPage = ({ products }: { products: ProductDemo[] }) => {
-	console.log('🚀 ~ DemoPage ~ products:', products);
+const DemoDetailPage = () => {
+	const { onDetail } = useProduct();
+	const { detailId } = useParams();
 
-	return <div>DemoDetailPage</div>;
+	const product = onDetail(Number(detailId));
+	console.log('🚀 ~ DemoDetailPage ~ product:', product);
+
+	return (
+		<div>
+			<h1>{product?.name}</h1>
+			<p>{product?.price}</p>
+			<p>{product?.image}</p>
+		</div>
+	);
 };
 
 export default DemoDetailPage;

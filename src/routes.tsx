@@ -1,13 +1,14 @@
-import { createBrowserRouter } from 'react-router-dom';
-import EditCategoryPage from './pages/categories/edit/[categoryId]/page';
 import CategoriesPage from './pages/categories/page';
+import CreateProductPage from './pages/products/create/page';
 import DemoDetailPage from './pages/demo/detail/[detailId]/page';
 import DemoPage from './pages/demo/page';
+import EditCategoryPage from './pages/categories/edit/[categoryId]/page';
 import HomePage from './pages/home/page';
 import Layout from './pages/layout';
 import LoginPage from './pages/login/page';
-import CreateProductPage from './pages/products/create/page';
+import { ProductProvider } from './contexts/product-context.context';
 import ProductsPage from './pages/products/page';
+import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
 	{
@@ -24,7 +25,11 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: 'categories',
-				element: <CategoriesPage />,
+				element: (
+					<ProductProvider>
+						<CategoriesPage />
+					</ProductProvider>
+				),
 			},
 			{
 				path: 'categories/edit/:categoryId',
@@ -36,11 +41,19 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: 'demo',
-				element: <DemoPage />,
+				element: (
+					<ProductProvider>
+						<DemoPage />
+					</ProductProvider>
+				),
 			},
 			{
 				path: 'demo/detail/:detailId',
-				element: <DemoDetailPage />,
+				element: (
+					<ProductProvider>
+						<DemoDetailPage />
+					</ProductProvider>
+				),
 			},
 		],
 	},
