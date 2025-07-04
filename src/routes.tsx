@@ -1,14 +1,16 @@
+import { createBrowserRouter } from 'react-router-dom';
+import { ProductProvider } from './contexts/product-context.context';
+import EditCategoryPageV2 from './pages/categories-v2/edit/page';
+import CategoryPageV2 from './pages/categories-v2/page';
+import EditCategoryPage from './pages/categories/edit/[categoryId]/page';
 import CategoriesPage from './pages/categories/page';
-import CreateProductPage from './pages/products/create/page';
 import DemoDetailPage from './pages/demo/detail/[detailId]/page';
 import DemoPage from './pages/demo/page';
-import EditCategoryPage from './pages/categories/edit/[categoryId]/page';
 import HomePage from './pages/home/page';
 import Layout from './pages/layout';
 import LoginPage from './pages/login/page';
-import { ProductProvider } from './contexts/product-context.context';
+import CreateProductPage from './pages/products/create/page';
 import ProductsPage from './pages/products/page';
-import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
 	{
@@ -54,6 +56,14 @@ export const router = createBrowserRouter([
 						<DemoDetailPage />
 					</ProductProvider>
 				),
+			},
+			{
+				path: 'categories-v2',
+				element: <CategoryPageV2 />,
+			},
+			{
+				path: 'categories-v2/edit',
+				element: <EditCategoryPageV2 />,
 			},
 		],
 	},

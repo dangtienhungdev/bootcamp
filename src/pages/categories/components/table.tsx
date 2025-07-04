@@ -6,17 +6,18 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import type { Category } from '@/types/category.type';
 import { PencilIcon } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 interface TableCategoryProps {
 	categories: Category[];
+	abc?: (categoryId: string) => void;
 }
 
-export const TableCategory = ({ categories }: TableCategoryProps) => {
+export const TableCategory = ({ categories, abc }: TableCategoryProps) => {
 	const navigate = useNavigate();
 
 	const handleEditCategory = (categoryId: string) => {
@@ -41,9 +42,20 @@ export const TableCategory = ({ categories }: TableCategoryProps) => {
 						<TableRow key={category.id}>
 							<TableCell className="font-mono text-xs">#{index + 1}</TableCell>
 							<TableCell>
-								<div className="font-medium text-gray-900">
-									{category.categoryName}
-								</div>
+								{abc ? (
+									<Link
+										to={`/categories-v2/edit`}
+										onClick={() => abc && abc(category.id)}
+									>
+										<div className="font-medium text-gray-900 cursor-pointer pointer-events-none">
+											{category.categoryName}
+										</div>
+									</Link>
+								) : (
+									<div className="font-medium text-gray-900 cursor-pointer pointer-events-none">
+										{category.categoryName}
+									</div>
+								)}
 							</TableCell>
 							<TableCell>
 								<div className="text-sm text-gray-600 max-w-xs">

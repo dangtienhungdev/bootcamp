@@ -7,8 +7,8 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 
-import type { Product } from '@/types/product.type';
 import { formatPrice } from '@/lib/format-currency';
+import type { Product } from '@/types/product.type';
 
 interface TableProductProps {
 	products: Product[];
@@ -52,7 +52,7 @@ export const TableProduct = ({ products }: TableProductProps) => {
 							</TableCell>
 							<TableCell>
 								<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-									{product.category.categoryName}
+									{product.category?.categoryName}
 								</span>
 							</TableCell>
 							<TableCell className="font-medium">
@@ -60,14 +60,14 @@ export const TableProduct = ({ products }: TableProductProps) => {
 							</TableCell>
 							<TableCell>
 								<div className="text-green-600 font-medium">
-									{formatPrice(product.discountedPrice)}
+									{formatPrice(product.price)}
 								</div>
-								{product.discountPercentage !== 0 && (
+								{/* {product.price !== 0 && (
 									<div className="text-xs text-red-500">
-										{product.discountPercentage > 0 ? '+' : ''}
-										{product.discountPercentage}%
+										{product.price > 0 ? '+' : ''}
+										{product.price}%
 									</div>
-								)}
+								)} */}
 							</TableCell>
 							<TableCell>
 								<span

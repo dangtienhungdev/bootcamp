@@ -1,10 +1,13 @@
-import { RouterProvider } from 'react-router-dom'
-import { router } from './routes'
+import { RouterProvider } from 'react-router-dom';
+import { CategoryProvider } from './contexts/category-context.context';
+import { router } from './routes';
 
 function App() {
-  return (
-    <RouterProvider router={router} />
-  )
+	return (
+		<CategoryProvider>
+			<RouterProvider router={router} />
+		</CategoryProvider>
+	);
 }
 
-export default App
+export default App;
