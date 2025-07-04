@@ -11,6 +11,7 @@ import Layout from './pages/layout';
 import LoginPage from './pages/login/page';
 import CreateProductPage from './pages/products/create/page';
 import ProductsPage from './pages/products/page';
+import TaskPage from './pages/task/page';
 
 export const router = createBrowserRouter([
 	{
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
 				path: 'categories-v2/edit',
 				element: <EditCategoryPageV2 />,
 			},
+      {
+        path: 'task',
+        element: <TaskPage/>
+      }
 		],
 	},
 	{
