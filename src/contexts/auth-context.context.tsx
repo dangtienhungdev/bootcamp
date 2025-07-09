@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	};
 
 	useEffect(() => {
-		const admin = JSON.parse(localStorage.getItem('admin') || '');
+		const admin = JSON.parse(localStorage.getItem('admin') || 'null');
 		const accessToken = localStorage.getItem('accessToken');
 
 		if (admin && accessToken) {

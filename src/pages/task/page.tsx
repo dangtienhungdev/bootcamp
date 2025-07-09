@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { useTaskStore } from '@/stores/useTaskStore';
+import FormCreate from './components/form-create';
 import type { Task } from '@/types/task.type';
+import { useTaskStore } from '@/stores/useTaskStore';
 
 const TaskPage = () => {
 	const bodyTaskCreate: Task = {
@@ -17,8 +18,6 @@ const TaskPage = () => {
 		detailTask,
 		task: taskDetail,
 	} = useTaskStore();
-	console.log('🚀 ~ TaskPage ~ taskDetail:', taskDetail);
-	console.log('🚀 ~ TaskPage ~ tasks:', tasks);
 
 	const handleCreateTask = () => {
 		setTasks(bodyTaskCreate);
@@ -38,19 +37,24 @@ const TaskPage = () => {
 
 	return (
 		<div className="p-10">
-			<Button onClick={() => handleCreateTask()}>Thêm mới task</Button>
+			<FormCreate />
 
 			<div>
 				{tasks &&
 					tasks.length > 0 &&
 					tasks.map((task, index) => {
 						return (
-							<div key={index}>
+							<div
+								key={index}
+								className="flex items-center justify-between gap-2 border-b border-gray-200 py-2"
+							>
 								{task.title}-{' '}
 								{task.completed ? 'Đã hoàn thành' : 'Chưa hoàn thành'}
-								<Button onClick={() => handleDetail(task.id)}>Detail</Button>
-								<Button onClick={() => handleUpdate(task)}>Update</Button>
-								<Button onClick={() => deleteTask(task.id)}>Delete</Button>
+								<div>
+									<Button onClick={() => handleDetail(task.id)}>Detail</Button>
+									<Button onClick={() => handleUpdate(task)}>Update</Button>
+									<Button onClick={() => deleteTask(task.id)}>Delete</Button>
+								</div>
 							</div>
 						);
 					})}
