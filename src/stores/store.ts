@@ -10,6 +10,7 @@ import {
 } from 'redux-persist';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import { productApi } from '@/services/product.service';
 import productReducer from './features/products/productSlice';
 import storage from 'redux-persist/lib/storage';
 import todoReducer from './features/todo/todoSlice';
@@ -26,6 +27,9 @@ const rootReducer = combineReducers({
 	todos: todoReducer,
 	users: userReducer,
 	products: productReducer,
+
+	// RTK Query
+	[productApi.reducerPath]: productApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,7 +41,7 @@ export const store = configureStore({
 			serializableCheck: {
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
-		}),
+		}).concat(productApi.middleware),
 });
 
 export const persistor = persistStore(store);

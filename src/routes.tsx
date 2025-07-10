@@ -8,6 +8,7 @@ import EditCategoryPageV2 from './pages/categories-v2/edit/page';
 import HomePage from './pages/home/page';
 import Layout from './pages/layout';
 import LoginPage from './pages/login/page';
+import ProductPageV2 from './pages/product-v2/page';
 import { ProductProvider } from './contexts/product-context.context';
 import ProductsPage from './pages/products/page';
 import TaskPage from './pages/task/page';
@@ -74,6 +75,10 @@ export const router = createBrowserRouter([
 			{
 				path: 'task-v2',
 				element: <TaskPageV2 />,
+			},
+			{
+				path: 'product-v2',
+				element: <ProductPageV2 />,
 			},
 		],
 	},

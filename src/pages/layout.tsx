@@ -32,6 +32,9 @@ export default function Layout() {
 							<Link to="/task-v2">
 								<Button variant="ghost">Task v2</Button>
 							</Link>
+							<Link to="/product-v2">
+								<Button variant="ghost">Product v2</Button>
+							</Link>
 						</div>
 					</div>
 				</div>
