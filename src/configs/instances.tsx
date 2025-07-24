@@ -1,3 +1,4 @@
+import { getAuthData } from '@/utils/auth-storage'
 import axios from 'axios'
 
 const instance = axios.create({
@@ -11,8 +12,9 @@ const instance = axios.create({
 // Request interceptor
 instance.interceptors.request.use(
   (config) => {
+    const { accessToken } = getAuthData()
     // You can add auth tokens or other headers here
-    // config.headers['Authorization'] = `Bearer ${token}`;
+    config.headers['Authorization'] = `Bearer ${accessToken}`
     return config
   },
   (error) => Promise.reject(error)

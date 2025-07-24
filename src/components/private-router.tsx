@@ -4,7 +4,6 @@ import { useAuth } from '@/contexts/auth-context'
 
 const PrivateRouter = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, accessToken } = useAuth()
-  console.log('🚀 ~ PrivateRouter ~ isAuthenticated:', isAuthenticated)
 
   if (!isAuthenticated) return null
 

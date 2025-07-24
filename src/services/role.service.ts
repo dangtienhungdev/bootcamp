@@ -1,13 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { RoleListResponse, RoleQueryParams } from '../types/role.type'
 
+import { getAuthData } from '@/utils/auth-storage'
+
 // Role API configuration
 export const roleApi = createApi({
   reducerPath: 'roleApi',
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_URL_BE || 'http://103.216.119.111:8900/api/v1',
     prepareHeaders: (headers) => {
-      headers.set('Content-Type', 'application/json')
+      const { accessToken } = getAuthData()
+      if (accessToken) {
+        headers.set('Authorization', `Bearer ${accessToken}`)
+      }
       return headers
     }
   }),
