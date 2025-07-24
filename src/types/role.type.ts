@@ -1,13 +1,6 @@
 import type { PaginatedResponse, QueryParams } from './common.type'
 
-export type Permission = {
-  _id: string
-  name: string
-  description: string
-  createdAt: string
-  updatedAt: string
-  slug: string
-}
+import type { Permission } from './permission.type'
 
 export type Role = {
   _id: string

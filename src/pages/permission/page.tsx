@@ -3,12 +3,12 @@ import { createSearchParams, useNavigate, useSearchParams } from 'react-router-d
 
 import { SearchOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useGetRolesQuery } from '../../services/role.service'
+import { useGetPermissionsQuery } from '../../services/permission.service'
 
 const { Title } = Typography
 const { Search } = Input
 
-const RolePage = () => {
+const PermissionPage = () => {
   const navigate = useNavigate()
   const [queryParams] = useSearchParams()
   const currentPage = Number(queryParams.get('page')) || 1
@@ -19,22 +19,28 @@ const RolePage = () => {
   // const [pageSize, setPageSize] = useState(10)
 
   const {
-    data: rolesData,
+    data: permissionsData,
     isLoading,
     error
-  } = useGetRolesQuery({
-    search,
-    page: currentPage,
-    limit: pageSize
-  })
+  } = useGetPermissionsQuery(
+    {
+      search,
+      page: currentPage,
+      limit: pageSize
+    },
+    {
+      refetchOnMountOrArgChange: true,
+      refetchOnFocus: false
+    }
+  )
 
   const columns = [
     {
-      title: 'Role Name',
+      title: 'Permission Name',
       dataIndex: 'name',
       key: 'name',
       render: (name: string) => (
-        <Tag color='blue' style={{ fontSize: '14px', padding: '4px 8px' }}>
+        <Tag color='purple' style={{ fontSize: '14px', padding: '4px 8px' }}>
           {name}
         </Tag>
       )
@@ -46,12 +52,12 @@ const RolePage = () => {
       render: (description: string) => <span style={{ color: '#666' }}>{description || 'No description'}</span>
     },
     {
-      title: 'Permissions Count',
-      dataIndex: 'permissions',
-      key: 'permissions',
-      render: (permissions: any[]) => (
-        <Tag color='green' style={{ fontSize: '14px', padding: '4px 8px' }}>
-          {permissions?.length || 0} permissions
+      title: 'Slug',
+      dataIndex: 'slug',
+      key: 'slug',
+      render: (slug: string) => (
+        <Tag color='orange' style={{ fontSize: '12px', padding: '2px 6px' }}>
+          {slug}
         </Tag>
       )
     },
@@ -77,7 +83,7 @@ const RolePage = () => {
     // setCurrentPage(newPage)
     // setPageSize(newPageSize)
     navigate({
-      pathname: '/roles',
+      pathname: '/permissions',
       search: createSearchParams({
         page: newPage.toString(),
         limit: newPageSize.toString()
@@ -87,12 +93,12 @@ const RolePage = () => {
 
   return (
     <div>
-      <Title level={2}>Role Management</Title>
+      <Title level={2}>Permission Management</Title>
 
       <Card style={{ marginBottom: 16 }}>
         <Space direction='vertical' style={{ width: '100%' }}>
           <Search
-            placeholder='Search roles...'
+            placeholder='Search permissions...'
             allowClear
             enterButton={<SearchOutlined />}
             size='large'
@@ -105,16 +111,16 @@ const RolePage = () => {
       <Card>
         <Table
           columns={columns}
-          dataSource={rolesData?.docs || []}
+          dataSource={permissionsData?.docs || []}
           loading={isLoading}
           rowKey='_id'
           pagination={{
             current: currentPage,
             pageSize: pageSize,
-            total: rolesData?.totalDocs || 0,
+            total: permissionsData?.totalDocs || 0,
             showSizeChanger: true,
-            showQuickJumper: true,
-            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} roles`,
+            // showQuickJumper: true,
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} permissions`,
             pageSizeOptions: ['10', '20', '50'],
             onChange: (page, pageSize) => handleTableChange({ current: page, pageSize: pageSize })
           }}
@@ -123,11 +129,11 @@ const RolePage = () => {
 
       {error && (
         <Card style={{ marginTop: 16, borderColor: '#ff4d4f' }}>
-          <Typography.Text type='danger'>Error loading roles. Please try again.</Typography.Text>
+          <Typography.Text type='danger'>Error loading permissions. Please try again.</Typography.Text>
         </Card>
       )}
     </div>
   )
 }
 
-export default RolePage
+export default PermissionPage

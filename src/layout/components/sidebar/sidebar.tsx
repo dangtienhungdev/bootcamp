@@ -7,6 +7,7 @@ import {
   ChevronRight,
   FileText,
   HelpCircle,
+  Key,
   LayoutDashboard,
   MessageCircle,
   Settings,
@@ -62,6 +63,16 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
           key: '/users',
           icon: <Users size={18} />,
           label: 'Users'
+        },
+        {
+          key: '/roles',
+          icon: <Shield size={18} />,
+          label: 'Roles'
+        },
+        {
+          key: '/permissions',
+          icon: <Key size={18} />,
+          label: 'Permissions'
         },
         {
           key: '/secured',

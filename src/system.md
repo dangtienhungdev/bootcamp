@@ -51,16 +51,20 @@ admin/
     │   │   └── 📄 page.tsx
     │   ├── 📁 login/
     │   │   └── 📄 page.tsx
+    │   ├── 📁 permission/
+    │   │   └── 📄 page.tsx
     │   └── 📁 role/
     │       └── 📄 page.tsx
     ├── 📁 services/
     │   ├── 📄 auth.service.ts
+    │   ├── 📄 permission.service.ts
     │   └── 📄 role.service.ts
     ├── 📁 store/
     │   └── 📄 index.ts
     ├── 📁 types/
     │   ├── 📄 auth.type.ts
     │   ├── 📄 common.type.ts
+    │   ├── 📄 permission.type.ts
     │   └── 📄 role.type.ts
     └── 📁 utils/
         └── 📄 auth-storage.ts
@@ -153,6 +157,8 @@ The main source code directory containing all application logic, components, and
   - `page.tsx` - Login page component
 
 ### Management Pages
+- `permission/` - Permission management pages
+  - `page.tsx` - Permission management page with table view and search functionality
 - `role/` - Role management pages
   - `page.tsx` - Role management page with table view and search functionality
 
@@ -161,6 +167,7 @@ The main source code directory containing all application logic, components, and
 **Purpose**: Contains service layer files that handle API calls, external integrations, and business logic.
 
 - `auth.service.ts` - Authentication service for API calls
+- `permission.service.ts` - Permission management service with Redux Toolkit Query
 - `role.service.ts` - Role management service with Redux Toolkit Query
 
 ## src/store/
@@ -175,6 +182,7 @@ The main source code directory containing all application logic, components, and
 
 - `auth.type.ts` - Authentication-related type definitions
 - `common.type.ts` - Reusable generic types for pagination and API responses
+- `permission.type.ts` - Permission type definitions
 - `role.type.ts` - Role and permission type definitions
 
 ## src/utils/
