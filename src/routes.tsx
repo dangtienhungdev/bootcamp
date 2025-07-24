@@ -2,10 +2,12 @@ import { createBrowserRouter } from 'react-router-dom'
 import PrivateRouter from './components/private-router'
 import PublicRoutePage from './components/public-router'
 import MainLayout from './layout/main-layout'
+import CustomerPage from './pages/customers/page'
 import DashboardPage from './pages/dashboard/page'
 import LoginPage from './pages/login/page'
 import PermissionPage from './pages/permission/page'
 import RolePage from './pages/role/page'
+import StaffPage from './pages/staffs/page'
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ export const router = createBrowserRouter([
       {
         path: 'permissions',
         element: <PermissionPage />
+      },
+      {
+        path: 'customers',
+        element: <CustomerPage />
+      },
+      {
+        path: 'staffs',
+        element: <StaffPage />
       }
     ]
   }

@@ -47,25 +47,33 @@ admin/
     ├── 📁 lib/
     │   └── 📄 utils.ts
     ├── 📁 pages/
+    │   ├── 📁 customers/
+    │   │   └── 📄 page.tsx
     │   ├── 📁 dashboard/
     │   │   └── 📄 page.tsx
     │   ├── 📁 login/
     │   │   └── 📄 page.tsx
     │   ├── 📁 permission/
     │   │   └── 📄 page.tsx
-    │   └── 📁 role/
+    │   ├── 📁 role/
+    │   │   └── 📄 page.tsx
+    │   └── 📁 staffs/
     │       └── 📄 page.tsx
     ├── 📁 services/
     │   ├── 📄 auth.service.ts
+    │   ├── 📄 customer.service.ts
     │   ├── 📄 permission.service.ts
-    │   └── 📄 role.service.ts
+    │   ├── 📄 role.service.ts
+    │   └── 📄 staff.service.ts
     ├── 📁 store/
     │   └── 📄 index.ts
     ├── 📁 types/
     │   ├── 📄 auth.type.ts
     │   ├── 📄 common.type.ts
+    │   ├── 📄 customer.type.ts
     │   ├── 📄 permission.type.ts
-    │   └── 📄 role.type.ts
+    │   ├── 📄 role.type.ts
+    │   └── 📄 staff.type.ts
     └── 📁 utils/
         └── 📄 auth-storage.ts
 ```
@@ -157,18 +165,24 @@ The main source code directory containing all application logic, components, and
   - `page.tsx` - Login page component
 
 ### Management Pages
+- `customers/` - Customer management pages
+  - `page.tsx` - Customer management page with table view and search functionality
 - `permission/` - Permission management pages
   - `page.tsx` - Permission management page with table view and search functionality
 - `role/` - Role management pages
   - `page.tsx` - Role management page with table view and search functionality
+- `staffs/` - Staff management pages
+  - `page.tsx` - Staff management page with table view and search functionality
 
 ## src/services/
 
 **Purpose**: Contains service layer files that handle API calls, external integrations, and business logic.
 
 - `auth.service.ts` - Authentication service for API calls
+- `customer.service.ts` - Customer management service with Redux Toolkit Query
 - `permission.service.ts` - Permission management service with Redux Toolkit Query
 - `role.service.ts` - Role management service with Redux Toolkit Query
+- `staff.service.ts` - Staff management service with Redux Toolkit Query
 
 ## src/store/
 
@@ -182,8 +196,10 @@ The main source code directory containing all application logic, components, and
 
 - `auth.type.ts` - Authentication-related type definitions
 - `common.type.ts` - Reusable generic types for pagination and API responses
+- `customer.type.ts` - Customer type definitions
 - `permission.type.ts` - Permission type definitions
 - `role.type.ts` - Role and permission type definitions
+- `staff.type.ts` - Staff type definitions
 
 ## src/utils/
 

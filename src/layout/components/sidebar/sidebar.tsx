@@ -5,7 +5,6 @@ import {
   AlertTriangle,
   CheckSquare,
   ChevronRight,
-  FileText,
   HelpCircle,
   Key,
   LayoutDashboard,
@@ -31,30 +30,30 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   const menuItems: any[] = [
     {
       key: 'general',
-      label: 'General',
+      label: 'Chung',
       type: 'group',
       children: [
         {
           key: '/',
           icon: <LayoutDashboard size={18} />,
-          label: 'Dashboard'
+          label: 'Bảng điều khiển'
         },
         {
           key: '/tasks',
           icon: <CheckSquare size={18} />,
-          label: 'Tasks'
+          label: 'Công việc'
         },
         {
           key: '/apps',
           icon: <Settings size={18} />,
-          label: 'Apps'
+          label: 'Ứng dụng'
         },
         {
           key: '/chats',
           icon: <MessageCircle size={18} />,
           label: (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span>Chats</span>
+              <span>Trò chuyện</span>
               <Badge count={1} size='small' />
             </div>
           )
@@ -62,24 +61,24 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
         {
           key: '/users',
           icon: <Users size={18} />,
-          label: 'Users'
+          label: 'Người dùng'
         },
         {
           key: '/roles',
           icon: <Shield size={18} />,
-          label: 'Roles'
+          label: 'Vai trò'
         },
         {
           key: '/permissions',
           icon: <Key size={18} />,
-          label: 'Permissions'
+          label: 'Quyền hạn'
         },
         {
           key: '/secured',
           icon: <Shield size={18} />,
           label: (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span>Secured by Clerk</span>
+              <span>Bảo mật bởi Clerk</span>
               <ChevronRight size={14} />
             </div>
           )
@@ -87,44 +86,22 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
       ]
     },
     {
-      key: 'pages',
-      label: 'Pages',
+      key: 'user-group',
+      label: 'Quản lý người dùng',
       type: 'group',
       children: [
         {
-          key: '/auth',
-          icon: <FileText size={18} />,
-          label: (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span>Auth</span>
-              <ChevronRight size={14} />
-            </div>
-          )
-        },
-        {
-          key: 'errors',
+          key: 'users',
           icon: <AlertTriangle size={18} />,
-          label: 'Errors',
+          label: 'Quản lý người dùng',
           children: [
             {
-              key: '/errors/unauthorized',
-              label: 'Unauthorized'
+              key: '/customers',
+              label: 'Danh sách người dùng'
             },
             {
-              key: '/errors/forbidden',
-              label: 'Forbidden'
-            },
-            {
-              key: '/errors/not-found',
-              label: 'Not Found'
-            },
-            {
-              key: '/errors/internal-server-error',
-              label: 'Internal Server Error'
-            },
-            {
-              key: '/errors/maintenance',
-              label: 'Maintenance Error'
+              key: '/staffs',
+              label: 'Quản lý nhân viên'
             }
           ]
         }
@@ -132,7 +109,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
     },
     {
       key: 'other',
-      label: 'Other',
+      label: 'Khác',
       type: 'group',
       children: [
         {
@@ -140,7 +117,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
           icon: <Settings size={18} />,
           label: (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span>Settings</span>
+              <span>Cài đặt</span>
               <ChevronRight size={14} />
             </div>
           )
@@ -148,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
         {
           key: '/help',
           icon: <HelpCircle size={18} />,
-          label: 'Help Center'
+          label: 'Trung tâm trợ giúp'
         }
       ]
     }
