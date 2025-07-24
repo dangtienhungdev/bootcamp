@@ -4,6 +4,7 @@ import PublicRoutePage from './components/public-router'
 import MainLayout from './layout/main-layout'
 import DashboardPage from './pages/dashboard/page'
 import LoginPage from './pages/login/page'
+import RolePage from './pages/role/page'
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: 'help',
         element: <div>Help Center</div>
+      },
+      {
+        path: 'roles',
+        element: <RolePage />
       }
     ]
   }
