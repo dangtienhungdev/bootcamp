@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react'
 import { getAuthData, saveAuthData } from '@/utils/auth-storage'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 import type { User } from '@/types/auth.type'
 
@@ -7,6 +7,7 @@ interface AuthContextType {
   accessToken: string | null
   user: User | null
   login: (accessToken: string, user: User) => void
+  logout: () => void
   isAuthenticated: boolean
 }
 
@@ -37,6 +38,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('user')
     setaccessToken(null)
+    setUser(null)
+    setIsAuthenticated(false)
   }
 
   return (
@@ -45,7 +48,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         accessToken,
         isAuthenticated,
         user,
-        login
+        login,
+        logout
       }}
     >
       {children}
