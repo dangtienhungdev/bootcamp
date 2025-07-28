@@ -1,5 +1,5 @@
+import type { Permission, PermissionListResponse, PermissionQueryParams } from '../types/permission.type'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { PermissionListResponse, PermissionQueryParams } from '../types/permission.type'
 
 import { getAuthData } from '@/utils/auth-storage'
 
@@ -29,8 +29,15 @@ export const permissionApi = createApi({
           }
         }
       }
+    }),
+    createPermission: builder.mutation<Permission, { name: string; description: string }>({
+      query: (body) => ({
+        url: '/permissions',
+        method: 'POST',
+        body
+      })
     })
   })
 })
 
-export const { useGetPermissionsQuery } = permissionApi
+export const { useGetPermissionsQuery, useCreatePermissionMutation } = permissionApi

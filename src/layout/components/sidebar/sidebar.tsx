@@ -1,18 +1,7 @@
 import './sidebar.css'
 
-import { Badge, Layout, Menu } from 'antd'
-import {
-  AlertTriangle,
-  CheckSquare,
-  ChevronRight,
-  HelpCircle,
-  Key,
-  LayoutDashboard,
-  MessageCircle,
-  Settings,
-  Shield,
-  Users
-} from 'lucide-react'
+import { AlertTriangle, Key, LayoutDashboard, Shield } from 'lucide-react'
+import { Layout, Menu } from 'antd'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import React from 'react'
@@ -39,31 +28,6 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
           label: 'Bảng điều khiển'
         },
         {
-          key: '/tasks',
-          icon: <CheckSquare size={18} />,
-          label: 'Công việc'
-        },
-        {
-          key: '/apps',
-          icon: <Settings size={18} />,
-          label: 'Ứng dụng'
-        },
-        {
-          key: '/chats',
-          icon: <MessageCircle size={18} />,
-          label: (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span>Trò chuyện</span>
-              <Badge count={1} size='small' />
-            </div>
-          )
-        },
-        {
-          key: '/users',
-          icon: <Users size={18} />,
-          label: 'Người dùng'
-        },
-        {
           key: '/roles',
           icon: <Shield size={18} />,
           label: 'Vai trò'
@@ -72,16 +36,6 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
           key: '/permissions',
           icon: <Key size={18} />,
           label: 'Quyền hạn'
-        },
-        {
-          key: '/secured',
-          icon: <Shield size={18} />,
-          label: (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span>Bảo mật bởi Clerk</span>
-              <ChevronRight size={14} />
-            </div>
-          )
         }
       ]
     },
@@ -104,28 +58,6 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
               label: 'Quản lý nhân viên'
             }
           ]
-        }
-      ]
-    },
-    {
-      key: 'other',
-      label: 'Khác',
-      type: 'group',
-      children: [
-        {
-          key: '/settings',
-          icon: <Settings size={18} />,
-          label: (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span>Cài đặt</span>
-              <ChevronRight size={14} />
-            </div>
-          )
-        },
-        {
-          key: '/help',
-          icon: <HelpCircle size={18} />,
-          label: 'Trung tâm trợ giúp'
         }
       ]
     }
