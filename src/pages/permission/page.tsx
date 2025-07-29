@@ -1,4 +1,5 @@
-import { Button, Card, Drawer, Form, Input, Space, Table, Tag, Typography, message } from 'antd'
+import { Button, Card, Drawer, Form, Input, Space, Table, Typography, message } from 'antd'
+import { PERMISSIONS, PermissionGuard } from '@/utils/permissions-guard'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useCreatePermissionMutation, useGetPermissionsQuery } from '../../services/permission.service'
@@ -29,10 +30,7 @@ const PermissionPage = () => {
       page: currentPage,
       limit: pageSize
     },
-    {
-      refetchOnMountOrArgChange: true,
-      refetchOnFocus: false
-    }
+    { refetchOnMountOrArgChange: true }
   )
 
   const [createPermission, { isLoading: isCreating }] = useCreatePermissionMutation()
@@ -42,11 +40,7 @@ const PermissionPage = () => {
       title: 'Permission Name',
       dataIndex: 'name',
       key: 'name',
-      render: (name: string) => (
-        <Tag color='purple' style={{ fontSize: '14px', padding: '4px 8px' }}>
-          {name}
-        </Tag>
-      )
+      render: (name: string) => <span style={{ fontWeight: '500', color: '#1f2937' }}>{name}</span>
     },
     {
       title: 'Description',
@@ -58,11 +52,7 @@ const PermissionPage = () => {
       title: 'Slug',
       dataIndex: 'slug',
       key: 'slug',
-      render: (slug: string) => (
-        <Tag color='orange' style={{ fontSize: '12px', padding: '2px 6px' }}>
-          {slug}
-        </Tag>
-      )
+      render: (slug: string) => <span style={{ color: '#666', fontSize: '12px', fontFamily: 'monospace' }}>{slug}</span>
     },
     {
       title: 'Created At',
@@ -128,9 +118,11 @@ const PermissionPage = () => {
               onSearch={handleSearch}
               style={{ maxWidth: 400 }}
             />
-            <Button type='primary' icon={<PlusOutlined />} onClick={showDrawer} size='large'>
-              Thêm mới permissions
-            </Button>
+            <PermissionGuard permission={PERMISSIONS.CREATE_PERMISSION}>
+              <Button type='primary' icon={<PlusOutlined />} onClick={showDrawer} size='large'>
+                Thêm mới permissions
+              </Button>
+            </PermissionGuard>
           </Space>
         </Space>
       </Card>
@@ -146,6 +138,7 @@ const PermissionPage = () => {
             pageSize: pageSize,
             total: permissionsData?.totalDocs || 0,
             showSizeChanger: true,
+            showQuickJumper: true,
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} permissions`,
             pageSizeOptions: ['10', '20', '50'],
             onChange: (page, pageSize) => handleTableChange({ current: page, pageSize: pageSize })
@@ -159,45 +152,47 @@ const PermissionPage = () => {
         </Card>
       )}
 
-      <Drawer
-        title='Thêm mới quyền hạn'
-        width={520}
-        onClose={onClose}
-        open={drawerVisible}
-        bodyStyle={{ paddingBottom: 80 }}
-        extra={
-          <Space>
-            <Button onClick={onClose}>Hủy</Button>
-            <Button onClick={() => form.submit()} type='primary' loading={isCreating}>
-              Tạo quyền hạn
-            </Button>
-          </Space>
-        }
-      >
-        <Form form={form} layout='vertical' onFinish={handleCreatePermission} requiredMark={false}>
-          <Form.Item
-            name='name'
-            label='Tên quyền hạn'
-            rules={[
-              { required: true, message: 'Vui lòng nhập tên quyền hạn!' },
-              { min: 2, message: 'Tên quyền hạn phải có ít nhất 2 ký tự!' }
-            ]}
-          >
-            <Input placeholder='Nhập tên quyền hạn (ví dụ: get_product)' />
-          </Form.Item>
+      <PermissionGuard permission={PERMISSIONS.CREATE_PERMISSION}>
+        <Drawer
+          title='Thêm mới quyền hạn'
+          width={520}
+          onClose={onClose}
+          open={drawerVisible}
+          bodyStyle={{ paddingBottom: 80 }}
+          extra={
+            <Space>
+              <Button onClick={onClose}>Hủy</Button>
+              <Button onClick={() => form.submit()} type='primary' loading={isCreating}>
+                Tạo quyền hạn
+              </Button>
+            </Space>
+          }
+        >
+          <Form form={form} layout='vertical' onFinish={handleCreatePermission} requiredMark={false}>
+            <Form.Item
+              name='name'
+              label='Tên quyền hạn'
+              rules={[
+                { required: true, message: 'Vui lòng nhập tên quyền hạn!' },
+                { min: 2, message: 'Tên quyền hạn phải có ít nhất 2 ký tự!' }
+              ]}
+            >
+              <Input placeholder='Nhập tên quyền hạn (ví dụ: create_user, view_products)' />
+            </Form.Item>
 
-          <Form.Item
-            name='description'
-            label='Mô tả'
-            rules={[
-              { required: true, message: 'Vui lòng nhập mô tả!' },
-              { min: 5, message: 'Mô tả phải có ít nhất 5 ký tự!' }
-            ]}
-          >
-            <TextArea rows={4} placeholder='Nhập mô tả chi tiết về quyền hạn này' />
-          </Form.Item>
-        </Form>
-      </Drawer>
+            <Form.Item
+              name='description'
+              label='Mô tả'
+              rules={[
+                { required: true, message: 'Vui lòng nhập mô tả!' },
+                { min: 5, message: 'Mô tả phải có ít nhất 5 ký tự!' }
+              ]}
+            >
+              <TextArea rows={4} placeholder='Nhập mô tả chi tiết về quyền hạn này' />
+            </Form.Item>
+          </Form>
+        </Drawer>
+      </PermissionGuard>
     </div>
   )
 }

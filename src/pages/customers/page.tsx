@@ -1,9 +1,10 @@
-import { Card, Input, Space, Table, Tag, Typography } from 'antd'
+import { Card, Input, Space, Table, Typography } from 'antd'
+import { PERMISSIONS, PermissionGuard } from '@/utils/permissions-guard'
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { SearchOutlined } from '@ant-design/icons'
-import { useState } from 'react'
 import { useGetCustomersQuery } from '../../services/customer.service'
+import { useState } from 'react'
 
 const { Title } = Typography
 const { Search } = Input
@@ -15,28 +16,20 @@ const CustomerPage = () => {
   const pageSize = Number(queryParams.get('limit')) || 10
 
   const [search, setSearch] = useState('')
-  // const [currentPage, setCurrentPage] = useState(1)
-  // const [pageSize, setPageSize] = useState(10)
 
   const {
     data: customersData,
     isLoading,
     error
-  } = useGetCustomersQuery(
-    {
-      search,
-      page: currentPage,
-      limit: pageSize
-    },
-    {
-      refetchOnMountOrArgChange: true,
-      refetchOnFocus: false
-    }
-  )
+  } = useGetCustomersQuery({
+    search,
+    page: currentPage,
+    limit: pageSize
+  })
 
   const columns = [
     {
-      title: 'Họ và tên',
+      title: 'Full Name',
       dataIndex: 'fullName',
       key: 'fullName',
       render: (fullName: string) => <span style={{ fontWeight: '500', color: '#1f2937' }}>{fullName}</span>
@@ -45,63 +38,54 @@ const CustomerPage = () => {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      render: (email: string) => <span style={{ color: '#374151' }}>{email}</span>
+      render: (email: string) => <span style={{ color: '#666' }}>{email}</span>
     },
     {
-      title: 'Số điện thoại',
+      title: 'Phone',
       dataIndex: 'phone',
       key: 'phone',
-      render: (phone: string) => <span style={{ color: '#374151' }}>{phone}</span>
+      render: (phone: string) => <span style={{ color: '#666' }}>{phone}</span>
     },
     {
-      title: 'Trạng thái',
+      title: 'Verified',
       dataIndex: 'isVerified',
       key: 'isVerified',
       render: (isVerified: boolean) => (
-        <Tag color={isVerified ? 'green' : 'red'} style={{ fontSize: '12px', padding: '2px 6px' }}>
-          {isVerified ? 'Đã xác thực' : 'Chưa xác thực'}
-        </Tag>
+        <span style={{ color: isVerified ? '#52c41a' : '#ff4d4f' }}>{isVerified ? 'Yes' : 'No'}</span>
       )
     },
     {
-      title: 'Tổng đơn hàng',
+      title: 'Total Orders',
       dataIndex: 'totalOrders',
       key: 'totalOrders',
-      render: (totalOrders: number) => (
-        <Tag color='blue' style={{ fontSize: '12px', padding: '2px 6px' }}>
-          {totalOrders} đơn
-        </Tag>
-      )
+      render: (totalOrders: number) => <span style={{ color: '#1890ff', fontWeight: '500' }}>{totalOrders || 0}</span>
     },
     {
-      title: 'Tổng chi tiêu',
+      title: 'Total Spent',
       dataIndex: 'totalSpent',
       key: 'totalSpent',
       render: (totalSpent: number) => (
-        <span style={{ color: '#059669', fontWeight: '500' }}>{totalSpent.toLocaleString('vi-VN')} ₫</span>
+        <span style={{ color: '#52c41a', fontWeight: '500' }}>${totalSpent?.toFixed(2) || '0.00'}</span>
       )
     },
     {
-      title: 'Ngày tạo',
+      title: 'Created At',
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (createdAt: string) => (
-        <span style={{ color: '#666', fontSize: '12px' }}>{new Date(createdAt).toLocaleDateString('vi-VN')}</span>
+        <span style={{ color: '#666', fontSize: '12px' }}>{new Date(createdAt).toLocaleDateString()}</span>
       )
     }
   ]
 
   const handleSearch = (value: string) => {
     setSearch(value)
-    // setCurrentPage(1) // Reset to first page when searching
   }
 
   const handleTableChange = (pagination: { current: number; pageSize: number }) => {
     const newPage = pagination.current || 1
     const newPageSize = pagination.pageSize || 10
 
-    // setCurrentPage(newPage)
-    // setPageSize(newPageSize)
     navigate({
       pathname: '/customers',
       search: createSearchParams({
@@ -112,47 +96,49 @@ const CustomerPage = () => {
   }
 
   return (
-    <div>
-      <Title level={2}>Quản lý khách hàng</Title>
+    <PermissionGuard permission={PERMISSIONS.VIEW_CUSTOMER}>
+      <div>
+        <Title level={2}>Customer Management</Title>
 
-      <Card style={{ marginBottom: 16 }}>
-        <Space direction='vertical' style={{ width: '100%' }}>
-          <Search
-            placeholder='Tìm kiếm khách hàng...'
-            allowClear
-            enterButton={<SearchOutlined />}
-            size='large'
-            onSearch={handleSearch}
-            style={{ maxWidth: 400 }}
-          />
-        </Space>
-      </Card>
-
-      <Card>
-        <Table
-          columns={columns}
-          dataSource={customersData?.docs || []}
-          loading={isLoading}
-          rowKey='_id'
-          pagination={{
-            current: currentPage,
-            pageSize: pageSize,
-            total: customersData?.totalDocs || 0,
-            showSizeChanger: true,
-            showQuickJumper: true,
-            showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} khách hàng`,
-            pageSizeOptions: ['10', '20', '50'],
-            onChange: (page, pageSize) => handleTableChange({ current: page, pageSize: pageSize })
-          }}
-        />
-      </Card>
-
-      {error && (
-        <Card style={{ marginTop: 16, borderColor: '#ff4d4f' }}>
-          <Typography.Text type='danger'>Lỗi khi tải danh sách khách hàng. Vui lòng thử lại.</Typography.Text>
+        <Card style={{ marginBottom: 16 }}>
+          <Space direction='vertical' style={{ width: '100%' }}>
+            <Search
+              placeholder='Search customers...'
+              allowClear
+              enterButton={<SearchOutlined />}
+              size='large'
+              onSearch={handleSearch}
+              style={{ maxWidth: 400 }}
+            />
+          </Space>
         </Card>
-      )}
-    </div>
+
+        <Card>
+          <Table
+            columns={columns}
+            dataSource={customersData?.docs || []}
+            loading={isLoading}
+            rowKey='_id'
+            pagination={{
+              current: currentPage,
+              pageSize: pageSize,
+              total: customersData?.totalDocs || 0,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} customers`,
+              pageSizeOptions: ['10', '20', '50'],
+              onChange: (page, pageSize) => handleTableChange({ current: page, pageSize: pageSize })
+            }}
+          />
+        </Card>
+
+        {error && (
+          <Card style={{ marginTop: 16, borderColor: '#ff4d4f' }}>
+            <Typography.Text type='danger'>Error loading customers. Please try again.</Typography.Text>
+          </Card>
+        )}
+      </div>
+    </PermissionGuard>
   )
 }
 

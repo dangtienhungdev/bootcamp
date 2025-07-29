@@ -1,5 +1,5 @@
+import type { Staff, StaffListResponse, StaffQueryParams } from '../types/staff.type'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { StaffListResponse, StaffQueryParams } from '../types/staff.type'
 
 import { getAuthData } from '@/utils/auth-storage'
 
@@ -27,8 +27,14 @@ export const staffApi = createApi({
           page: params.page || 1
         }
       })
+    }),
+    getCurrentStaff: builder.query<Staff, void>({
+      query: () => ({
+        url: '/staff/me',
+        method: 'GET'
+      })
     })
   })
 })
 
-export const { useGetStaffsQuery } = staffApi
+export const { useGetStaffsQuery, useGetCurrentStaffQuery } = staffApi

@@ -1,3 +1,4 @@
+import CategoriePage from './pages/categories/page'
 import CustomerPage from './pages/customers/page'
 import DashboardPage from './pages/dashboard/page'
 import LoginPage from './pages/login/page'
@@ -74,6 +75,10 @@ export const router = createBrowserRouter([
       {
         path: 'staffs',
         element: <StaffPage />
+      },
+      {
+        path: 'categories',
+        element: <CategoriePage />
       }
     ]
   }

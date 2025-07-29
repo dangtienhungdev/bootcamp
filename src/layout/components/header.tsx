@@ -2,8 +2,9 @@ import { Avatar, Breadcrumb, Button, Dropdown, Layout, Typography } from 'antd'
 import { ChevronDown, LogOut, Menu, User } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import { useAuth } from '@/contexts/auth-context'
 import React from 'react'
+import { useAuth } from '@/contexts/auth-context'
+import { useGetCurrentStaffQuery } from '@/services/staff.service'
 
 const { Header: AntHeader } = Layout
 const { Text } = Typography
@@ -17,6 +18,9 @@ const Header: React.FC<HeaderProps> = ({ collapsed, onCollapse }) => {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, logout } = useAuth()
+
+  // Get current staff information
+  const { data: currentStaff } = useGetCurrentStaffQuery()
 
   // Generate breadcrumb items based on current path
   const generateBreadcrumbItems = () => {
@@ -67,6 +71,11 @@ const Header: React.FC<HeaderProps> = ({ collapsed, onCollapse }) => {
       .toUpperCase()
       .slice(0, 2)
   }
+
+  // Use staff data if available, otherwise fall back to auth user data
+  const displayName = currentStaff?.fullName || user?.fullName || 'User'
+  const displayEmail = currentStaff?.email || user?.email || 'user@example.com'
+  const displayPosition = currentStaff?.position || 'Staff'
 
   return (
     <AntHeader
@@ -120,14 +129,15 @@ const Header: React.FC<HeaderProps> = ({ collapsed, onCollapse }) => {
                 fontWeight: 'bold'
               }}
             >
-              {user ? getUserInitials(user.fullName) : 'U'}
+              {getUserInitials(displayName)}
             </Avatar>
 
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: '14px', fontWeight: '500', lineHeight: '1.2' }}>{user?.fullName || 'User'}</div>
-              <div style={{ fontSize: '12px', color: '#8c8c8c', lineHeight: '1.2' }}>
-                {user?.email || 'user@example.com'}
-              </div>
+              <div style={{ fontSize: '14px', fontWeight: '500', lineHeight: '1.2' }}>{displayName}</div>
+              <div style={{ fontSize: '12px', color: '#8c8c8c', lineHeight: '1.2' }}>{displayEmail}</div>
+              {currentStaff?.position && (
+                <div style={{ fontSize: '11px', color: '#52c41a', lineHeight: '1.2' }}>{displayPosition}</div>
+              )}
             </div>
 
             <ChevronDown size={14} style={{ color: '#8c8c8c' }} />

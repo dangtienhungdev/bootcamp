@@ -1,5 +1,6 @@
 import { Button, Card, Checkbox, Drawer, Form, Input, Space, Table, Tag, Typography, message } from 'antd'
 import { Link, createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { PERMISSIONS, PermissionGuard } from '@/utils/permissions-guard'
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { useCreateRoleMutation, useGetRolesQuery } from '../../services/role.service'
 
@@ -50,11 +51,13 @@ const RolePage = () => {
       dataIndex: 'name',
       key: 'name',
       render: (name: string, record: Role) => (
-        <Link to={`/roles/${record._id}/detail`}>
-          <Tag color='blue' style={{ fontSize: '14px', padding: '4px 8px' }}>
-            {name}
-          </Tag>
-        </Link>
+        <PermissionGuard permission={PERMISSIONS.VIEW_ROLE}>
+          <Link to={`/roles/${record._id}/detail`}>
+            <Tag color='blue' style={{ fontSize: '14px', padding: '4px 8px' }}>
+              {name}
+            </Tag>
+          </Link>
+        </PermissionGuard>
       )
     },
     {
@@ -104,15 +107,27 @@ const RolePage = () => {
     })
   }
 
-  const handleCreateRole = async (values: { name: string; description: string; permissions: string[] }) => {
+  const handleCreateRole = async (values: { name: string; description: string; permissions: any }) => {
     try {
-      await createRole(values).unwrap()
+      // Đảm bảo permissions luôn là array
+      const permissionsArray = Array.isArray(values.permissions) ? values.permissions : []
+
+      const roleData = {
+        name: values.name,
+        description: values.description,
+        permissions: permissionsArray
+      }
+
+      console.log('Sending role data:', roleData) // Debug log
+
+      await createRole(roleData).unwrap()
       message.success('Tạo vai trò thành công!')
       setDrawerVisible(false)
       form.resetFields()
       // Refetch the roles list
       window.location.reload()
     } catch (error) {
+      console.error('Error creating role:', error) // Debug log
       message.error('Có lỗi xảy ra khi tạo vai trò. Vui lòng thử lại!')
     }
   }
@@ -142,9 +157,11 @@ const RolePage = () => {
               onSearch={handleSearch}
               style={{ maxWidth: 400 }}
             />
-            <Button type='primary' icon={<PlusOutlined />} onClick={showDrawer} size='large'>
-              Thêm mới roles
-            </Button>
+            <PermissionGuard permission={PERMISSIONS.CREATE_ROLE}>
+              <Button type='primary' icon={<PlusOutlined />} onClick={showDrawer} size='large'>
+                Thêm mới roles
+              </Button>
+            </PermissionGuard>
           </Space>
         </Space>
       </Card>
@@ -174,50 +191,46 @@ const RolePage = () => {
         </Card>
       )}
 
-      <Drawer
-        title='Thêm mới vai trò'
-        width={520}
-        onClose={onClose}
-        open={drawerVisible}
-        bodyStyle={{ paddingBottom: 80 }}
-        extra={
-          <Space>
-            <Button onClick={onClose}>Hủy</Button>
-            <Button onClick={() => form.submit()} type='primary' loading={isCreating}>
-              Tạo vai trò
-            </Button>
-          </Space>
-        }
-      >
-        <Form form={form} layout='vertical' onFinish={handleCreateRole} requiredMark={false}>
-          <Form.Item
-            name='name'
-            label='Tên vai trò'
-            rules={[
-              { required: true, message: 'Vui lòng nhập tên vai trò!' },
-              { min: 2, message: 'Tên vai trò phải có ít nhất 2 ký tự!' }
-            ]}
-          >
-            <Input placeholder='Nhập tên vai trò (ví dụ: admin, user)' />
-          </Form.Item>
+      <PermissionGuard permission={PERMISSIONS.CREATE_ROLE}>
+        <Drawer
+          title='Thêm mới vai trò'
+          width={520}
+          onClose={onClose}
+          open={drawerVisible}
+          bodyStyle={{ paddingBottom: 80 }}
+          extra={
+            <Space>
+              <Button onClick={onClose}>Hủy</Button>
+              <Button onClick={() => form.submit()} type='primary' loading={isCreating}>
+                Tạo vai trò
+              </Button>
+            </Space>
+          }
+        >
+          <Form form={form} layout='vertical' onFinish={handleCreateRole} requiredMark={false}>
+            <Form.Item
+              name='name'
+              label='Tên vai trò'
+              rules={[
+                { required: true, message: 'Vui lòng nhập tên vai trò!' },
+                { min: 2, message: 'Tên vai trò phải có ít nhất 2 ký tự!' }
+              ]}
+            >
+              <Input placeholder='Nhập tên vai trò (ví dụ: admin, user)' />
+            </Form.Item>
 
-          <Form.Item
-            name='description'
-            label='Mô tả'
-            rules={[
-              { required: true, message: 'Vui lòng nhập mô tả!' },
-              { min: 5, message: 'Mô tả phải có ít nhất 5 ký tự!' }
-            ]}
-          >
-            <TextArea rows={4} placeholder='Nhập mô tả chi tiết về vai trò này' />
-          </Form.Item>
+            <Form.Item
+              name='description'
+              label='Mô tả'
+              rules={[
+                { required: true, message: 'Vui lòng nhập mô tả!' },
+                { min: 5, message: 'Mô tả phải có ít nhất 5 ký tự!' }
+              ]}
+            >
+              <TextArea rows={4} placeholder='Nhập mô tả chi tiết về vai trò này' />
+            </Form.Item>
 
-          <Form.Item
-            name='permissions'
-            label='Quyền hạn'
-            rules={[{ required: true, message: 'Vui lòng chọn ít nhất một quyền hạn!' }]}
-          >
-            <div style={{ marginBottom: '12px' }}>
+            <Form.Item label='Tìm kiếm quyền hạn'>
               <Search
                 placeholder='Tìm kiếm quyền hạn...'
                 allowClear
@@ -225,47 +238,52 @@ const RolePage = () => {
                 onChange={(e) => handlePermissionSearch(e.target.value)}
                 size='middle'
               />
-            </div>
-            <div
-              style={{
-                maxHeight: '300px',
-                overflowY: 'auto',
-                border: '1px solid #d9d9d9',
-                borderRadius: '6px',
-                padding: '12px',
-                backgroundColor: '#fafafa'
+            </Form.Item>
+
+            <Form.Item
+              name='permissions'
+              label='Quyền hạn'
+              rules={[{ required: true, message: 'Vui lòng chọn ít nhất một quyền hạn!' }]}
+              getValueFromEvent={(checkedValues) => {
+                // Đảm bảo luôn trả về array
+                return Array.isArray(checkedValues) ? checkedValues : []
               }}
             >
-              <Checkbox.Group style={{ width: '100%' }}>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '12px',
-                    width: '100%'
-                  }}
-                >
-                  {permissionsData?.docs?.map((permission) => (
-                    <div key={permission._id}>
-                      <Checkbox value={permission._id}>
+              <div
+                style={{
+                  maxHeight: '300px',
+                  overflowY: 'auto',
+                  border: '1px solid #d9d9d9',
+                  borderRadius: '6px',
+                  padding: '12px',
+                  backgroundColor: '#fafafa'
+                }}
+              >
+                {permissionsData?.docs && permissionsData.docs.length > 0 ? (
+                  <Checkbox.Group
+                    style={{ width: '100%' }}
+                    options={permissionsData.docs.map((permission) => ({
+                      label: (
                         <div style={{ marginLeft: '8px' }}>
                           <div style={{ fontWeight: '500', color: '#1f2937' }}>{permission.name}</div>
                           <div style={{ fontSize: '12px', color: '#666', marginTop: '2px' }}>
                             {permission.description}
                           </div>
                         </div>
-                      </Checkbox>
-                    </div>
-                  ))}
-                </div>
-              </Checkbox.Group>
-              {permissionsData?.docs?.length === 0 && (
-                <div style={{ textAlign: 'center', color: '#666', padding: '20px' }}>Không tìm thấy quyền hạn nào</div>
-              )}
-            </div>
-          </Form.Item>
-        </Form>
-      </Drawer>
+                      ),
+                      value: permission._id
+                    }))}
+                  />
+                ) : (
+                  <div style={{ textAlign: 'center', color: '#666', padding: '20px' }}>
+                    Không tìm thấy quyền hạn nào
+                  </div>
+                )}
+              </div>
+            </Form.Item>
+          </Form>
+        </Drawer>
+      </PermissionGuard>
     </div>
   )
 }
