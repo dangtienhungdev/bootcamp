@@ -1,13 +1,15 @@
-import { createBrowserRouter } from 'react-router-dom'
-import PrivateRouter from './components/private-router'
-import PublicRoutePage from './components/public-router'
-import MainLayout from './layout/main-layout'
+import CategoriesPage from './pages/categories/page'
 import CustomerPage from './pages/customers/page'
 import DashboardPage from './pages/dashboard/page'
 import LoginPage from './pages/login/page'
+import MainLayout from './layout/main-layout'
 import PermissionPage from './pages/permission/page'
+import PrivateRouter from './components/private-router'
+import ProductPage from './pages/products/page'
+import PublicRoutePage from './components/public-router'
 import RolePage from './pages/role/page'
 import StaffPage from './pages/staffs/page'
+import { createBrowserRouter } from 'react-router-dom'
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +71,14 @@ export const router = createBrowserRouter([
       {
         path: 'staffs',
         element: <StaffPage />
+      },
+      {
+        path: 'categories',
+        element: <CategoriesPage />
+      },
+      {
+        path: 'products',
+        element: <ProductPage />
       }
     ]
   }

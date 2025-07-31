@@ -2,8 +2,8 @@ import { Card, Input, Space, Table, Tag, Typography } from 'antd'
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { SearchOutlined } from '@ant-design/icons'
-import { useState } from 'react'
 import { useGetStaffsQuery } from '../../services/staff.service'
+import { useState } from 'react'
 
 const { Title } = Typography
 const { Search } = Input

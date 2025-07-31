@@ -1,9 +1,10 @@
-import { Card, Input, Space, Table, Tag, Typography } from 'antd'
+import { Button, Card, Input, Space, Table, Tag, Typography } from 'antd'
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 
+import CreateRole from './components/create-role'
 import { SearchOutlined } from '@ant-design/icons'
-import { useState } from 'react'
 import { useGetRolesQuery } from '../../services/role.service'
+import { useState } from 'react'
 
 const { Title } = Typography
 const { Search } = Input
@@ -14,6 +15,7 @@ const RolePage = () => {
   const currentPage = Number(queryParams.get('page')) || 1
   const pageSize = Number(queryParams.get('limit')) || 10
 
+  const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   // const [currentPage, setCurrentPage] = useState(1)
   // const [pageSize, setPageSize] = useState(10)
@@ -85,12 +87,20 @@ const RolePage = () => {
     })
   }
 
+  const showDrawer = () => {
+    setOpen(true)
+  }
+
+  const onClose = () => {
+    setOpen(false)
+  }
+
   return (
     <div>
       <Title level={2}>Role Management</Title>
 
       <Card style={{ marginBottom: 16 }}>
-        <Space direction='vertical' style={{ width: '100%' }}>
+        <Space direction='horizontal' style={{ width: '100%' }} className='flex items-center justify-between'>
           <Search
             placeholder='Search roles...'
             allowClear
@@ -99,6 +109,10 @@ const RolePage = () => {
             onSearch={handleSearch}
             style={{ maxWidth: 400 }}
           />
+
+          <Button onClick={showDrawer} type='primary' size='large'>
+            Thêm mới
+          </Button>
         </Space>
       </Card>
 
@@ -126,6 +140,9 @@ const RolePage = () => {
           <Typography.Text type='danger'>Error loading roles. Please try again.</Typography.Text>
         </Card>
       )}
+
+      {/* drawer create role */}
+      <CreateRole open={open} onClose={onClose} />
     </div>
   )
 }
