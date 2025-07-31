@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { RoleListResponse, RoleQueryParams } from '../types/role.type'
+import type { Role, RoleListResponse, RolePayload, RoleQueryParams } from '../types/role.type'
 
 import { getAuthData } from '@/utils/auth-storage'
 
@@ -27,8 +27,16 @@ export const roleApi = createApi({
           page: params.page || 1
         }
       })
+    }),
+
+    createRole: builder.mutation<Role, RolePayload>({
+      query: (payload) => ({
+        url: '/roles',
+        method: 'POST',
+        body: payload
+      })
     })
   })
 })
 
-export const { useGetRolesQuery } = roleApi
+export const { useGetRolesQuery, useCreateRoleMutation } = roleApi

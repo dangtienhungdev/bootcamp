@@ -15,3 +15,9 @@ export type Role = {
 // Re-export common types for role-specific usage
 export type RoleQueryParams = QueryParams
 export type RoleListResponse = PaginatedResponse<Role>
+
+export type RolePayload = {
+  name: string
+  description: string
+  permissions: string[]
+}
