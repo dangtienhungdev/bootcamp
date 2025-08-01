@@ -35,8 +35,16 @@ export const roleApi = createApi({
         method: 'POST',
         body: payload
       })
+    }),
+
+    // lấy ra thông tin chi tiết vai trò
+    getRoleById: builder.query<Role, string>({
+      query: (id) => ({
+        url: `/roles/${id}`,
+        method: 'GET'
+      })
     })
   })
 })
 
-export const { useGetRolesQuery, useCreateRoleMutation } = roleApi
+export const { useGetRolesQuery, useCreateRoleMutation, useGetRoleByIdQuery } = roleApi

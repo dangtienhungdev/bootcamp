@@ -12,3 +12,8 @@ export type Permission = {
 // Re-export common types for permission-specific usage
 export type PermissionQueryParams = QueryParams
 export type PermissionListResponse = PaginatedResponse<Permission>
+
+export type CreatePermissionPayload = {
+  name: string
+  description: string
+}

@@ -1,10 +1,12 @@
+import { useCurrentUserPermissions } from '@/guard/use-current-user-permissions'
 import { Card, Col, Row, Statistic, Typography } from 'antd'
 import { DollarSign, ShoppingCart, TrendingUp, Users } from 'lucide-react'
-
 
 const { Title } = Typography
 
 const DashboardPage = () => {
+  const currentStaff = useCurrentUserPermissions()
+
   return (
     <div>
       <Title level={2}>Dashboard</Title>

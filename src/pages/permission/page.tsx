@@ -1,9 +1,10 @@
-import { Card, Input, Space, Table, Tag, Typography } from 'antd'
+import { Button, Card, Input, Space, Table, Tag, Typography } from 'antd'
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { SearchOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import { useGetPermissionsQuery } from '../../services/permission.service'
+import CreatePermissions from './components/create-permission'
 
 const { Title } = Typography
 const { Search } = Input
@@ -14,6 +15,7 @@ const PermissionPage = () => {
   const currentPage = Number(queryParams.get('page')) || 1
   const pageSize = Number(queryParams.get('limit')) || 10
 
+  const [openCreatePermission, setOpenCreatePermission] = useState<boolean>(false)
   const [search, setSearch] = useState('')
   // const [currentPage, setCurrentPage] = useState(1)
   // const [pageSize, setPageSize] = useState(10)
@@ -96,7 +98,7 @@ const PermissionPage = () => {
       <Title level={2}>Permission Management</Title>
 
       <Card style={{ marginBottom: 16 }}>
-        <Space direction='vertical' style={{ width: '100%' }}>
+        <Space direction='horizontal' style={{ width: '100%' }} className='flex items-center justify-between'>
           <Search
             placeholder='Search permissions...'
             allowClear
@@ -105,6 +107,10 @@ const PermissionPage = () => {
             onSearch={handleSearch}
             style={{ maxWidth: 400 }}
           />
+
+          <Button size='large' type='primary' onClick={() => setOpenCreatePermission(!openCreatePermission)}>
+            Create Permission
+          </Button>
         </Space>
       </Card>
 
@@ -132,6 +138,8 @@ const PermissionPage = () => {
           <Typography.Text type='danger'>Error loading permissions. Please try again.</Typography.Text>
         </Card>
       )}
+
+      <CreatePermissions open={openCreatePermission} onClose={() => setOpenCreatePermission(false)} />
     </div>
   )
 }
