@@ -1,9 +1,11 @@
 import './sidebar.css'
 
-import { AlertTriangle, Folder, Key, LayoutDashboard, Package, Shield } from 'lucide-react'
 import { Layout, Menu } from 'antd'
+import { AlertTriangle, Folder, Key, LayoutDashboard, Package, Shield } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import { PERMISSIONS } from '@/guard/permissions-guard'
+import { useCurrentUserPermissions } from '@/guard/use-current-user-permissions'
 import React from 'react'
 
 const { Sider } = Layout
@@ -16,69 +18,141 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const menuItems: any[] = [
-    {
-      key: 'general',
-      label: 'Chung',
-      type: 'group',
-      children: [
-        {
-          key: '/',
-          icon: <LayoutDashboard size={18} />,
-          label: 'Bảng điều khiển'
-        },
-        {
-          key: '/roles',
-          icon: <Shield size={18} />,
-          label: 'Vai trò'
-        },
-        {
-          key: '/permissions',
-          icon: <Key size={18} />,
-          label: 'Quyền hạn'
-        }
-      ]
-    },
-    {
-      key: 'user-group',
-      label: 'Quản lý người dùng',
-      type: 'group',
-      children: [
-        {
-          key: 'users',
-          icon: <AlertTriangle size={18} />,
-          label: 'Quản lý người dùng',
-          children: [
-            {
-              key: '/customers',
-              label: 'Danh sách người dùng'
-            },
-            {
-              key: '/staffs',
-              label: 'Quản lý nhân viên'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      key: 'product-system',
-      label: 'Hệ thống sản phẩm',
-      type: 'group',
-      children: [
-        {
-          key: '/categories',
-          icon: <Folder size={18} />,
-          label: 'Danh mục sản phẩm'
-        },
-        {
-          key: '/products',
-          icon: <Package size={18} />,
-          label: 'Danh sách sản phẩm'
-        }
-      ]
+  const { hasPermission, isLoading } = useCurrentUserPermissions()
+
+  // build menu items based on permissions
+  const buildMenuItems = () => {
+    const items: any[] = [
+      {
+        key: 'general',
+        label: 'Chung',
+        type: 'group',
+        children: [
+          {
+            key: '/',
+            icon: <LayoutDashboard size={18} />,
+            label: 'Bảng điều khiển'
+          }
+        ]
+      }
+    ]
+
+    // roles
+    if (
+      hasPermission(PERMISSIONS.VIEW_ROLES) ||
+      hasPermission(PERMISSIONS.VIEW_ROLE) ||
+      hasPermission(PERMISSIONS.CREATE_ROLE) ||
+      hasPermission(PERMISSIONS.UPDATE_ROLE) ||
+      hasPermission(PERMISSIONS.DELETE_ROLE) ||
+      hasPermission(PERMISSIONS.MANAGE_ROLE_PERMISSIONS)
+    ) {
+      items[0].children.push({
+        key: '/roles',
+        icon: <Shield size={18} />,
+        label: 'Vai trò'
+      })
     }
-  ]
+
+    // permissions
+    if (
+      hasPermission(PERMISSIONS.VIEW_PERMISSIONS) ||
+      hasPermission(PERMISSIONS.CREATE_PERMISSION) ||
+      hasPermission(PERMISSIONS.UPDATE_PERMISSION) ||
+      hasPermission(PERMISSIONS.DELETE_PERMISSION)
+    ) {
+      items[0].children.push({
+        key: '/permissions',
+        icon: <Key size={18} />,
+        label: 'Quyền hạn'
+      })
+    }
+
+    // add user management
+    const userManagement = []
+
+    // customers
+    if (hasPermission(PERMISSIONS.VIEW_CUSTOMER)) {
+      userManagement.push({
+        key: '/customers',
+        label: 'Danh sách người dùng'
+      })
+    }
+
+    // staffs
+    if (
+      hasPermission(PERMISSIONS.VIEW_PERMISSIONS) ||
+      hasPermission(PERMISSIONS.CREATE_PERMISSION) ||
+      hasPermission(PERMISSIONS.UPDATE_PERMISSION) ||
+      hasPermission(PERMISSIONS.DELETE_PERMISSION)
+    ) {
+      userManagement.push({
+        key: '/staffs',
+        label: 'Quản lý nhân viên'
+      })
+    }
+
+    if (userManagement.length > 0) {
+      items.push({
+        key: 'user-group',
+        label: 'Quản lý người dùng',
+        type: 'group',
+        children: [
+          {
+            key: 'users',
+            icon: <AlertTriangle size={18} />,
+            label: 'Quản lý người dùng',
+            children: userManagement
+          }
+        ]
+      })
+    }
+
+    // addd product system
+    const productManagement = []
+
+    // category
+    if (
+      hasPermission(PERMISSIONS.CREATE_CATEGORY) ||
+      hasPermission(PERMISSIONS.GET_CATEGORY) ||
+      hasPermission(PERMISSIONS.GET_ALL_CATEGORIES) ||
+      hasPermission(PERMISSIONS.UPDATE_CATEGORY) ||
+      hasPermission(PERMISSIONS.DELETE_CATEGORY)
+    ) {
+      productManagement.push({
+        key: '/categories',
+        icon: <Folder size={18} />,
+        label: 'Danh mục sản phẩm'
+      })
+    }
+
+    // product
+    if (
+      hasPermission(PERMISSIONS.CREATE_PRODUCT) ||
+      hasPermission(PERMISSIONS.GET_PRODUCT) ||
+      hasPermission(PERMISSIONS.GET_ALL_PRODUCTS) ||
+      hasPermission(PERMISSIONS.UPDATE_PRODUCT) ||
+      hasPermission(PERMISSIONS.DELETE_PRODUCT)
+    ) {
+      productManagement.push({
+        key: '/products',
+        icon: <Package size={18} />,
+        label: 'Danh sách sản phẩm'
+      })
+    }
+
+    if (productManagement.length > 0) {
+      items.push({
+        key: 'product-system',
+        label: 'Hệ thống sản phẩm',
+        type: 'group',
+        children: productManagement
+      })
+    }
+
+    return items
+  }
+
+  const menuItems = buildMenuItems()
 
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(key)

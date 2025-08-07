@@ -4,17 +4,17 @@ export const PERMISSIONS = {
   CREATE_PRODUCT: 'create_product',
   UPDATE_PRODUCT: 'update_product',
   DELETE_PRODUCT: 'delete_product',
+  GET_ALL_PRODUCTS: 'get-all-products',
 
   // Category permissions (Quyền liên quan đến danh mục)
   DELETE_CATEGORY: 'delete_category',
   UPDATE_CATEGORY: 'update_category',
+  GET_CATEGORY: 'get_category',
+  CREATE_CATEGORY: 'create_category',
+  GET_ALL_CATEGORIES: 'get-all-categories',
 
   // User permissions (Quyền liên quan đến người dùng)
   CREATE_USER: 'create-user',
-
-  // General product/category view permissions (Xem danh sách sản phẩm/danh mục)
-  GET_ALL_PRODUCTS: 'get-all-products',
-  GET_ALL_CATEGORIES: 'get-all-categories',
 
   // Role permissions (Quyền liên quan đến vai trò)
   VIEW_ROLES: 'view-roles',
