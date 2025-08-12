@@ -1,10 +1,12 @@
 import { Button, Card, Input, Space, Table, Tag, Typography } from 'antd'
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 
-import CreateRole from './components/create-role'
+import { PermissionGuard } from '@/guard/permission-guard'
+import { PERMISSIONS } from '@/guard/permissions-guard'
 import { SearchOutlined } from '@ant-design/icons'
-import { useGetRolesQuery } from '../../services/role.service'
 import { useState } from 'react'
+import { useGetRolesQuery } from '../../services/role.service'
+import CreateRole from './components/create-role'
 
 const { Title } = Typography
 const { Search } = Input
@@ -110,29 +112,33 @@ const RolePage = () => {
             style={{ maxWidth: 400 }}
           />
 
-          <Button onClick={showDrawer} type='primary' size='large'>
-            Thêm mới
-          </Button>
+          <PermissionGuard perrmission={PERMISSIONS.CREATE_ROLE}>
+            <Button onClick={showDrawer} type='primary' size='large'>
+              Thêm mới
+            </Button>
+          </PermissionGuard>
         </Space>
       </Card>
 
       <Card>
-        <Table
-          columns={columns}
-          dataSource={rolesData?.docs || []}
-          loading={isLoading}
-          rowKey='_id'
-          pagination={{
-            current: currentPage,
-            pageSize: pageSize,
-            total: rolesData?.totalDocs || 0,
-            showSizeChanger: true,
-            showQuickJumper: true,
-            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} roles`,
-            pageSizeOptions: ['10', '20', '50'],
-            onChange: (page, pageSize) => handleTableChange({ current: page, pageSize: pageSize })
-          }}
-        />
+        <PermissionGuard perrmission={PERMISSIONS.VIEW_ROLES}>
+          <Table
+            columns={columns}
+            dataSource={rolesData?.docs || []}
+            loading={isLoading}
+            rowKey='_id'
+            pagination={{
+              current: currentPage,
+              pageSize: pageSize,
+              total: rolesData?.totalDocs || 0,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} roles`,
+              pageSizeOptions: ['10', '20', '50'],
+              onChange: (page, pageSize) => handleTableChange({ current: page, pageSize: pageSize })
+            }}
+          />
+        </PermissionGuard>
       </Card>
 
       {error && (

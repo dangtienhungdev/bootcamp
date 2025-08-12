@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
 import PrivateRouter from './components/private-router'
+import ProtectedRouter from './components/protected-router'
 import PublicRoutePage from './components/public-router'
+import { PERMISSIONS } from './guard/permissions-guard'
 import MainLayout from './layout/main-layout'
 import CategoriesPage from './pages/categories/page'
 import CustomerPage from './pages/customers/page'
@@ -59,11 +61,19 @@ export const router = createBrowserRouter([
       },
       {
         path: 'roles',
-        element: <RolePage />
+        element: (
+          <ProtectedRouter permission={PERMISSIONS.VIEW_ROLES as PermissionName}>
+            <RolePage />
+          </ProtectedRouter>
+        )
       },
       {
         path: 'permissions',
-        element: <PermissionPage />
+        element: (
+          <ProtectedRouter permission={PERMISSIONS.VIEW_PERMISSIONS as PermissionName}>
+            <PermissionPage />
+          </ProtectedRouter>
+        )
       },
       {
         path: 'customers',
