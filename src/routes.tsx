@@ -85,7 +85,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'categories',
-        element: <CategoriesPage />
+        element: (
+          <ProtectedRouter permission={PERMISSIONS.GET_ALL_CATEGORIES as PermissionName}>
+            <CategoriesPage />
+          </ProtectedRouter>
+        )
       },
       {
         path: 'products',
