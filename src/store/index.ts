@@ -1,4 +1,5 @@
 import { categoryApi } from '@/services/category.service'
+import { uploadApi } from '@/services/upload.service'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { authApi } from '../services/auth.service'
@@ -14,7 +15,8 @@ export const store = configureStore({
     [permissionApi.reducerPath]: permissionApi.reducer,
     [customerApi.reducerPath]: customerApi.reducer,
     [staffApi.reducerPath]: staffApi.reducer,
-    [categoryApi.reducerPath]: categoryApi.reducer
+    [categoryApi.reducerPath]: categoryApi.reducer,
+    [uploadApi.reducerPath]: uploadApi.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -23,7 +25,8 @@ export const store = configureStore({
       permissionApi.middleware,
       customerApi.middleware,
       staffApi.middleware,
-      categoryApi.middleware
+      categoryApi.middleware,
+      uploadApi.middleware
     )
 })
 

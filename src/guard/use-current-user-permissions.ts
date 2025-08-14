@@ -17,11 +17,15 @@ export const useCurrentUserPermissions = () => {
   // isLoading
   const isLoading = !currentStaff || !userRole
 
+  // role
+  const isAdmin = userRole?.slug === 'admin'
+
   return {
     hasPermission,
     permissions: userPermissions,
     currentStaff,
     userRole,
-    isLoading
+    isLoading,
+    isAdmin
   }
 }

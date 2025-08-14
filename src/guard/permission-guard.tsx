@@ -9,10 +9,14 @@ interface PermissionGuardProps {
 }
 
 export const PermissionGuard = ({ perrmission, children, fallback }: PermissionGuardProps) => {
-  const { hasPermission, isLoading } = useCurrentUserPermissions()
+  const { hasPermission, isLoading, isAdmin } = useCurrentUserPermissions()
 
   if (isLoading) {
     return fallback
+  }
+
+  if (isAdmin) {
+    return <>{children}</>
   }
 
   if (!hasPermission(perrmission)) {
