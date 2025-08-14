@@ -22,7 +22,7 @@ const CategoriesPage = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
 
-  const { permissions } = useCurrentUserPermissions()
+  const { permissions, isAdmin } = useCurrentUserPermissions()
 
   const {
     data: categoriesData,
@@ -115,7 +115,10 @@ const CategoriesPage = () => {
       title: 'Action',
       dataIndex: 'action',
       key: 'action',
-      hidden: !permissions.includes(PERMISSIONS.UPDATE_CATEGORY) && !permissions.includes(PERMISSIONS.DELETE_CATEGORY),
+      hidden:
+        !isAdmin &&
+        !permissions.includes(PERMISSIONS.UPDATE_CATEGORY) &&
+        !permissions.includes(PERMISSIONS.DELETE_CATEGORY),
       render: (_: unknown, record: Category) => (
         <Space>
           <PermissionGuard perrmission={PERMISSIONS.UPDATE_CATEGORY}>

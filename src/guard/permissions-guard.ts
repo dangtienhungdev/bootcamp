@@ -32,6 +32,12 @@ export const PERMISSIONS = {
 
   // Customer permissions (Quyền liên quan đến khách hàng)
   VIEW_CUSTOMER: 'view-customer',
+  GET_CUSTOMER: 'get_customer',
+  CREATE_CUSTOMER: 'create_customer',
+  UPDATE_CUSTOMER: 'update_customer',
+  DELETE_CUSTOMER: 'delete_customer',
+  GET_ALL_CUSTOMERS: 'get-all-customers',
+  VIEW_CUSTOMER_WISHLIST: 'view-customer-wishlist',
 
   // Cart permissions (Quyền liên quan đến giỏ hàng)
   CREATE_CART: 'create-cart',

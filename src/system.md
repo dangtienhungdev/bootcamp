@@ -234,7 +234,12 @@ The main source code directory containing all application logic, components, and
     - `index.ts` - Component exports
     - `CategoryFormDrawer.tsx` - Ant Design drawer component for category CRUD operations with permission guards
 - `customers/` - Customer management pages
-  - `page.tsx` - Customer management page with table view and search functionality
+  - `page.tsx` - Customer management page with CRUD operations and wishlist
+  - `components/` - Customer-specific components
+    - `index.ts` - Component exports
+    - `CustomerFormDrawer.tsx` - Ant Design drawer component for customer CRUD operations with permission guards
+    - `CustomerDetailDrawer.tsx` - Drawer component to display customer details with wishlist access
+    - `WishlistDrawer.tsx` - Drawer component to display customer wishlist items
 - `permission/` - Permission management pages
   - `page.tsx` - Permission management page with table view and search functionality
 - `products/` - Product management pages
@@ -255,7 +260,7 @@ The main source code directory containing all application logic, components, and
 
 - `auth.service.ts` - Authentication service for API calls
 - `category.service.ts` - Category management service with Redux Toolkit Query and cache invalidation
-- `customer.service.ts` - Customer management service with Redux Toolkit Query
+- `customer.service.ts` - Customer management service with Redux Toolkit Query and CRUD operations
 - `permission.service.ts` - Permission management service with Redux Toolkit Query
 - `role.service.ts` - Role management service with Redux Toolkit Query
 - `staff.service.ts` - Staff management service with Redux Toolkit Query
@@ -274,7 +279,7 @@ The main source code directory containing all application logic, components, and
 - `auth.type.ts` - Authentication-related type definitions
 - `category.type.ts` - Category type definitions and CRUD operation types
 - `common.type.ts` - Reusable generic types for pagination and API responses
-- `customer.type.ts` - Customer type definitions
+- `customer.type.ts` - Customer type definitions and wishlist types
 - `permission.type.ts` - Permission type definitions
 - `role.type.ts` - Role and permission type definitions
 - `staff.type.ts` - Staff type definitions
