@@ -1,8 +1,9 @@
-import { PermissionGuard } from '@/guard/permission-guard'
-import { PERMISSIONS } from '@/guard/permissions-guard'
-import { useCreateCustomerMutation, useUpdateCustomerMutation } from '@/services/customer.service'
-import type { CreateCustomerType, Customer, UpdateCustomerType } from '@/types/customer.type'
 import { Button, Drawer, Form, Input, Switch, message } from 'antd'
+import type { CreateCustomerType, Customer, UpdateCustomerType } from '@/types/customer.type'
+import { useCreateCustomerMutation, useUpdateCustomerMutation } from '@/services/customer.service'
+
+import { PERMISSIONS } from '@/guard/permissions-guard'
+import { PermissionGuard } from '@/guard/permission-guard'
 import { useEffect } from 'react'
 
 interface CustomerFormDrawerProps {
@@ -120,9 +121,45 @@ const CustomerFormDrawer = ({ open, onClose, customer, onSuccess }: CustomerForm
           <Input placeholder='Enter phone number' size='large' />
         </Form.Item>
 
-        <Form.Item name='isVerified' label='Verified Status' valuePropName='checked'>
-          <Switch checkedChildren='Verified' unCheckedChildren='Not Verified' />
-        </Form.Item>
+        {!isEditing && (
+          <>
+            <Form.Item
+              name='password'
+              label='Password'
+              rules={[
+                { required: true, message: 'Please enter password' },
+                { min: 6, message: 'Password must be at least 6 characters' }
+              ]}
+            >
+              <Input.Password placeholder='Enter password' size='large' />
+            </Form.Item>
+
+            <Form.Item
+              name='passwordConfirm'
+              label='Confirm Password'
+              dependencies={['password']}
+              rules={[
+                { required: true, message: 'Please confirm password' },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve()
+                    }
+                    return Promise.reject(new Error('The two passwords do not match!'))
+                  }
+                })
+              ]}
+            >
+              <Input.Password placeholder='Confirm password' size='large' />
+            </Form.Item>
+          </>
+        )}
+
+        {isEditing && (
+          <Form.Item name='isVerified' label='Verified Status' valuePropName='checked'>
+            <Switch checkedChildren='Verified' unCheckedChildren='Not Verified' />
+          </Form.Item>
+        )}
       </Form>
     </Drawer>
   )

@@ -1,5 +1,5 @@
+import type { CreateStaffType, Staff, StaffListResponse, StaffQueryParams, UpdateStaffType } from '../types/staff.type'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { Staff, StaffListResponse, StaffQueryParams } from '../types/staff.type'
 
 import { getAuthData } from '@/utils/auth-storage'
 
@@ -16,6 +16,7 @@ export const staffApi = createApi({
       return headers
     }
   }),
+  tagTypes: ['Staff'],
   endpoints: (builder) => ({
     // lấy ra danh sách nhân viên
     getStaffs: builder.query<StaffListResponse, StaffQueryParams>({
@@ -27,7 +28,46 @@ export const staffApi = createApi({
           limit: params.limit || 10,
           page: params.page || 1
         }
-      })
+      }),
+      providesTags: ['Staff']
+    }),
+
+    // tạo mới nhân viên
+    createStaff: builder.mutation<Staff, CreateStaffType>({
+      query: (staff) => ({
+        url: '/staff/register',
+        method: 'POST',
+        body: staff
+      }),
+      invalidatesTags: ['Staff']
+    }),
+
+    // lấy thông tin nhân viên theo ID
+    getStaffById: builder.query<Staff, { id: string }>({
+      query: ({ id }) => ({
+        url: `/staff/${id}`,
+        method: 'GET'
+      }),
+      providesTags: (result, error, { id }) => [{ type: 'Staff', id }]
+    }),
+
+    // cập nhật thông tin nhân viên
+    updateStaff: builder.mutation<Staff, { id: string; staff: UpdateStaffType }>({
+      query: ({ id, staff }) => ({
+        url: `/staff/${id}`,
+        method: 'PATCH',
+        body: staff
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Staff', id }, 'Staff']
+    }),
+
+    // xóa nhân viên
+    deleteStaff: builder.mutation<Staff, { id: string }>({
+      query: ({ id }) => ({
+        url: `/staff/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Staff']
     }),
 
     // lấy ra thông tin chi tiết người đăng nhập hiện tại
@@ -40,4 +80,11 @@ export const staffApi = createApi({
   })
 })
 
-export const { useGetStaffsQuery, useGetCurrentStaffQuery } = staffApi
+export const {
+  useGetStaffsQuery,
+  useCreateStaffMutation,
+  useGetStaffByIdQuery,
+  useUpdateStaffMutation,
+  useDeleteStaffMutation,
+  useGetCurrentStaffQuery
+} = staffApi

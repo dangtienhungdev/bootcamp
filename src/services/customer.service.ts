@@ -1,4 +1,3 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type {
   CreateCustomerType,
   Customer,
@@ -7,6 +6,7 @@ import type {
   UpdateCustomerType,
   WishlistResponse
 } from '../types/customer.type'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { getAuthData } from '@/utils/auth-storage'
 
@@ -26,23 +26,20 @@ export const customerApi = createApi({
   tagTypes: ['Customer'],
   endpoints: (builder) => ({
     // Get all customers
+    // exampleFunction: builder.query<Data đầu ra, đata đầu vào>({
     getCustomers: builder.query<CustomerListResponse, CustomerQueryParams>({
       query: (params) => ({
         url: '/customers',
         method: 'GET',
-        params: {
-          search: params.search || '',
-          limit: params.limit || 10,
-          page: params.page || 1
-        }
+        params
       }),
       providesTags: ['Customer']
     }),
 
-    // Create customer
+    // Create customer (register)
     createCustomer: builder.mutation<Customer, CreateCustomerType>({
       query: (customer) => ({
-        url: '/customers',
+        url: '/register',
         method: 'POST',
         body: customer
       }),
@@ -84,6 +81,15 @@ export const customerApi = createApi({
         method: 'GET'
       }),
       providesTags: ['Customer']
+    }),
+
+    // Get customer wishlist by ID
+    getCustomerWishlistById: builder.query<WishlistResponse, { id: string }>({
+      query: ({ id }) => ({
+        url: `/customers/${id}/wishlist`,
+        method: 'GET'
+      }),
+      providesTags: (result, error, { id }) => [{ type: 'Customer', id }]
     })
   })
 })
@@ -94,5 +100,6 @@ export const {
   useGetCustomerByIdQuery,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
-  useGetCustomerWishlistQuery
+  useGetCustomerWishlistQuery,
+  useGetCustomerWishlistByIdQuery
 } = customerApi

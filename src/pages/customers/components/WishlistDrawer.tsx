@@ -1,24 +1,29 @@
-import { PermissionGuard } from '@/guard/permission-guard'
-import { PERMISSIONS } from '@/guard/permissions-guard'
-import { useGetCustomerWishlistQuery } from '@/services/customer.service'
-import { HeartOutlined } from '@ant-design/icons'
 import { Button, Drawer, Empty, List, Spin, Tag, Typography } from 'antd'
+
+import { HeartOutlined } from '@ant-design/icons'
+import { PERMISSIONS } from '@/guard/permissions-guard'
+import { PermissionGuard } from '@/guard/permission-guard'
+import { useGetCustomerWishlistByIdQuery } from '@/services/customer.service'
 
 const { Text, Title } = Typography
 
 interface WishlistDrawerProps {
   open: boolean
   onClose: () => void
+  customerId?: string | null
 }
 
-const WishlistDrawer = ({ open, onClose }: WishlistDrawerProps) => {
+const WishlistDrawer = ({ open, onClose, customerId }: WishlistDrawerProps) => {
   const {
     data: wishlistData,
     isLoading,
     error
-  } = useGetCustomerWishlistQuery(undefined, {
-    skip: !open
-  })
+  } = useGetCustomerWishlistByIdQuery(
+    { id: customerId || '' },
+    {
+      skip: !open || !customerId
+    }
+  )
 
   return (
     <Drawer
@@ -38,7 +43,11 @@ const WishlistDrawer = ({ open, onClose }: WishlistDrawerProps) => {
       }
     >
       <PermissionGuard perrmission={PERMISSIONS.VIEW_CUSTOMER_WISHLIST}>
-        {isLoading ? (
+        {!customerId ? (
+          <div style={{ textAlign: 'center', padding: '40px 0' }}>
+            <Text type='secondary'>Please select a customer to view their wishlist</Text>
+          </div>
+        ) : isLoading ? (
           <div style={{ textAlign: 'center', padding: '40px 0' }}>
             <Spin size='large' />
             <div style={{ marginTop: 16 }}>

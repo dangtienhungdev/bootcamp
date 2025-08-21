@@ -6,29 +6,34 @@ This document provides a comprehensive overview of the React Admin Dashboard pro
 
 ```
 bootcamp/
-├── 📄 package.json
+├── 📄 .editorconfig
+├── 📄 .env
+├── 📄 .gitignore
+├── 📄 .prettierignore
+├── 📄 .prettierrc
+├── 📄 components.json
+├── 📄 eslint.config.js
+├── 📄 hoc.md
+├── 📄 index.html
 ├── 📄 package-lock.json
-├── 📄 tsconfig.json
+├── 📄 package.json
+├── 📄 README.md
+├── 📄 status-code.md
 ├── 📄 tsconfig.app.json
+├── 📄 tsconfig.json
 ├── 📄 tsconfig.node.json
 ├── 📄 vite.config.ts
-├── 📄 eslint.config.js
-├── 📄 components.json
-├── 📄 index.html
-├── 📄 README.md
-├── 📄 hoc.md
-├── 📄 status-code.md
 ├── 📁 node_modules/
 ├── 📁 public/
 │   └── 📄 vite.svg
 └── 📁 src/
-    ├── 📄 main.tsx
-    ├── 📄 App.tsx
     ├── 📄 App.css
+    ├── 📄 App.tsx
     ├── 📄 index.css
-    ├── 📄 vite-env.d.ts
+    ├── 📄 main.tsx
     ├── 📄 routes.tsx
     ├── 📄 system.md
+    ├── 📄 vite-env.d.ts
     ├── 📁 assets/
     │   └── 📄 react.svg
     ├── 📁 components/
@@ -65,9 +70,15 @@ bootcamp/
     │   ├── 📁 categories/
     │   │   ├── 📄 page.tsx
     │   │   └── 📁 components/
-    │   │       └── 📄 CategoryFormDrawer.tsx
+    │   │       ├── 📄 CategoryFormDrawer.tsx
+    │   │       └── 📄 index.ts
     │   ├── 📁 customers/
-    │   │   └── 📄 page.tsx
+    │   │   ├── 📄 page.tsx
+    │   │   └── 📁 components/
+    │   │       ├── 📄 CustomerDetailDrawer.tsx
+    │   │       ├── 📄 CustomerFormDrawer.tsx
+    │   │       ├── 📄 index.ts
+    │   │       └── 📄 WishlistDrawer.tsx
     │   ├── 📁 dashboard/
     │   │   └── 📄 page.tsx
     │   ├── 📁 demo/
@@ -75,11 +86,15 @@ bootcamp/
     │   ├── 📁 login/
     │   │   └── 📄 page.tsx
     │   ├── 📁 permission/
-    │   │   └── 📄 page.tsx
+    │   │   ├── 📄 page.tsx
+    │   │   └── 📁 components/
+    │   │       └── 📄 create-permission.tsx
     │   ├── 📁 products/
     │   │   └── 📄 page.tsx
     │   ├── 📁 role/
-    │   │   └── 📄 page.tsx
+    │   │   ├── 📄 page.tsx
+    │   │   └── 📁 components/
+    │   │       └── 📄 create-role.tsx
     │   └── 📁 staffs/
     │       └── 📄 page.tsx
     ├── 📁 services/
@@ -99,7 +114,8 @@ bootcamp/
     │   ├── 📄 customer.type.ts
     │   ├── 📄 permission.type.ts
     │   ├── 📄 role.type.ts
-    │   └── 📄 staff.type.ts
+    │   ├── 📄 staff.type.ts
+    │   └── 📄 upload.type.ts
     └── 📁 utils/
         └── 📄 auth-storage.ts
 ```
@@ -118,6 +134,11 @@ The root directory contains configuration files, dependencies, and the main proj
 - `vite.config.ts` - Vite build tool configuration
 - `eslint.config.js` - ESLint code linting configuration
 - `components.json` - Shadcn/UI components configuration
+- `.editorconfig` - Editor configuration for consistent coding style
+- `.env` - Environment variables configuration
+- `.gitignore` - Git ignore patterns
+- `.prettierignore` - Prettier ignore patterns
+- `.prettierrc` - Prettier code formatting configuration
 
 ### Documentation Files
 
@@ -148,10 +169,6 @@ The main source code directory containing all application logic, components, and
 ## src/components/
 
 **Purpose**: Contains reusable UI components and routing components that can be shared across different parts of the application.
-
-### Form Components
-
-- No global form components (moved to page-specific components)
 
 ### Router Components
 
@@ -242,10 +259,14 @@ The main source code directory containing all application logic, components, and
     - `WishlistDrawer.tsx` - Drawer component to display customer wishlist items
 - `permission/` - Permission management pages
   - `page.tsx` - Permission management page with table view and search functionality
+  - `components/` - Permission-specific components
+    - `create-permission.tsx` - Component for creating new permissions
 - `products/` - Product management pages
   - `page.tsx` - Product management page with table view and search functionality
 - `role/` - Role management pages
   - `page.tsx` - Role management page with table view and search functionality
+  - `components/` - Role-specific components
+    - `create-role.tsx` - Component for creating new roles
 - `staffs/` - Staff management pages
   - `page.tsx` - Staff management page with table view and search functionality
 
