@@ -1,9 +1,10 @@
-import { Button, Drawer, Form, Input, message } from 'antd'
+import { Button, Drawer, Form, Input, Select, message } from 'antd'
 
-import type { CreateStaffType } from '@/types/staff.type'
-import { PERMISSIONS } from '@/guard/permissions-guard'
 import { PermissionGuard } from '@/guard/permission-guard'
+import { PERMISSIONS } from '@/guard/permissions-guard'
+import { useGetRolesQuery } from '@/services/role.service'
 import { useCreateStaffMutation } from '@/services/staff.service'
+import type { CreateStaffType } from '@/types/staff.type'
 import { useEffect } from 'react'
 
 interface StaffFormDrawerProps {
@@ -15,6 +16,13 @@ interface StaffFormDrawerProps {
 const StaffFormDrawer = ({ open, onClose, onSuccess }: StaffFormDrawerProps) => {
   const [form] = Form.useForm()
   const [createStaff, { isLoading }] = useCreateStaffMutation()
+
+  // get role
+  const { data: rolesData } = useGetRolesQuery({
+    page: 1,
+    limit: 1000
+  })
+  const roles = rolesData?.docs
 
   useEffect(() => {
     if (open) {
@@ -42,18 +50,18 @@ const StaffFormDrawer = ({ open, onClose, onSuccess }: StaffFormDrawerProps) => 
 
   return (
     <Drawer
-      title='Create New Staff'
+      title='Thêm mới nhân viên'
       open={open}
       onClose={handleClose}
       width={500}
       footer={
         <div style={{ textAlign: 'right' }}>
           <Button onClick={handleClose} style={{ marginRight: 8 }}>
-            Cancel
+            Hủy
           </Button>
           <PermissionGuard perrmission={PERMISSIONS.CREATE_STAFF}>
             <Button type='primary' loading={isLoading} onClick={() => form.submit()}>
-              Create
+              Thêm mới
             </Button>
           </PermissionGuard>
         </div>
@@ -144,7 +152,13 @@ const StaffFormDrawer = ({ open, onClose, onSuccess }: StaffFormDrawerProps) => 
         </Form.Item>
 
         <Form.Item name='role' label='Role ID' rules={[{ required: true, message: 'Please enter role ID' }]}>
-          <Input placeholder='Enter role ID' size='large' />
+          <Select
+            options={roles?.map((role) => {
+              return { value: role._id, label: role.name }
+            })}
+            placeholder='Chọn vai trò'
+            size='large'
+          />
         </Form.Item>
       </Form>
     </Drawer>

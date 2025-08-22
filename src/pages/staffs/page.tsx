@@ -1,14 +1,14 @@
-import { Button, Card, Input, Modal, Space, Table, Tag, Typography, message } from 'antd'
-import { DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons'
-import { StaffFormDrawer, StaffUpdateDrawer } from './components'
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDeleteStaffMutation, useGetStaffsQuery } from '@/services/staff.service'
+import { DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons'
+import { Button, Card, Input, Modal, Space, Table, Tag, Typography, message } from 'antd'
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { StaffFormDrawer, StaffUpdateDrawer } from './components'
 
-import type { ColumnsType } from 'antd/es/table'
-import { PERMISSIONS } from '@/guard/permissions-guard'
 import { PermissionGuard } from '@/guard/permission-guard'
-import type { Staff } from '@/types/staff.type'
+import { PERMISSIONS } from '@/guard/permissions-guard'
 import { useCurrentUserPermissions } from '@/guard/use-current-user-permissions'
+import type { Staff } from '@/types/staff.type'
+import type { ColumnsType } from 'antd/es/table'
 import { useState } from 'react'
 
 const { Title } = Typography
@@ -173,7 +173,7 @@ const StaffPage = () => {
       title: 'Action',
       dataIndex: 'action',
       key: 'action',
-      width: 150,
+      width: 120,
       fixed: 'right',
       hidden:
         !isAdmin && !permissions.includes(PERMISSIONS.UPDATE_STAFF) && !permissions.includes(PERMISSIONS.DELETE_STAFF),

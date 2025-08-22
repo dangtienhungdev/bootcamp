@@ -1,12 +1,13 @@
-import { Button, Card, DatePicker, Drawer, Form, Input, Space, Switch, Typography, message } from 'antd'
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import type { Staff, StaffAddress, UpdateStaffType } from '@/types/staff.type'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import { Button, Card, DatePicker, Drawer, Form, Input, Select, Space, Switch, Typography, message } from 'antd'
 import { useEffect, useState } from 'react'
 
-import { PERMISSIONS } from '@/guard/permissions-guard'
 import { PermissionGuard } from '@/guard/permission-guard'
-import dayjs from 'dayjs'
+import { PERMISSIONS } from '@/guard/permissions-guard'
+import { useGetRolesQuery } from '@/services/role.service'
 import { useUpdateStaffMutation } from '@/services/staff.service'
+import dayjs from 'dayjs'
 
 const { Title } = Typography
 
@@ -119,20 +120,27 @@ const StaffUpdateDrawer = ({ open, onClose, staff, onSuccess }: StaffUpdateDrawe
     setAddresses(addresses.filter((_, i) => i !== index))
   }
 
+  // get role
+  const { data: rolesData } = useGetRolesQuery({
+    page: 1,
+    limit: 1000
+  })
+  const roles = rolesData?.docs
+
   return (
     <Drawer
-      title='Update Staff Information'
+      title='Cập nhật thông tin nhân viên'
       open={open}
       onClose={handleClose}
       width={800}
       footer={
         <div style={{ textAlign: 'right' }}>
           <Button onClick={handleClose} style={{ marginRight: 8 }}>
-            Cancel
+            Hủy
           </Button>
           <PermissionGuard perrmission={PERMISSIONS.UPDATE_STAFF}>
             <Button type='primary' loading={isLoading} onClick={() => form.submit()}>
-              Update
+              Cập nhật
             </Button>
           </PermissionGuard>
         </div>
@@ -148,94 +156,99 @@ const StaffUpdateDrawer = ({ open, onClose, staff, onSuccess }: StaffUpdateDrawe
         }}
       >
         {/* Basic Information */}
-        <Card title='Basic Information' style={{ marginBottom: 16 }}>
+        <Card title='Thông tin cá nhân' style={{ marginBottom: 16 }} className='!p-0'>
           <Form.Item
             name='fullName'
-            label='Full Name'
+            label='Họ và tên'
             rules={[
-              { required: true, message: 'Please enter full name' },
-              { min: 2, message: 'Full name must be at least 2 characters' }
+              { required: true, message: 'Vui lòng nhập họ và tên' },
+              { min: 2, message: 'Họ và tên phải có ít nhất 2 ký tự' }
             ]}
           >
-            <Input placeholder='Enter full name' size='large' />
+            <Input placeholder='Nhập họ và tên' size='large' />
           </Form.Item>
 
           <Form.Item
             name='email'
             label='Email'
             rules={[
-              { required: true, message: 'Please enter email' },
-              { type: 'email', message: 'Please enter a valid email' }
+              { required: true, message: 'Vui lòng nhập email' },
+              { type: 'email', message: 'Vui lòng nhập email hợp lệ' }
             ]}
           >
-            <Input placeholder='Enter email address' size='large' />
+            <Input placeholder='Nhập email' size='large' />
           </Form.Item>
 
           <Form.Item
             name='phone'
-            label='Phone Number'
+            label='Số điện thoại'
             rules={[
-              { required: true, message: 'Please enter phone number' },
-              { pattern: /^[0-9+\-\s()]+$/, message: 'Please enter a valid phone number' }
+              { required: true, message: 'Vui lòng nhập số điện thoại' },
+              { pattern: /^[0-9+\-\s()]+$/, message: 'Vui lòng nhập số điện thoại hợp lệ' }
             ]}
           >
-            <Input placeholder='Enter phone number' size='large' />
+            <Input placeholder='Nhập số điện thoại' size='large' />
           </Form.Item>
 
-          <Form.Item name='birthDay' label='Birth Day'>
+          <Form.Item name='birthDay' label='Ngày sinh'>
             <DatePicker style={{ width: '100%' }} size='large' />
           </Form.Item>
-
-          <Form.Item name='avatar' label='Avatar URL'>
-            <Input placeholder='Enter avatar URL' size='large' />
+          <Form.Item name='avatar' label='Ảnh đại diện'>
+            <Input placeholder='Nhập ảnh đại diện' size='large' />
           </Form.Item>
         </Card>
 
         {/* Work Information */}
-        <Card title='Work Information' style={{ marginBottom: 16 }}>
+        <Card title='Thông tin công việc' style={{ marginBottom: 16 }}>
           <Form.Item
             name='department'
-            label='Department'
-            rules={[{ required: true, message: 'Please enter department' }]}
+            label='Phòng ban'
+            rules={[{ required: true, message: 'Vui lòng nhập phòng ban' }]}
           >
-            <Input placeholder='Enter department' size='large' />
+            <Input placeholder='Nhập phòng ban' size='large' />
           </Form.Item>
 
-          <Form.Item name='position' label='Position' rules={[{ required: true, message: 'Please enter position' }]}>
-            <Input placeholder='Enter position' size='large' />
+          <Form.Item name='position' label='Chức vụ' rules={[{ required: true, message: 'Vui lòng nhập chức vụ' }]}>
+            <Input placeholder='Nhập chức vụ' size='large' />
           </Form.Item>
 
           <Form.Item
             name='employeeId'
-            label='Employee ID'
-            rules={[{ required: true, message: 'Please enter employee ID' }]}
+            label='Mã nhân viên'
+            rules={[{ required: true, message: 'Vui lòng nhập mã nhân viên' }]}
           >
-            <Input placeholder='Enter employee ID' size='large' />
+            <Input placeholder='Nhập mã nhân viên' size='large' />
           </Form.Item>
 
           <Form.Item name='role' label='Role ID' rules={[{ required: true, message: 'Please enter role ID' }]}>
-            <Input placeholder='Enter role ID' size='large' />
+            <Select
+              options={roles?.map((role) => {
+                return { value: role._id, label: role.name }
+              })}
+              placeholder='Chọn vai trò'
+              size='large'
+            />
           </Form.Item>
         </Card>
 
         {/* Status */}
-        <Card title='Status' style={{ marginBottom: 16 }}>
-          <Form.Item name='isVerified' label='Verified Status' valuePropName='checked'>
-            <Switch checkedChildren='Verified' unCheckedChildren='Not Verified' />
+        <Card title='Trạng thái' style={{ marginBottom: 16 }}>
+          <Form.Item name='isVerified' label='Trạng thái xác thực' valuePropName='checked'>
+            <Switch />
           </Form.Item>
 
-          <Form.Item name='isActive' label='Active Status' valuePropName='checked'>
-            <Switch checkedChildren='Active' unCheckedChildren='Inactive' />
+          <Form.Item name='isActive' label='Trạng thái hoạt động' valuePropName='checked'>
+            <Switch />
           </Form.Item>
         </Card>
 
         {/* Addresses */}
         <Card
-          title='Addresses'
+          title='Địa chỉ'
           style={{ marginBottom: 16 }}
           extra={
             <Button type='dashed' icon={<PlusOutlined />} onClick={addAddress}>
-              Add Address
+              Thêm địa chỉ
             </Button>
           }
         >
@@ -243,27 +256,27 @@ const StaffUpdateDrawer = ({ open, onClose, staff, onSuccess }: StaffUpdateDrawe
             <Card key={index} size='small' style={{ marginBottom: 8 }}>
               <Space direction='vertical' style={{ width: '100%' }}>
                 <Input
-                  placeholder='Street'
+                  placeholder='Địa chỉ'
                   value={address.street}
                   onChange={(e) => updateAddress(index, 'street', e.target.value)}
                 />
                 <Input
-                  placeholder='City'
+                  placeholder='Thành phố'
                   value={address.city}
                   onChange={(e) => updateAddress(index, 'city', e.target.value)}
                 />
                 <Input
-                  placeholder='State'
+                  placeholder='Quốc gia'
                   value={address.state}
                   onChange={(e) => updateAddress(index, 'state', e.target.value)}
                 />
                 <Input
-                  placeholder='Postal Code'
+                  placeholder='Mã bưu điện'
                   value={address.postalCode}
                   onChange={(e) => updateAddress(index, 'postalCode', e.target.value)}
                 />
                 <Input
-                  placeholder='Country'
+                  placeholder='Quốc gia'
                   value={address.country}
                   onChange={(e) => updateAddress(index, 'country', e.target.value)}
                 />
@@ -272,14 +285,14 @@ const StaffUpdateDrawer = ({ open, onClose, staff, onSuccess }: StaffUpdateDrawe
                     checked={address.isDefault}
                     onChange={(checked) => updateAddress(index, 'isDefault', checked)}
                   />
-                  <span>Default Address</span>
+                  <span>Địa chỉ mặc định</span>
                   <Button type='text' danger icon={<DeleteOutlined />} onClick={() => removeAddress(index)} />
                 </Space>
               </Space>
             </Card>
           ))}
           {addresses.length === 0 && (
-            <div style={{ textAlign: 'center', color: '#999', padding: '20px' }}>No addresses added yet</div>
+            <div style={{ textAlign: 'center', color: '#999', padding: '20px' }}>Chưa có địa chỉ</div>
           )}
         </Card>
       </Form>
