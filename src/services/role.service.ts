@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import type { Role, RoleListResponse, RolePayload, RoleQueryParams } from '../types/role.type'
+import type { Role, RoleDetail, RoleListResponse, RolePayload, RoleQueryParams } from '../types/role.type'
 
 import { getAuthData } from '@/utils/auth-storage'
 
@@ -16,6 +16,7 @@ export const roleApi = createApi({
       return headers
     }
   }),
+  tagTypes: ['Role'],
   endpoints: (builder) => ({
     getRoles: builder.query<RoleListResponse, RoleQueryParams>({
       query: (params) => ({
@@ -26,7 +27,8 @@ export const roleApi = createApi({
           limit: params.limit || 10,
           page: params.page || 1
         }
-      })
+      }),
+      providesTags: ['Role']
     }),
 
     createRole: builder.mutation<Role, RolePayload>({
@@ -34,17 +36,66 @@ export const roleApi = createApi({
         url: '/roles',
         method: 'POST',
         body: payload
-      })
+      }),
+      invalidatesTags: ['Role']
     }),
 
     // lấy ra thông tin chi tiết vai trò
-    getRoleById: builder.query<Role, string>({
+    getRoleById: builder.query<RoleDetail, string>({
       query: (id) => ({
         url: `/roles/${id}`,
         method: 'GET'
-      })
+      }),
+      providesTags: (result, error, id) => [{ type: 'Role', id }]
+    }),
+
+    // cập nhật vai trò
+    updateRole: builder.mutation<Role, { id: string; name: string; description: string; permissions: string[] }>({
+      query: ({ id, ...payload }) => ({
+        url: `/roles/${id}`,
+        method: 'PATCH',
+        body: payload
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Role', id }, 'Role']
+    }),
+
+    // xóa vai trò
+    deleteRole: builder.mutation<Role, { id: string }>({
+      query: ({ id }) => ({
+        url: `/roles/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Role']
+    }),
+
+    // xóa nhiều permissions của role
+    deleteRolePermissions: builder.mutation<RoleDetail, { id: string; permissionIds: string[] }>({
+      query: ({ id, permissionIds }) => ({
+        url: `/roles/${id}/permissions/bulk`,
+        method: 'DELETE',
+        body: { permissionIds }
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Role', id }, 'Role']
+    }),
+
+    // thêm nhiều permissions cho role
+    addRolePermissions: builder.mutation<RoleDetail, { id: string; permissionIds: string[] }>({
+      query: ({ id, permissionIds }) => ({
+        url: `/roles/${id}/permissions/bulk`,
+        method: 'POST',
+        body: { permissionIds }
+      }),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Role', id }, 'Role']
     })
   })
 })
 
-export const { useGetRolesQuery, useCreateRoleMutation, useGetRoleByIdQuery } = roleApi
+export const {
+  useGetRolesQuery,
+  useCreateRoleMutation,
+  useGetRoleByIdQuery,
+  useUpdateRoleMutation,
+  useDeleteRoleMutation,
+  useDeleteRolePermissionsMutation,
+  useAddRolePermissionsMutation
+} = roleApi
