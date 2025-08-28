@@ -12,3 +12,5 @@ export type Category = {
 }
 
 export type CreateCategoryType = Pick<Category, 'name' | 'description' | 'thumbnail' | 'isActive' | 'isDeleted'>
+
+export type CategoryRefProduct = Pick<Category, '_id' | 'name' | 'slug'>
