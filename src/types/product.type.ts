@@ -117,3 +117,11 @@ export type Product = {
   updatedAt: string
   slug: string
 }
+
+export type ParamProduct = {
+  search?: string
+  page?: number
+  limit?: number
+  active?: boolean
+  deleted?: boolean
+}

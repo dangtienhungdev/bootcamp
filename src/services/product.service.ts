@@ -1,7 +1,7 @@
+import type { ParamProduct, Product } from '@/types/product.type'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import type { PaginatedResponse } from '@/types/common.type'
-import type { Product } from '@/types/product.type'
 
 export const productApi = createApi({
   reducerPath: 'productApi',
@@ -15,8 +15,11 @@ export const productApi = createApi({
   tagTypes: ['Product'],
   endpoints: (builder) => ({
     // get products
-    getProducts: builder.query<PaginatedResponse<Product>, void>({
-      query: () => '/products'
+    getProducts: builder.query<PaginatedResponse<Product>, Partial<ParamProduct>>({
+      query: (params: Partial<ParamProduct> = {}) => ({
+        url: '/products',
+        params
+      })
     })
   })
 })
