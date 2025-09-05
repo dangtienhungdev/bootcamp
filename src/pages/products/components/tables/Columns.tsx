@@ -1,14 +1,16 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import { Button, Image, Space, Table, Tag, Tooltip, Typography } from 'antd'
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
-import { cn } from '@/lib/utils'
+import type { ColumnsType } from 'antd/es/table'
 import type { Product } from '@/types/product.type'
+import { cn } from '@/lib/utils'
 import { filterColor } from '@/utils/filter-color'
 import { formatCurrency } from '@/utils/fomat-currency.util'
-import type { ColumnsType } from 'antd/es/table'
 import { renderColumnVariant } from './ColumnVariants'
 
-export const renderColumnProduct = (products: Product[]) => {
+export const renderColumnProduct = (products: Product[], params?: { [key: string]: string }) => {
+  const deleted = Boolean(params?.delete === 'true')
+
   const columns: ColumnsType<Product> = [
     {
       title: 'Tên sản phẩm',
@@ -39,6 +41,7 @@ export const renderColumnProduct = (products: Product[]) => {
       title: 'Trạng thái',
       dataIndex: 'isActive',
       key: 'isActive',
+      hidden: deleted,
       render: (isActive: boolean) => (
         <Tag color={isActive ? 'green' : 'red'}>{isActive ? 'Hoạt động' : 'Không hoạt động'}</Tag>
       )
@@ -84,7 +87,9 @@ export const renderColumnProduct = (products: Product[]) => {
         return (
           <Space direction='horizontal'>
             <Button size='small' icon={<EditOutlined />} type='dashed'></Button>
-            <Button size='small' icon={<DeleteOutlined />} type='primary' danger></Button>
+            {!row.isDeleted && !deleted && (
+              <Button size='small' icon={<DeleteOutlined />} type='primary' danger></Button>
+            )}
           </Space>
         )
       }

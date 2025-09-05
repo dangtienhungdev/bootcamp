@@ -1,37 +1,20 @@
-import { Card, Table, Tabs, type TabsProps } from 'antd'
+import { Card, Result, Spin, Table, Tabs, type TabsProps } from 'antd'
 
+import { useQueryParams } from '@/hooks/useQueryParams'
 import { useGetProductsQuery } from '@/services/product.service'
-import type { ParamProduct } from '@/types/product.type'
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
+import { createSearchParams, useNavigate } from 'react-router-dom'
 import { renderColumnProduct } from './tables/Columns'
 
 const MainProduct = () => {
   const navigate = useNavigate()
 
-  const [params] = useSearchParams()
-  const active = params.get('active')
-  const deleted = params.get('delete')
-  const page = Number(params.get('page')) || 1
-  const limit = Number(params.get('limit')) || 10
+  const params = useQueryParams()
+  const { deleted, page, limit, active } = params
 
-  const paramsProduct: ParamProduct =
-    deleted === 'true'
-      ? {
-          delete: deleted,
-          limit,
-          page
-        }
-      : {
-          active,
-          limit,
-          delete: deleted,
-          page
-        }
-
-  const { data, isLoading, error } = useGetProductsQuery(paramsProduct)
+  const { data, isLoading, isError } = useGetProductsQuery(params)
   const products = data?.docs || []
 
-  const columns = renderColumnProduct(products)
+  const columns = renderColumnProduct(products, params)
 
   const tabs: TabsProps['items'] = [
     {
@@ -89,6 +72,14 @@ const MainProduct = () => {
 
   const isActive = active === 'true' && deleted === 'false'
   const isInactive = active === 'false' && deleted === 'false'
+
+  if (isLoading) {
+    return <Spin />
+  }
+
+  if (isError) {
+    return <Result status='error' title='Lỗi' subTitle='Lỗi khi tải sản phẩm' />
+  }
 
   return (
     <Card>
