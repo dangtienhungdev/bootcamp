@@ -1,4 +1,4 @@
-import { Button, Image, Space, Table, Tag, Tooltip, Typography } from 'antd'
+import { Button, Image, Modal, Space, Table, Tag, Tooltip, Typography } from 'antd'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 
 import type { ColumnsType } from 'antd/es/table'
@@ -8,7 +8,11 @@ import { filterColor } from '@/utils/filter-color'
 import { formatCurrency } from '@/utils/fomat-currency.util'
 import { renderColumnVariant } from './ColumnVariants'
 
-export const renderColumnProduct = (products: Product[], params?: { [key: string]: string }) => {
+export const renderColumnProduct = (
+  products: Product[],
+  params?: { [key: string]: string },
+  handleUpdateProduct?: (product: Product) => void
+) => {
   const deleted = Boolean(params?.delete === 'true')
 
   const columns: ColumnsType<Product> = [
@@ -88,7 +92,30 @@ export const renderColumnProduct = (products: Product[], params?: { [key: string
           <Space direction='horizontal'>
             <Button size='small' icon={<EditOutlined />} type='dashed'></Button>
             {!row.isDeleted && !deleted && (
-              <Button size='small' icon={<DeleteOutlined />} type='primary' danger></Button>
+              <Button
+                size='small'
+                icon={<DeleteOutlined />}
+                type='primary'
+                danger
+                onClick={() => {
+                  Modal.confirm({
+                    title: 'Xoá sản phẩm',
+                    content: `Bạn có chắc chắn muốn xoá sản phẩm "${row.name}"?`,
+                    okText: 'Xoá',
+                    okType: 'danger',
+                    cancelText: 'Hủy',
+                    onOk: async () => {
+                      if (handleUpdateProduct) await handleUpdateProduct(row)
+                    },
+                    footer: (_, { OkBtn, CancelBtn }) => (
+                      <>
+                        <CancelBtn />
+                        <OkBtn />
+                      </>
+                    )
+                  })
+                }}
+              ></Button>
             )}
           </Space>
         )
