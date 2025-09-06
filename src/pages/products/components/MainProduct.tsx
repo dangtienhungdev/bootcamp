@@ -10,6 +10,7 @@ const MainProduct = () => {
   const navigate = useNavigate()
 
   const params = useQueryParams()
+  const { page, limit } = params
   params.delete = params.delete ? params.delete : 'false'
   params.active = params.active ? params.active : 'true'
 
@@ -59,12 +60,20 @@ const MainProduct = () => {
     })
   }
 
+  // handle change page and limit
+  const handleChangePageAndLimit = (page: string, limit: string) => {
+    navigate({
+      pathname: '/products',
+      search: createSearchParams({ ...params, page: page, limit }).toString()
+    })
+  }
+
   // handle soft delete product
   const handleSoftDeleteProduct = async (id: string) => {
     try {
       await softDeleteProduct(id).unwrap()
       message.success('Xoá sản phẩm thành công')
-    } catch (error) {
+    } catch (_) {
       message.error('Lỗi khi xoá sản phẩm')
     }
   }
@@ -84,23 +93,46 @@ const MainProduct = () => {
 
   const columns = renderColumnProduct(products, params, handleUpdateProduct, handleSoftDeleteProduct)
 
-  const tabs: TabsProps['items'] = [
+  const tabsArray = [
     {
       key: 'active',
-      label: <p>Sản phẩm hoạt động</p>,
-      children: <Table dataSource={products} columns={columns} rowKey='_id' />
+      label: <p>Sản phẩm hoạt động</p>
     },
     {
       key: 'inactive',
-      label: <p>Sản phẩm không hoạt động</p>,
-      children: <Table dataSource={products} columns={columns} rowKey='_id' />
+      label: <p>Sản phẩm không hoạt động</p>
     },
     {
       key: 'deleted',
-      label: <p>Sản phẩm đã xoá</p>,
-      children: <Table dataSource={products} columns={columns} rowKey='_id' />
+      label: <p>Sản phẩm đã xoá</p>
     }
   ]
+
+  const tabs: TabsProps['items'] = tabsArray.map((tab) => {
+    return {
+      key: tab.key,
+      label: tab.label,
+      children: (
+        <Table
+          dataSource={products}
+          columns={columns}
+          rowKey='_id'
+          pagination={{
+            size: 'small',
+            current: Number(page) || 1,
+            total: data?.totalDocs || 0,
+            pageSize: Number(limit) || 10,
+            showTotal: (total, range) => {
+              return `${range[0]}-${range[1]} của ${total} sản phẩm`
+            },
+            pageSizeOptions: ['5', '10', '20', '50', '100'],
+            showSizeChanger: true,
+            onChange: (page, limit) => handleChangePageAndLimit(page.toString(), limit.toString())
+          }}
+        />
+      )
+    }
+  })
 
   if (isLoading) {
     return <Spin />
