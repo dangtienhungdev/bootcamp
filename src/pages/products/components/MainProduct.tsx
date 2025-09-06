@@ -10,7 +10,9 @@ const MainProduct = () => {
   const navigate = useNavigate()
 
   const params = useQueryParams()
-  const { deleted, page, limit, active } = params
+  const { page, limit } = params
+  params.delete = params.delete ? params.delete : 'false'
+  params.active = params.active ? params.active : 'true'
 
   // get products
   const { data, isLoading, isError } = useGetProductsQuery(params)
@@ -44,15 +46,15 @@ const MainProduct = () => {
         newParams = {}
         break
     }
-    newParams = {
-      ...newParams,
-      page: page,
-      limit: limit
-    }
+    // newParams = {
+    //   ...newParams,
+    //   page: 1,
+    //   limit: 10
+    // }
 
     navigate({
       pathname: '/products',
-      search: createSearchParams(newParams).toString()
+      search: createSearchParams({ ...newParams }).toString()
     })
   }
 
@@ -66,8 +68,8 @@ const MainProduct = () => {
     }
   }
 
-  const isActive = active === 'true' && deleted === 'false'
-  const isInactive = active === 'false' && deleted === 'false'
+  const isActive = params.active === 'true' && params.delete === 'false'
+  const isInactive = params.active === 'false' && params.delete === 'false'
 
   const columns = renderColumnProduct(products, params, handleUpdateProduct)
 
