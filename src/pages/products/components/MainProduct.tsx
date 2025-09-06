@@ -1,7 +1,7 @@
 import { Card, message, Result, Spin, Table, Tabs, type TabsProps } from 'antd'
 
 import { useQueryParams } from '@/hooks/useQueryParams'
-import { useGetProductsQuery, useUpdateProductMutation } from '@/services/product.service'
+import { useGetProductsQuery, useSoftDeleteProductMutation, useUpdateProductMutation } from '@/services/product.service'
 import type { Product } from '@/types/product.type'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import { renderColumnProduct } from './tables/Columns'
@@ -10,7 +10,6 @@ const MainProduct = () => {
   const navigate = useNavigate()
 
   const params = useQueryParams()
-  const { page, limit } = params
   params.delete = params.delete ? params.delete : 'false'
   params.active = params.active ? params.active : 'true'
 
@@ -20,6 +19,8 @@ const MainProduct = () => {
 
   // update product
   const [updateProduct] = useUpdateProductMutation()
+  // soft delete product
+  const [softDeleteProduct] = useSoftDeleteProductMutation()
 
   // handle
   const handleTabChange = (key: string) => {
@@ -58,6 +59,16 @@ const MainProduct = () => {
     })
   }
 
+  // handle soft delete product
+  const handleSoftDeleteProduct = async (id: string) => {
+    try {
+      await softDeleteProduct(id).unwrap()
+      message.success('Xoá sản phẩm thành công')
+    } catch (error) {
+      message.error('Lỗi khi xoá sản phẩm')
+    }
+  }
+
   // handle update product
   const handleUpdateProduct = async (product: Product) => {
     try {
@@ -71,7 +82,7 @@ const MainProduct = () => {
   const isActive = params.active === 'true' && params.delete === 'false'
   const isInactive = params.active === 'false' && params.delete === 'false'
 
-  const columns = renderColumnProduct(products, params, handleUpdateProduct)
+  const columns = renderColumnProduct(products, params, handleUpdateProduct, handleSoftDeleteProduct)
 
   const tabs: TabsProps['items'] = [
     {

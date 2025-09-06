@@ -23,7 +23,8 @@ export const productApi = createApi({
       query: (params: Partial<ParamProduct> = {}) => ({
         url: '/products',
         params
-      })
+      }),
+      providesTags: ['Product']
     }),
 
     // cập nhật sản phẩm
@@ -32,9 +33,19 @@ export const productApi = createApi({
         url: `/products/${product._id}`,
         method: 'PATCH',
         body: omit(product, ['_id', 'createdAt', 'updatedAt'])
-      })
+      }),
+      invalidatesTags: ['Product']
+    }),
+
+    // xoá mềm sản phẩm
+    softDeleteProduct: builder.mutation<Product, string>({
+      query: (id: string) => ({
+        url: `/products/${id}/toggle-deleted`,
+        method: 'PATCH'
+      }),
+      invalidatesTags: ['Product']
     })
   })
 })
 
-export const { useGetProductsQuery, useUpdateProductMutation } = productApi
+export const { useGetProductsQuery, useUpdateProductMutation, useSoftDeleteProductMutation } = productApi

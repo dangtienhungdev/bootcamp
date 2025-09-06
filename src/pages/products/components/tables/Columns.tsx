@@ -11,7 +11,8 @@ import { renderColumnVariant } from './ColumnVariants'
 export const renderColumnProduct = (
   products: Product[],
   params?: { [key: string]: string },
-  handleUpdateProduct?: (product: Product) => void
+  handleUpdateProduct?: (product: Product) => void,
+  handleSoftDeleteProduct?: (id: string) => void
 ) => {
   const deleted = Boolean(params?.delete === 'true')
 
@@ -105,7 +106,7 @@ export const renderColumnProduct = (
                     okType: 'danger',
                     cancelText: 'Hủy',
                     onOk: async () => {
-                      if (handleUpdateProduct) await handleUpdateProduct(row)
+                      if (handleSoftDeleteProduct) await handleSoftDeleteProduct(row._id)
                     },
                     footer: (_, { OkBtn, CancelBtn }) => (
                       <>
