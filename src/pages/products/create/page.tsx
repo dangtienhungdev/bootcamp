@@ -12,6 +12,11 @@ const CreateProductPage = () => {
       <Form onFinish={onFinish} layout='vertical' autoComplete='off'>
         <Row gutter={16}>
           <Col span={12}>
+            <Form.Item label={'Tên pet'} name={'name'}>
+              <Input placeholder={'Nhập tên sản phẩm'} size='large' />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
             <Form.Item label={'Tên sản phẩm'} name={'name'}>
               <Input placeholder={'Nhập tên sản phẩm'} size='large' />
             </Form.Item>
