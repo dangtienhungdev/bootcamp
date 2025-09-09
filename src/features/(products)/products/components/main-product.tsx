@@ -4,7 +4,7 @@ import { useQueryParams } from '@/hooks/useQueryParams'
 import { useGetProductsQuery, useSoftDeleteProductMutation, useUpdateProductMutation } from '@/services/product.service'
 import type { Product } from '@/types/product.type'
 import { createSearchParams, useNavigate } from 'react-router-dom'
-import { renderColumnProduct } from './tables/Columns'
+import { renderColumnProduct } from './tables'
 
 const MainProduct = () => {
   const navigate = useNavigate()

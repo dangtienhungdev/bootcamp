@@ -1,8 +1,8 @@
+import { CreateRole, RoleDetailDrawer } from '@/features/role'
 import { DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons'
 import { Button, Card, Input, Modal, Space, Table, Tag, Typography, message } from 'antd'
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDeleteRoleMutation, useGetRolesQuery } from '../../services/role.service'
-import { CreateRole, RoleDetailDrawer } from './components'
 
 import { PermissionGuard } from '@/guard/permission-guard'
 import { PERMISSIONS } from '@/guard/permissions-guard'

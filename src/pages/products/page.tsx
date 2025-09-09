@@ -1,7 +1,6 @@
-import { Typography } from 'antd'
+import { HeaderProduct, MainProduct } from '@/features/(products)/products'
 
-import HeaderProduct from './components/HeaderProduct'
-import MainProduct from './components/MainProduct'
+import { Typography } from 'antd'
 
 const ProductPage = () => {
   return (

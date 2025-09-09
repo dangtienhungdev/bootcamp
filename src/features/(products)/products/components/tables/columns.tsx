@@ -1,12 +1,12 @@
-import { Button, Image, Modal, Space, Table, Tag, Tooltip, Typography } from 'antd'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
+import { Button, Image, Modal, Space, Table, Tag, Tooltip, Typography } from 'antd'
 
-import type { ColumnsType } from 'antd/es/table'
-import type { Product } from '@/types/product.type'
 import { cn } from '@/lib/utils'
+import type { Product } from '@/types/product.type'
 import { filterColor } from '@/utils/filter-color'
 import { formatCurrency } from '@/utils/fomat-currency.util'
-import { renderColumnVariant } from './ColumnVariants'
+import type { ColumnsType } from 'antd/es/table'
+import { renderColumnVariant } from './column-variants'
 
 export const renderColumnProduct = (
   products: Product[],

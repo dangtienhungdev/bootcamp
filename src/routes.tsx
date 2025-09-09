@@ -7,9 +7,9 @@ import MainLayout from './layout/main-layout'
 import CategoriesPage from './pages/categories/page'
 import CustomerPage from './pages/customers/page'
 import DashboardPage from './pages/dashboard/page'
-import DemoPageWithTimestamp from './pages/demo/page'
 import LoginPage from './pages/login/page'
 import PermissionPage from './pages/permission/page'
+import CreateProductPage from './pages/products/create/page'
 import ProductPage from './pages/products/page'
 import RolePage from './pages/role/page'
 import StaffPage from './pages/staffs/page'
@@ -93,11 +93,28 @@ export const router = createBrowserRouter([
       },
       {
         path: 'products',
-        element: <ProductPage />
+        element: (
+          <ProtectedRouter permission={PERMISSIONS.GET_ALL_PRODUCTS as PermissionName}>
+            <ProductPage />
+          </ProtectedRouter>
+        )
       },
       {
-        path: 'demo',
-        element: <DemoPageWithTimestamp text='Hello' />
+        path: 'products/create',
+        element: (
+          <ProtectedRouter permission={PERMISSIONS.CREATE_PRODUCT as PermissionName}>
+            <CreateProductPage />
+          </ProtectedRouter>
+        )
+      },
+
+      {
+        path: 'products/create',
+        element: (
+          <ProtectedRouter permission={PERMISSIONS.CREATE_PRODUCT as PermissionName}>
+            <CreateProductPage />
+          </ProtectedRouter>
+        )
       }
     ]
   }
