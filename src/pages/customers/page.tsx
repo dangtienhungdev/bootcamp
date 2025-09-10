@@ -1,5 +1,10 @@
 import { Button, Card, Input, Modal, Space, Table, Tag, Typography, message } from 'antd'
-import { CustomerDetailDrawer, CustomerFormDrawer, CustomerUpdateDrawer, WishlistDrawer } from './components'
+import {
+  CustomerDetailDrawer,
+  CustomerFormDrawer,
+  CustomerUpdateDrawer,
+  WishlistDrawer
+} from '../../features/customers/components'
 import { DeleteOutlined, EditOutlined, HeartOutlined, SearchOutlined } from '@ant-design/icons'
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDeleteCustomerMutation, useGetCustomersQuery } from '@/services/customer.service'

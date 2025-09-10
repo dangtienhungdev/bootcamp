@@ -24,6 +24,10 @@ export const router = createBrowserRouter([
     )
   },
   {
+    path: '/create-form-product',
+    element: <CreateProductPage />
+  },
+  {
     path: '/',
     element: (
       <PrivateRouter>
