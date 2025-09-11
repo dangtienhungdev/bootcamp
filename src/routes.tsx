@@ -23,10 +23,7 @@ export const router = createBrowserRouter([
       </PublicRoutePage>
     )
   },
-  {
-    path: '/create-form-product',
-    element: <CreateProductPage />
-  },
+
   {
     path: '/',
     element: (
@@ -100,14 +97,6 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRouter permission={PERMISSIONS.GET_ALL_PRODUCTS as PermissionName}>
             <ProductPage />
-          </ProtectedRouter>
-        )
-      },
-      {
-        path: 'products/create',
-        element: (
-          <ProtectedRouter permission={PERMISSIONS.CREATE_PRODUCT as PermissionName}>
-            <CreateProductPage />
           </ProtectedRouter>
         )
       },
